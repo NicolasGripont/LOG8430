@@ -21,5 +21,8 @@
     "grunt-open" : "latest",
     "forever" : "latest",
     "fs" : "latest"
+  },
+  "devDependencies": {
+    "mocha": "^4.0.1"
   }
 }
