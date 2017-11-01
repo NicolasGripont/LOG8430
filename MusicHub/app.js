@@ -5,10 +5,26 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var expressHandlebars = require('express-handlebars');
+var mongoose = require('mongoose');
 
 var index = require('./routes/index');
 
 var app = express();
+
+var config = require('config.json');
+
+
+// DB connexion
+var dbConfig = config.database;
+var dbOptions = {useMongoClient: true};
+mongoose.connect('mongodb://' + dbConfig.username + ':' + dbConfig.password + '@' +
+    dbConfig.host + ':' + dbConfig.port, dbOptions, function (error) {
+    if(error) {
+      //TODO
+      console.log(error);
+    }
+});
+
 
 // view engine setup
 app.engine('.hbs', expressHandlebars({defaultLayout: 'layout', extname: '.hbs'}));
