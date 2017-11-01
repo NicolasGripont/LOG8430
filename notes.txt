@@ -1,0 +1,2 @@
+BD : On a fait ce choix car modèle simple donc si on change ce sera pas trop long à modifier et en général on change rarement de base de données car ça implique énormément de boulot. De plus c'est adapté à notre cas.
+
