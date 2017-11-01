@@ -14,6 +14,12 @@
     "morgan": "~1.9.0",
     "serve-favicon": "~2.4.5",
     "express-handlebars": "~3.0.0",
-    "mongoose": "^4.12.5"
+    "mongoose": "^4.12.5",
+    "grunt" : "latest",
+    "grunt-shell" : "latest",
+    "grunt-run" : "latest",
+    "grunt-open" : "latest",
+    "forever" : "latest",
+    "fs" : "latest"
   }
 }
