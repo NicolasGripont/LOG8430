@@ -11,20 +11,38 @@ var index = require('./routes/index');
 
 var app = express();
 
-var config = require('config.json');
+var config = require('./config.json');
 
 
 // DB connexion
 var dbConfig = config.database;
 var dbOptions = {useMongoClient: true};
 mongoose.connect('mongodb://' + dbConfig.username + ':' + dbConfig.password + '@' +
-    dbConfig.host + ':' + dbConfig.port, dbOptions, function (error) {
-    if(error) {
-      //TODO
-      console.log(error);
+    dbConfig.host + ':' + dbConfig.port + '/' + dbConfig.name, dbOptions, function (error) {
+
+    if(error) { //TODO
+      console.log("Database error when mongoose.connect : ", error);
     }
 });
 
+// Test DB
+//
+// var User = require('./models/user');
+//
+// User.create({
+//     email : "ludo@gmail.com",
+//     password : "pass"
+// }, function(error, user) {
+//     if (error)
+//         console.log("Database error when User.create : ", error);
+//     User.find(function(error, user) {
+//         if (error)
+//             console.log("Database error when User.find : ", error);
+//         console.log("Database success when User.find : " + user);
+//     });
+// });
+//
+// Fin Test DB
 
 // view engine setup
 app.engine('.hbs', expressHandlebars({defaultLayout: 'layout', extname: '.hbs'}));

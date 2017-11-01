@@ -1,9 +1,9 @@
 {
   "database" : {
     "name": "music-hub",
-    "host": "localhost",
-    "port": "1234567",
-    "username" :"username",
+    "host": "127.0.0.1",
+    "port": "27017",
+    "username" :"admin",
     "password": "password"
   }
 }
