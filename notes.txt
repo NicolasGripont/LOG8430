@@ -1,2 +1,7 @@
 BD : On a fait ce choix car modèle simple donc si on change ce sera pas trop long à modifier et en général on change rarement de base de données car ça implique énormément de boulot. De plus c'est adapté à notre cas.
 
+DTO : objet renvoyé à l'user avec seulement ce qui est nécessaire pour la vue
+
+Choix de pas faire un système où ajout de fontionnalités pas méga easy, car on sait pas prévoir exactement ce qu'il y aura dans le futur.
+
+Abstraction pour transformer ce qu'on reçoit de l'extérieur (API) vers nous afin d'avoir un code unifié pour tout le système (Music).
