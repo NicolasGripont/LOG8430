@@ -20,7 +20,9 @@
     "grunt-run" : "latest",
     "grunt-open" : "latest",
     "forever" : "latest",
-    "fs" : "latest"
+    "fs" : "latest",
+    "querystring": "~0.2.0",
+    "request": "~2.34.0"
   },
   "devDependencies": {
     "mocha": "^4.0.1"
