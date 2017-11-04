@@ -12,7 +12,7 @@ var _ = require('lodash');
 
 var views = require('./routes/views');
 var user = require('./routes/user');
-
+var connexion = require('./routes/connexion');
 var app = express();
 
 var config = require('./config.json');
@@ -34,7 +34,7 @@ mongoose.connect(mongoURL, dbOptions, function (error) {
 
 var store = new MongoDBStore({
     uri: mongoURL,
-    collection: 'Sessions'
+    collection: 'sessions'
 });
  
 // Catch connexion errors on db
