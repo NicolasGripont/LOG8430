@@ -6,8 +6,12 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var expressHandlebars = require('express-handlebars');
 var mongoose = require('mongoose');
+var session = require('express-session');
+var MongoDBStore = require('connect-mongodb-session')(session);
+var _ = require('lodash');
 
 var views = require('./routes/views');
+var user = require('./routes/user');
 
 var app = express();
 
@@ -17,14 +21,41 @@ var config = require('./config.json');
 // DB connexion
 var dbConfig = config.database;
 var dbOptions = {useMongoClient: true};
-mongoose.connect('mongodb://' + dbConfig.username + ':' + dbConfig.password + '@' +
-    dbConfig.host + ':' + dbConfig.port + '/' + dbConfig.name, dbOptions, function (error) {
+var mongoURL = 'mongodb://' + dbConfig.username + ':' + dbConfig.password + '@' +
+	dbConfig.host + ':' + dbConfig.port + '/' + dbConfig.name;
+
+mongoose.connect(mongoURL, dbOptions, function (error) {
 
     if(error) { //TODO
       console.log("Database error when mongoose.connect : ", error);
     }
 });
 
+
+var store = new MongoDBStore({
+    uri: mongoURL,
+    collection: 'Sessions'
+});
+ 
+// Catch connexion errors on db
+store.on('error', function(error) {
+	//assert.ifError(error);
+	//assert.ok(false);
+	console.log("error");
+});
+
+app.use(require('express-session')({
+    secret: 'musicHubProject',
+    cookie: {
+      maxAge: 1000 * 60 * 60 * 2 // 2 hours
+    },
+    store: store,
+    // Boilerplate options, see:
+    // * https://www.npmjs.com/package/express-session#resave
+    // * https://www.npmjs.com/package/express-session#saveuninitialized
+    resave: true,
+    saveUninitialized: false
+  }));
 // Test DB
 //
 // var User = require('./models/user');
@@ -56,7 +87,21 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+var exceptionList = ["/views/signup","/views/signin"];
+app.use(function(err,req,res,next) {
+	var path = _.find(exceptionList,function(elem) {
+		return elem === req.path;
+	});
+	if(path) {
+		return next();
+	}
+	if(!req.session) {
+		return res.redirect('/views/signup');
+	}
+});
+
 app.use('/views', views);
+app.use('/user', user);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
