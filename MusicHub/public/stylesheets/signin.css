@@ -40,3 +40,7 @@ body {
 .form-signin button[type="submit"] {
     margin-top: 10px;
 }
+
+a {
+    float: right;
+}
