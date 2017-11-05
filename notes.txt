@@ -7,3 +7,8 @@ Choix de pas faire un système où ajout de fontionnalités pas méga easy, car 
 Abstraction pour transformer ce qu'on reçoit de l'extérieur (API) vers nous afin d'avoir un code unifié pour tout le système (Music).
 
 Mongodb car plus performant mais plus "chiant" à mettre en place par rapport au modèle que l'on a imaginé. Si on avait choisit de faire en SQL, ça aurait été plus facile à mettre en place mais on aurait perdu en perfomance. De plus MongoDB est plus ... VOIR COURS 5 de FABIOOOOOO.
+
+Utilisation modèle MVC (models, views, routes).
+
+Voir pour autres patterns (mongoose, règles) ?
+
