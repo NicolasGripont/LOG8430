@@ -13,7 +13,7 @@ router.post('/signin', function(req, res, next) {
 	user.find({email:email, password:password}, function(err, foundUser) {
 		if(foundUser) {
 			req.session.email = email;
-			return res.redirect('views/index');
+			return res.status(200).json({ok:"ok"});
 		}
 		res.json({error:"bad email or password"});
 	});

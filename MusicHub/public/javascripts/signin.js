@@ -1,17 +1,22 @@
 $(function() {
-    $('button').click(function () {
+    $('form').submit(function (event) {
+    	event.preventDefault();
         $.ajax({
             url: "/user/signin",
             type: "POST",
             dataType: "json",
-            data: {
+            contentType: "application/json; charset=utf-8",
+            data: JSON.stringify({
                 email:"admin@admin.com",
                 password: "admin"
-            }
+            })
         })
         .done(function (json) {
-            if(json) {
+            if(json && json.error) {
                 alert(JSON.stringify(json));
+            }
+            else {
+            	window.location.replace("/views");
             }
         })
         .fail(function (xhr, status, errorThrown) {

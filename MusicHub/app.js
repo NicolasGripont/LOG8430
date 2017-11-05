@@ -11,7 +11,6 @@ var MongoDBStore = require('connect-mongodb-session')(session);
 var _ = require('lodash');
 
 var views = require('./routes/views');
-var user = require('./routes/user');
 var connexion = require('./routes/connexion');
 var app = express();
 
@@ -25,7 +24,6 @@ var mongoURL = 'mongodb://' + dbConfig.username + ':' + dbConfig.password + '@' 
 	dbConfig.host + ':' + dbConfig.port + '/' + dbConfig.name;
 
 mongoose.connect(mongoURL, dbOptions, function (error) {
-
     if(error) { //TODO
       console.log("Database error when mongoose.connect : ", error);
     }
@@ -53,6 +51,7 @@ app.use(require('express-session')({
     // Boilerplate options, see:
     // * https://www.npmjs.com/package/express-session#resave
     // * https://www.npmjs.com/package/express-session#saveuninitialized
+    rolling: true,
     resave: true,
     saveUninitialized: false
   }));
@@ -87,21 +86,29 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-var exceptionList = ["/views/signup","/views/signin"];
-app.use(function(err,req,res,next) {
+//TODO ajouter exception /user
+var exceptionList = ["^\/views\/signup$","^\/views\/signin$","^\/public\/.*",
+	"^\/user\/(signin|signup)$"
+	];
+app.use(function(req,res,next) {
 	var path = _.find(exceptionList,function(elem) {
-		return elem === req.path;
+		var reg = new RegExp(elem, "g");
+		return reg.test(req.path);
 	});
 	if(path) {
 		return next();
 	}
-	if(!req.session) {
-		return res.redirect('/views/signup');
-	}
+	req.session.reload(function(err) {
+		if(err) {
+			return res.redirect('/views/signin');
+		}
+		console.log(req.session);
+		return next();
+	});
 });
 
 app.use('/views', views);
-app.use('/user', user);
+app.use('/user', connexion);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
