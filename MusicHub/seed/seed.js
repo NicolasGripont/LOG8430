@@ -1,4 +1,4 @@
-var User = require('../models/user');
+var User = require('../models_db/user');
 var config = require('../config.json');
 var mongoose = require('mongoose');
 

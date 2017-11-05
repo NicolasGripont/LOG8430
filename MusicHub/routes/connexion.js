@@ -1,6 +1,6 @@
 var express = require('express');
 var router = express.Router();
-var user = require('../models/user');
+var user = require('../models_db/user');
 
 router.post('/signup', function(req, res, next) {
 	var email = req.body.email || "";
