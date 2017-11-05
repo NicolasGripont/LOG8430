@@ -20,7 +20,13 @@ router.post('/signin', function(req, res, next) {
 });
 
 router.get('/signout', function(req, res, next) {
-	//TODO
+	req.session.destroy(function(err) {
+		if(err) {
+			console.log(err);
+			return res.json({error:err});
+		}
+		res.status(200).json({ok:"ok"});
+	});
 });
 
 module.exports = router;
