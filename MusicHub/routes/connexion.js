@@ -21,7 +21,6 @@ router.post('/signup', function(req, res, next) {
 });
 
 router.post('/signin', function(req, res, next) {
-	//tests des paramètres a ajouter
 	var email = req.body.email || "";
 	var password = req.body.password || "";
 	user.find({email:email, password:password}, function(err, foundUser) {
