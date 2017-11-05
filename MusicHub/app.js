@@ -4,7 +4,6 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
-var expressHandlebars = require('express-handlebars');
 var mongoose = require('mongoose');
 var session = require('express-session');
 var MongoDBStore = require('connect-mongodb-session')(session);
@@ -56,24 +55,6 @@ app.use(require('express-session')({
     resave: true,
     saveUninitialized: false
   }));
-// Test DB
-//
-// var User = require('./models/user');
-//
-// User.create({
-//     email : "ludo@gmail.com",
-//     password : "pass"
-// }, function(error, user) {
-//     if (error)
-//         console.log("Database error when User.create : ", error);
-//     User.find(function(error, user) {
-//         if (error)
-//             console.log("Database error when User.find : ", error);
-//         console.log("Database success when User.find : " + user);
-//     });
-// });
-//
-// Fin Test DB
 
 // view engine setup
 app.set("views", path.join(__dirname, "views"));
