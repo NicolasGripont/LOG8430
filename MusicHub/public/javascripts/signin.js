@@ -7,8 +7,8 @@ $(function() {
             dataType: "json",
             contentType: "application/json; charset=utf-8",
             data: JSON.stringify({
-                email:"admin@admin.com",
-                password: "admin"
+                email:$("#inputEmail").val(),
+                password: $("#inputPassword").val()
             })
         })
         .done(function (json) {

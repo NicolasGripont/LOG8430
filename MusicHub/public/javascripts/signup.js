@@ -12,11 +12,13 @@ $(function() {
         })
         .done(function (json) {
             if (json && json.error) {
-                alert(JSON.stringify(json));
+                $(".alert-danger").append(json.error).fadeIn(1000);
             }
             else {
-                window.location.replace("/views/signin");
-                alert("Inscription réussie");
+                $(".alert-success").append("Inscription réussie.").fadeIn(1000);
+                setTimeout(function(){
+                    window.location.replace("/views/signin");
+                }, 3000);
             }
         })
         .fail(function (xhr, status, errorThrown) {
@@ -28,12 +30,13 @@ $(function() {
 
     $('form').submit(function (event) {
         event.preventDefault();
+        $(".alert").hide().html("");
         var passwordFilled = $("#inputPassword").val();
         var repasswordFilled = $("#reInputPassword").val();
         var emailFilled = $("#inputEmail").val();
 
         if(passwordFilled !== repasswordFilled) {
-            alert("Les mots de passes doivent être identiques.");
+            $(".alert-danger").append("Les mots de passent doivent être identiques.").fadeIn(1000);
         } else {
             sendAJAXRequest(emailFilled, passwordFilled);
         }

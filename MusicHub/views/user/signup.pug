@@ -1,5 +1,7 @@
 extends ../layouts/simple-layout
 
+
+
 block content
     form.form-signin
         h2.form-signin-heading Please sign up
@@ -11,6 +13,8 @@ block content
         input#reInputPassword.form-control(type='password', placeholder='Re-enter Password', required='')
         button.btn.btn-lg.btn-primary.btn-block(type='submit') Sign Up
         a(href='/views/signin') Sign In
+    .alert.alert-success
+    .alert.alert-danger
 
 block scripts
      script(src='/javascripts/signup.js')
