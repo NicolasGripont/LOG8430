@@ -15,7 +15,7 @@ $(function() {
                 alert(JSON.stringify(json));
             }
             else {
-                window.location.replace("/view/signin");
+                window.location.replace("/views/signin");
                 alert("Inscription réussie");
             }
         })
