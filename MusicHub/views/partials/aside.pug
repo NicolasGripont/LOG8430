@@ -1,0 +1,15 @@
+nav.col-sm-3.col-md-2.d-none.d-sm-block.bg-light.sidebar
+    form.bd-search.d-flex.align-items-center
+        input#search-input.form-control.ds-input(type='search', placeholder='Search...')
+    button.aside-btn
+        | Créer une Playlist
+    button.aside-btn(data-toggle='collapse', data-target='#playlists', aria-expanded='false', aria-controls='playlists')
+        | Playlists
+    #playlists.collapse.multi-collapse
+        ul.nav.nav-pills.flex-column
+            li.nav-item
+                a.nav-link.active(href='#')
+                    | Playlists 1
+                    span.sr-only (current)
+            li.nav-item
+                a.nav-link(href='#') Playlists 1

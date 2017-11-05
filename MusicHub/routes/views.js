@@ -7,15 +7,15 @@ router.get('/', function(req, res, next) {
 });
 
 router.get('/signup', function(req, res, next) {
-    res.render('user/signup', {  title: 'Sign Up', layout: 'simple-layout' } );
+    res.render('user/signup', { title: 'Music Hub - Sign Up' } );
 });
 
 router.get('/signin', function(req, res, next) {
-    res.render('user/signin', {  title: 'Sign In', layout: 'simple-layout' } );
+    res.render('user/signin', { title: 'Music Hub - Sign In' } );
 });
 
 router.get('/settings', function(req, res, next) {
-    res.render('settings/settings', {  title: 'Settings', layout: 'settings-layout' } );
+    res.render('settings/settings', { title: 'Music Hub - Settings' } );
 });
 
 module.exports = router;
