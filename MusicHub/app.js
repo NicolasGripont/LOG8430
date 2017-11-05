@@ -25,6 +25,7 @@ var dbOptions = {useMongoClient: true};
 var mongoURL = 'mongodb://' + dbConfig.username + ':' + dbConfig.password + '@' +
 	dbConfig.host + ':' + dbConfig.port + '/' + dbConfig.name;
 
+mongoose.Promise = global.Promise;
 mongoose.connect(mongoURL, dbOptions, function (error) {
     if(error) { //TODO
       console.log("Database error when mongoose.connect : ", error);
@@ -50,9 +51,6 @@ app.use(require('express-session')({
       maxAge: 1000 * 60 * 60 * 2 // 2 hours
     },
     store: store,
-    // Boilerplate options, see:
-    // * https://www.npmjs.com/package/express-session#resave
-    // * https://www.npmjs.com/package/express-session#saveuninitialized
     rolling: true,
     resave: true,
     saveUninitialized: false
@@ -104,7 +102,6 @@ app.use(function(req,res,next) {
 		if(err) {
 			return res.redirect('/views/signin');
 		}
-		console.log(req.session);
 		return next();
 	});
 });

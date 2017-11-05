@@ -3,13 +3,27 @@ var router = express.Router();
 var user = require('../models/user');
 
 router.post('/signup', function(req, res, next) {
-	//TODO
+	var email = req.body.email || "";
+	var password = req.body.password || "";
+	if(email === "" || password === "") {
+		return res.status(200).json({error:"Bad Email or password"});
+	}
+	var newUser = new user({
+		email : email,
+		password : password
+	});
+	newUser.save(function (err) {
+		if(err) {
+			return res.status(200).json({error:"Email is already used by another User"});
+		}
+		res.status(200).json({ok:"ok"});
+	});
 });
 
 router.post('/signin', function(req, res, next) {
 	//tests des paramètres a ajouter
-	var email = req.body.email | "";
-	var password = req.body.password | "";
+	var email = req.body.email || "";
+	var password = req.body.password || "";
 	user.find({email:email, password:password}, function(err, foundUser) {
 		if(foundUser) {
 			req.session.email = email;
