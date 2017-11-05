@@ -21,11 +21,16 @@
     "morgan": "~1.9.0",
     "pug": "^2.0.0-rc.4",
     "querystring": "~0.2.0",
+<<<<<<< Updated upstream
     "lodash": "latest",
     "express-session" : "latest",
     "connect-mongodb-session" : "latest",
     "serve-favicon": "~2.4.5",
     "request": "~2.34.0"
+=======
+    "request": "^2.34.0",
+    "serve-favicon": "~2.4.5"
+>>>>>>> Stashed changes
   },
   "devDependencies": {
     "mocha": "^4.0.1"

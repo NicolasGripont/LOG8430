@@ -1,17 +1,15 @@
 
 header
     nav.navbar.navbar-expand-md.navbar-dark.fixed-top.bg-dark
-        a.navbar-brand(href='#') {{title}}
+        a.navbar-brand(href='#') Music Hub
         button.navbar-toggler.d-lg-none(type='button', data-toggle='collapse', data-target='#navbarsExampleDefault', aria-controls='navbarsExampleDefault', aria-expanded='false', aria-label='Toggle navigation')
             span.navbar-toggler-icon
         #navbarsExampleDefault.collapse.navbar-collapse
             ul.navbar-nav.ml-auto
-                li.nav-item.active
-                    a.nav-link(href='#')
-                        | Home
-                        span.sr-only (current)
-                li.nav-item
-                    a.nav-link(href='#') Settings
+                li(class= (activeLi==='Home') ? 'nav-item active' : 'nav-item')
+                    a.nav-link(href='/views') Home
+                li(class= (activeLi==='Settings') ? 'nav-item active' : 'nav-item')
+                    a.nav-link(href='/views/settings') Settings
                 li.nav-item
                     a.nav-link(href='#') Profile
                 li.nav-item

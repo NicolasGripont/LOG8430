@@ -3,7 +3,7 @@ var router = express.Router();
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-    res.render('index', { title: 'Music Hub' });
+    res.render('index', { title: 'Music Hub', activeLi: "Home"} );
 });
 
 router.get('/signup', function(req, res, next) {
@@ -15,7 +15,7 @@ router.get('/signin', function(req, res, next) {
 });
 
 router.get('/settings', function(req, res, next) {
-    res.render('settings/settings', { title: 'Music Hub - Settings' } );
+    res.render('settings/settings', { title: 'Music Hub - Settings', activeLi: "Settings"} );
 });
 
 module.exports = router;
