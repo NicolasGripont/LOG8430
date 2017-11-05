@@ -13,6 +13,7 @@ var _ = require('lodash');
 var views = require('./routes/views');
 var connexion = require('./routes/connexion');
 var spotify = require('./routes/spotify');
+var deezer = require('./routes/deezer');
 
 var app = express();
 
@@ -109,6 +110,7 @@ app.use(function(req,res,next) {
 app.use('/views', views);
 app.use('/user', connexion);
 app.use('/spotify', spotify);
+app.use('/deezer', deezer);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

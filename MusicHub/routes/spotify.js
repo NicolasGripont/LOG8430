@@ -8,7 +8,7 @@ var router = express.Router();
 
 var client_id = '2ab39fd6978c49869a1f06409fae1a54'; // Your client id
 var client_secret = '50a9b3a41817406da7976a236d25afea'; // Your secret
-var redirect_uri = 'http://localhost:3000/spotify/settings'; // Your redirect uri
+var redirect_uri = 'http://localhost:3000/spotify/loggedin'; // Your redirect uri
 
 /**
  * Generates a random string containing numbers and letters
@@ -46,7 +46,7 @@ router.get('/login', function(req, res, next) {
         }));
 });
 
-router.get('/settings', function(req, res, next) {
+router.get('/loggedin', function(req, res, next) {
 
     // your application requests refresh and access tokens
     // after checking the state parameter
@@ -77,9 +77,13 @@ router.get('/settings', function(req, res, next) {
 
         request.post(authOptions, function(error, response, body) {
             if (!error && response.statusCode === 200) {
-
                 var access_token = body.access_token;
                 var refresh_token = body.refresh_token;
+                var expires_in = body.expires_in;
+
+                console.log('access_token: ' + access_token);
+                console.log('refresh_token: ' + refresh_token);
+                console.log('expires_in: ' + expires_in);
 
                 var options = {
                     url: 'https://api.spotify.com/v1/me',
