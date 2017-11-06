@@ -1,6 +1,7 @@
 var request = require('request');
 var querystring = require('querystring');
 var AbstractConnector = require('./abstract-connector');
+var SettingDB = require('../models_db/settings');
 
 class SpotifyConnector extends AbstractConnector {
 
@@ -27,7 +28,7 @@ class SpotifyConnector extends AbstractConnector {
             }));
     }
 
-    loggedIn(req, res, redirectUri) {
+    loggedIn(req, res, successCallback, errorCallback) {
         var self = this;
         var code = req.query.code || null;
         var authOptions = {
@@ -47,17 +48,32 @@ class SpotifyConnector extends AbstractConnector {
             if (!error && response.statusCode === 200) {
                 self.accessToken = body.access_token;
                 self.refreshToken = body.refresh_token;
-                self.expires = body.expires_in;
+                self.expires = body.expires_in * 1000 + Date.now();
 
-                console.log('access_token: ' + self.accessToken);
-                console.log('refresh_token: ' + self.refreshToken);
-                console.log('expires_in: ' + self.expires);
-
-                res.redirect('/views/settings');
+                SettingDB.find( { userEmail : req.session.email }, function(err, settings) {
+                    var setting;
+                    if(settings && settings.length && settings.length == 1) {
+                        setting = settings[0];
+                    } else {
+                        setting = new SettingDB( {userEmail: req.session.email});
+                    }
+                    setting.spotify = {accessToken: self.accessToken, refreshToken : self.refreshToken, expires : self.expires};
+                    setting.save(function(error, result){
+                        if(error) {
+                            errorCallback(req, res, 500, error);
+                        } else {
+                            successCallback(req, res, result);
+                        }
+                    });
+                })
             } else {
-                res.redirect('/views/settings');
+                errorCallback(req, res, response.statusCode,error);
             }
         });
+    }
+
+    saveSettings() {
+
     }
 
     searchMusics(title) {

@@ -9,7 +9,7 @@ class AbstractConnector {
     login(req, res, redirectUri) {
     }
 
-    loggedIn(req, res, redirectUri) {
+    loggedIn(req, res, successCallback, errorCallback) {
     }
 
     searchMusics(title) {

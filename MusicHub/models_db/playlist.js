@@ -1,4 +1,3 @@
-
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
@@ -25,7 +24,7 @@ var music = {
 var playlistSchema = new Schema({
 	playlistID: {type: Number, required: true, unique: true},
     name: {type: String, required: true},
-    userID: {type: Number, required: true},
+    userEmail: {type: Number, required: true},
     musicList: [music]
 });
 

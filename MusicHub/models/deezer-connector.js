@@ -5,6 +5,7 @@
 var request = require('request');
 var queryString = require('querystring');
 var AbstractConnector = require('./abstract-connector');
+var SettingDB = require('../models_db/settings');
 
 class DeezerConnector extends AbstractConnector{
 
@@ -29,7 +30,7 @@ class DeezerConnector extends AbstractConnector{
             }));
     }
 
-    loggedIn(req, res, redirectUri) {
+    loggedIn(req, res, successCallback, errorCallback) {
         var self = this;
         var errorReason = req.param('error_reason');
         var code = req.param('code');
@@ -52,15 +53,26 @@ class DeezerConnector extends AbstractConnector{
                 self.accessToken = body.access_token;
                 self.expires = body.expires;
 
-                console.log('accessToken: ' + self.accessToken);
-                console.log('expires: ' + self.expires);
-
-                res.redirect('/views/settings');
+                SettingDB.find( { userEmail : req.session.email }, function(err, settings) {
+                    var setting;
+                    if(settings && settings.length && settings.length == 1) {
+                        setting = settings[0];
+                    } else {
+                        setting = new SettingDB( {userEmail: req.session.email});
+                    }
+                    setting.deezer = {accessToken: self.accessToken, expires : self.expires};
+                    setting.save(function(error, result){
+                        if(error) {
+                            errorCallback(req, res, 500, error);
+                        } else {
+                            successCallback(req, res, result);
+                        }
+                    });
+                })
             });
 
-
         } else {
-            console.log('error_reason:' + req.param('error_reason'));
+            errorCallback(req, res, 500, errorReason);
         }
     }
 
