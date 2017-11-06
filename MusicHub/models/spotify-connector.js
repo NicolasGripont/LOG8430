@@ -1,4 +1,4 @@
-var AbstractConnector = require('abstract-connector');
+var AbstractConnector = require('./abstract-connector');
 
 class SpotifyConnector extends AbstractConnector {
 
@@ -6,14 +6,14 @@ class SpotifyConnector extends AbstractConnector {
         super();
     }
 
-    login() {
+    login(req, res) {
     }
 
-    loggedIn() {
+    loggedIn(req, res) {
     }
 
-    searchMusic(title) {
+    searchMusics(title) {
     }
 }
 
-exports.SpotifyConnector = SpotifyConnector;
+module.exports = SpotifyConnector;

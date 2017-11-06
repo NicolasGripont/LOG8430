@@ -6,14 +6,15 @@ class AbstractConnector {
     constructor(){
     }
 
-    login() {
+    login(req, res, redirectUri) {
     }
 
-    loggedIn() {
+    loggedIn(req, res, redirectUri) {
     }
 
-    searchMusic(title) {
+    searchMusics(title) {
     }
 }
 
-exports.AbstractConnector = AbstractConnector;
+module.exports = AbstractConnector;
+

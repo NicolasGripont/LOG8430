@@ -7,25 +7,26 @@
   },
   "dependencies": {
     "body-parser": "~1.18.2",
+    "connect-mongodb-session": "latest",
     "cookie-parser": "~1.4.3",
     "debug": "~2.6.9",
     "express": "~4.15.5",
     "express-handlebars": "~3.0.0",
+    "express-session": "latest",
     "forever": "latest",
     "fs": "latest",
     "grunt": "latest",
     "grunt-open": "latest",
     "grunt-run": "latest",
     "grunt-shell": "latest",
+    "lodash": "latest",
     "mongoose": "^4.12.5",
     "morgan": "~1.9.0",
     "pug": "^2.0.0-rc.4",
     "querystring": "~0.2.0",
-    "lodash": "latest",
-    "express-session" : "latest",
-    "connect-mongodb-session" : "latest",
+    "request": "~2.34.0",
     "serve-favicon": "~2.4.5",
-    "request": "~2.34.0"
+    "validator": "^9.1.1"
   },
   "devDependencies": {
     "mocha": "^4.0.1"

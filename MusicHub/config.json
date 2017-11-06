@@ -5,5 +5,18 @@
     "port": "27017",
     "username" :"admin",
     "password": "password"
+  },
+
+  "spotidy" : {
+    "clientId" : "2ab39fd6978c49869a1f06409fae1a54",
+    "clientSecret" : "50a9b3a41817406da7976a236d25afea"
+  },
+
+  "deezer" : {
+    "appId" : "258882",
+    "secretKey" : "365da85ce2d14d1f33838cdc1c6699e4",
+    "loginUrl" : "https://connect.deezer.com/oauth/auth.php?",
+    "perms" : "basic_access",
+    "tokenUrl" : "https://connect.deezer.com/oauth/access_token.php?"
   }
 }
