@@ -15,6 +15,16 @@ class User {
 		});
 	}
 	
+	save(cb) {
+		var DbUser = new DbUser({
+			email : this.email,
+			password : this.password
+		});
+		DbUser.save(function (err) {
+			return cb(err);
+		});
+	}
+	
 	get email() {
 		return this._email;
 	}

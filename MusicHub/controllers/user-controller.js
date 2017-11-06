@@ -4,10 +4,21 @@ class UserController {
 	constructor() {}
 	
 	createUser(req, res) {
-		var newUser = new User();
+		var email = req.body.email || "";
+		var password = req.body.password || "";
+		if(email === "" || password === "") {
+			return res.status(200).json({error:"Bad Email or password"});
+		}
+		var newUser = new User(email,password);
+		newUser.save(function(err) {
+			if(err) {
+				return res.status(200).json({error:"Email is already used by another User"});
+			}
+			res.status(200).json({ok:"ok"});
+		});
 	}
 	
-	logIn(req, res) {
+	logIn(req, res, cb) {
 		var email = req.body.email || "";
 		var password = req.body.password || "";
 		var newUser = new User(email,password);
