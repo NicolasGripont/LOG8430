@@ -4,86 +4,60 @@ var AbstractConnector = require('./abstract-connector');
 
 class SpotifyConnector extends AbstractConnector {
 
-    constructor(){
+    constructor(clientId,clientSecret,loginUrl,tokenUrl,scope){
         super();
-        this.stateKey = 'spotify_auth_state';
-        this.clientId = '2ab39fd6978c49869a1f06409fae1a54';
-        this.clientSecret = '50a9b3a41817406da7976a236d25afea';
-        this.redirectUri = 'http://localhost:3000/connector/connection/spotify/loggedIn';
-        this.tokenUri = 'https://accounts.spotify.com/api/token';
-        
+        this.clientId = clientId;
+        this.clientSecret = clientSecret;
+        this.loginUrl = loginUrl;
+        this.tokenUrl = tokenUrl;
+        this.scope = scope;
         this.accessToken = undefined;
         this.refreshToken = undefined;
         this.expires = undefined;
     }
 
-    generateRandomString(length) {
-        var text = '';
-        var possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-
-        for (var i = 0; i < length; i++) {
-            text += possible.charAt(Math.floor(Math.random() * possible.length));
-        }
-        return text;
-    };
-
-    login(req, res) {
-        var state = this.generateRandomString(16);
-        res.cookie(this.stateKey, state);
-
+    login(req, res, redirectUri) {
         var scope = 'user-read-private user-read-email';
-        res.redirect('https://accounts.spotify.com/authorize?' +
+        res.redirect(this.loginUrl +
             querystring.stringify({
                 response_type: 'code',
                 client_id: this.clientId,
-                scope: scope,
-                redirect_uri: this.redirectUri,
-                state: state
+                scope: this.scope,
+                redirect_uri: redirectUri
             }));
     }
 
     loggedIn(req, res, redirectUri) {
         var self = this;
         var code = req.query.code || null;
-        var state = req.query.state || null;
-        var storedState = req.cookies ? req.cookies[this.stateKey] : null;
+        var authOptions = {
+            url: this.tokenUrl,
+            form: {
+                code: code,
+                redirect_uri: req.protocol + '://' + req.get('host') + req.baseUrl + req.path,
+                grant_type: 'authorization_code'
+            },
+            headers: {
+                'Authorization': 'Basic ' + (new Buffer(this.clientId + ':' + this.clientSecret).toString('base64'))
+            },
+            json: true
+        };
 
-        if (state === null || state !== storedState) {
-            res.redirect('/views/settings?' +
-                querystring.stringify({
-                    error: 'state_mismatch'
-                }));
-        } else {
-            res.clearCookie(this.stateKey);
-            var authOptions = {
-                url: this.tokenUri,
-                form: {
-                    code: code,
-                    redirect_uri: this.redirectUri,
-                    grant_type: 'authorization_code'
-                },
-                headers: {
-                    'Authorization': 'Basic ' + (new Buffer(this.clientId + ':' + this.clientSecret).toString('base64'))
-                },
-                json: true
-            };
+        request.post(authOptions, function(error, response, body) {
+            if (!error && response.statusCode === 200) {
+                self.accessToken = body.access_token;
+                self.refreshToken = body.refresh_token;
+                self.expires = body.expires_in;
 
-            request.post(authOptions, function(error, response, body) {
-                if (!error && response.statusCode === 200) {
-                    self.accessToken = body.access_token;
-                    self.refreshToken = body.refresh_token;
-                    self.expires = body.expires_in;
+                console.log('access_token: ' + self.accessToken);
+                console.log('refresh_token: ' + self.refreshToken);
+                console.log('expires_in: ' + self.expires);
 
-                    console.log('access_token: ' + self.accessToken);
-                    console.log('refresh_token: ' + self.refreshToken);
-                    console.log('expires_in: ' + self.expires);
-
-                    res.redirect('/views/settings');
-                } else {
-                    res.redirect('/views/settings');
-                }
-            });
-        }
+                res.redirect('/views/settings');
+            } else {
+                res.redirect('/views/settings');
+            }
+        });
     }
 
     searchMusics(title) {

@@ -7,9 +7,12 @@
     "password": "password"
   },
 
-  "spotidy" : {
+  "spotify" : {
     "clientId" : "2ab39fd6978c49869a1f06409fae1a54",
-    "clientSecret" : "50a9b3a41817406da7976a236d25afea"
+    "clientSecret" : "50a9b3a41817406da7976a236d25afea",
+    "loginUrl" : "https://accounts.spotify.com/authorize?",
+    "tokenUrl" : "https://accounts.spotify.com/api/token",
+    "scope" : "user-read-private user-read-email"
   },
 
   "deezer" : {

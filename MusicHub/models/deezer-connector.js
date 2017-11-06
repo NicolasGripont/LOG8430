@@ -34,8 +34,6 @@ class DeezerConnector extends AbstractConnector{
         var errorReason = req.param('error_reason');
         var code = req.param('code');
 
-        console.log("DeezerConnector : " + redirectUri);
-
         if(!errorReason) {
             var options = {
                 url: this.tokenUrl +
@@ -57,7 +55,7 @@ class DeezerConnector extends AbstractConnector{
                 console.log('accessToken: ' + self.accessToken);
                 console.log('expires: ' + self.expires);
 
-                res.redirect(redirectUri);
+                res.redirect('/views/settings');
             });
 
 

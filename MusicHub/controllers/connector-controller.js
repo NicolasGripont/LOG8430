@@ -9,11 +9,15 @@ var config = require('../config.json');
 
 class ConnectorController {
     constructor(){
-        var deezerConfig = config.deezer;
         this.connectors = {};
+
+        var deezerConfig = config.deezer;
         this.connectors['deezer'] = new DeezerConnector(deezerConfig.appId, deezerConfig.secretKey,
             deezerConfig.loginUrl, deezerConfig.perms, deezerConfig.tokenUrl);
-        this.connectors['spotify'] = new SpotifyConnector();
+
+        var spotifyConfig = config.spotify;
+        this.connectors['spotify'] = new SpotifyConnector(spotifyConfig.clientId, spotifyConfig.clientSecret,
+            spotifyConfig.loginUrl, spotifyConfig.tokenUrl, spotifyConfig.scope);
     }
 
     connection(req, res, api, action) {
