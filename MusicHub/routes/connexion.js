@@ -1,6 +1,6 @@
 var express = require('express');
 var router = express.Router();
-var user = require('../models_db/user');
+var UserController = require('../controllers/user-controller');
 
 router.post('/signup', function(req, res, next) {
 	var email = req.body.email || "";
@@ -21,15 +21,8 @@ router.post('/signup', function(req, res, next) {
 });
 
 router.post('/signin', function(req, res, next) {
-	var email = req.body.email || "";
-	var password = req.body.password || "";
-	user.find({email:email, password:password}, function(err, foundUser) {
-		if(foundUser) {
-			req.session.email = email;
-			return res.status(200).json({ok:"ok"});
-		}
-		res.json({error:"bad email or password"});
-	});
+	var controller = new UserController();
+	controller.logIn(req,res);
 });
 
 router.get('/signout', function(req, res, next) {
