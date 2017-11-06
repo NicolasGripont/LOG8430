@@ -25,14 +25,9 @@ router.post('/signin', function(req, res, next) {
 	controller.logIn(req,res);
 });
 
-router.get('/signout', function(req, res, next) {
-	req.session.destroy(function(err) {
-		if(err) {
-			console.log(err);
-			return res.json({error:err});
-		}
-		res.status(200).json({ok:"ok"});
-	});
+router.get('/signout', function(req, res) {
+	var controller = new UserController();
+	controller.logOut(req, res);
 });
 
 module.exports = router;

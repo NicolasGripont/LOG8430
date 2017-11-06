@@ -21,7 +21,13 @@ class UserController {
 	}
 	
 	logOut(req, res) {
-		
+        req.session.destroy(function(err) {
+            if(err) {
+                console.log(err);
+                return res.json({error:err});
+            }
+            res.status(200).json({ok:"ok"});
+        });
 	}
 }
 
