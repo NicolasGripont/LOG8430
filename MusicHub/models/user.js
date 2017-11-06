@@ -16,11 +16,11 @@ class User {
 	}
 	
 	save(cb) {
-		var DbUser = new DbUser({
+		var dbU = new DbUser({
 			email : this.email,
 			password : this.password
 		});
-		DbUser.save(function (err) {
+		dbU.save(function (err) {
 			return cb(err);
 		});
 	}
