@@ -3,6 +3,7 @@
  */
 var validator = require('validator');
 var DeezerConnector = require('../models/deezer-connector');
+var SpotifyConnector = require('../models/spotify-connector');
 var config = require('../config.json');
 
 
@@ -12,6 +13,7 @@ class ConnectorController {
         this.connectors = {};
         this.connectors['deezer'] = new DeezerConnector(deezerConfig.appId, deezerConfig.secretKey,
             deezerConfig.loginUrl, deezerConfig.perms, deezerConfig.tokenUrl);
+        this.connectors['spotify'] = new SpotifyConnector();
     }
 
     connection(req, res, api, action) {
