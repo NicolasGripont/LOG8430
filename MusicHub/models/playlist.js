@@ -47,4 +47,4 @@ class Playlist {
 	
 }
 
-module.exports = User;
+module.exports = Playlist;
