@@ -46,6 +46,16 @@ class Playlist {
 			});
 		});
 	}
+
+	getAllPlaylists(cb) {
+		var query = {userEmail : this.user};
+		DbPlaylist.find(query, function(error, playlists) {
+			if(error) {
+				return cb(error, []);
+			}
+			return cb(null, playlists);
+        });
+	}
 	
 	get name() {
 		return this._name;

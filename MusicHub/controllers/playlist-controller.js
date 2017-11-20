@@ -30,6 +30,17 @@ class PlaylistController {
 			return res.json({ok:"ok"});
 		});
 	}
+
+	getPlaylists(req, res) {
+		var email = req.session.email;
+		var playlist = new Playlist("", email, []);
+		playlist.getAllPlaylists(function(error, playlists) {
+			if(error) {
+				return res.json({error : error});
+			}
+			return res.json(playlists);
+		});
+	}
 }
 
 module.exports = PlaylistController;

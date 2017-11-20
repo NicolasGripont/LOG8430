@@ -11,4 +11,8 @@ router.delete('/delete', function(req, res) {
 	controller.deletePlaylist(req,res);
 });
 
+router.get('/', function(req, res) {
+	controller.getPlaylists(req, res);
+});
+
 module.exports = router;

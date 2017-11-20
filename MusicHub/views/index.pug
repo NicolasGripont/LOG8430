@@ -1,6 +1,24 @@
 extends layouts/layout
 
 block content
+    .modal.fade#modalPlaylistName
+        .modal-dialog(role="document")
+            .modal-content
+                .modal-header
+                    h5.modal-title Playlist name
+                    button.close(type="button", data-dismiss="modal", aria-label="Close")
+                        span(aria-hidden="true") ×
+                .modal-body
+                    form#form-name-playlist
+                        .form-group.row
+                            .col-sm-12
+                                input#name-playlist.form-control.form-control-lg(type='text', placeholder='Playlist name', required='')
+                        .alert.alert-success.col-sm-12
+                        .alert.alert-danger.col-sm-12
+                .modal-footer
+                    button.btn.btn-secondary(type="button", data-dismiss="modal") Close
+                    button.btn.btn-primary#save-playlist(type="submit") Save
+
     h1 Playlist 1
     .table-responsive
         table.table.table-striped
@@ -19,5 +37,5 @@ block content
                     td dolor
                     td sit
 block scripts
-    script(src='https://code.jquery.com/jquery-3.2.1.min.js')
     script(src='/javascripts/signout.js')
+    script(src='/javascripts/playlist.js')

@@ -69,6 +69,11 @@ h1 {
   text-align: left;
 }
 
+.alert {
+  display:none;
+  margin-top:25px;
+}
+
 /*
  * Dashboard
  */
