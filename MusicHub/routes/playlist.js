@@ -12,7 +12,7 @@ router.delete('/delete', function(req, res) {
 });
 
 router.get('/', function(req, res) {
-	controller.getPlaylists(req, res);
+	controller.findPlaylists(req, res);
 });
 
 module.exports = router;

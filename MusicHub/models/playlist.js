@@ -47,7 +47,7 @@ class Playlist {
 		});
 	}
 
-	getAllPlaylists(cb) {
+	findAllPlaylists(cb) {
 		var query = {userEmail : this.user};
 		DbPlaylist.find(query, function(error, playlists) {
 			if(error) {

@@ -31,10 +31,10 @@ class PlaylistController {
 		});
 	}
 
-	getPlaylists(req, res) {
+    findPlaylists(req, res) {
 		var email = req.session.email;
 		var playlist = new Playlist("", email, []);
-		playlist.getAllPlaylists(function(error, playlists) {
+		playlist.findAllPlaylists(function(error, playlists) {
 			if(error) {
 				return res.json({error : error});
 			}
