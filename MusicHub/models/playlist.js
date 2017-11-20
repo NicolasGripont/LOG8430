@@ -21,7 +21,7 @@ class Playlist {
 				return cb(error);
 			}
 			if(playlist && playlist.length > 0) {
-				return cb({error:"The playlist already exist"});
+				return cb({message:"The playlist already exist"});
 			}
 			dbP.save(function (err) {
 				return cb(err);
@@ -39,7 +39,7 @@ class Playlist {
 				return cb(error);
 			}
 			if(playlist && playlist.length <= 0) {
-				return cb({error:"The playlist doesn't exist"});
+				return cb({message:"The playlist doesn't exist"});
 			}
 			DbPlaylist.remove(query,function (err) {
 				return cb(err);
