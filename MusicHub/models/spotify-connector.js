@@ -50,30 +50,33 @@ class SpotifyConnector extends AbstractConnector {
                 self.refreshToken = body.refresh_token;
                 self.expires = body.expires_in * 1000 + Date.now();
 
-                SettingDB.find( { userEmail : req.session.email }, function(err, settings) {
-                    var setting;
-                    if(settings && settings.length && settings.length == 1) {
-                        setting = settings[0];
+                self.saveToken(req,res,function (error,result) {
+                    if(error) {
+                        errorCallback(req, res, 500, error);
                     } else {
-                        setting = new SettingDB( {userEmail: req.session.email});
+                        successCallback(req, res, result);
                     }
-                    setting.spotify = {accessToken: self.accessToken, refreshToken : self.refreshToken, expires : self.expires};
-                    setting.save(function(error, result){
-                        if(error) {
-                            errorCallback(req, res, 500, error);
-                        } else {
-                            successCallback(req, res, result);
-                        }
-                    });
-                })
+                });
             } else {
                 errorCallback(req, res, response.statusCode,error);
             }
         });
     }
 
-    saveSettings() {
-
+    saveToken(req, res, cb) {
+        var self = this;
+        SettingDB.find( { userEmail : req.session.email }, function(err, settings) {
+            var setting;
+            if(settings && settings.length && settings.length == 1) {
+                setting = settings[0];
+            } else {
+                setting = new SettingDB( {userEmail: req.session.email});
+            }
+            setting.spotify = {accessToken: self.accessToken, refreshToken : self.refreshToken, expires : self.expires};
+            setting.save(function(error, result){
+                return cb(error,result);
+            });
+        })
     }
 
     searchMusics(title) {

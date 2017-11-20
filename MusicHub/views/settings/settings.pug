@@ -3,13 +3,22 @@ extends ../layouts/settings-layout
 block content
     .container
         h1 Spotify settings
-        a.btn.btn-primary(href='/connector/connection/spotify/login') Log in with Spotify
+        .spotify
+            .login
+                a.btn.btn-primary(href='/connector/connection/spotify/login') Log in with Spotify
+            .loggedIn
+                p Connecté
+                a.btn.btn-primary(href='#') Log out
 
         h1 Deezer settings
-        a.btn.btn-primary(href='/connector/connection/deezer/login') Log in with Deezer
-
+        .deezer
+            .login
+                a.btn.btn-primary(href='/connector/connection/deezer/login') Log in with Deezer
+            .loggedIn
+                p Connecté
+                a.btn.btn-primary(href='#') Log out
 
 block scripts
     script(src='//cdnjs.cloudflare.com/ajax/libs/handlebars.js/2.0.0-alpha.1/handlebars.min.js')
     script(src='http://code.jquery.com/jquery-1.10.1.min.js')
-    script(src='/javascripts/spotify.js')
+    script(src='/javascripts/settings.js')

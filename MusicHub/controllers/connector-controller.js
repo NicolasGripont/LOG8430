@@ -5,7 +5,7 @@ var validator = require('validator');
 var DeezerConnector = require('../models/deezer-connector');
 var SpotifyConnector = require('../models/spotify-connector');
 var config = require('../config.json');
-
+var SettingDB = require('../models_db/settings');
 
 class ConnectorController {
     constructor(){
@@ -60,6 +60,24 @@ class ConnectorController {
 
     showError(req, res) {
         res.redirect('/error');
+    }
+
+    sendSettings(req, res) {
+        SettingDB.find( { userEmail : req.session.email }, function(err, settings) {
+            if(settings && settings.length === 1) {
+                var now = Date.now();
+                if(settings.deezer && now >= settings.deezer.expires) {
+                    settings.deezer = undefined;
+                }
+
+                if(settings.spotify && now >= settings.spotify.expires) {
+                    settings.spotify = undefined;
+                }
+                res.json(settings[0]);
+            } else {
+                res.json({});
+            }
+        })
     }
 }
 
