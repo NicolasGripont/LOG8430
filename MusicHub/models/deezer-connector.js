@@ -69,6 +69,18 @@ class DeezerConnector extends AbstractConnector{
         }
     }
 
+    logout(req, res, successCallback, errorCallback) {
+        var settings = new Settings(req.session.email);
+
+        settings.save("deezer", undefined, function (error,result) {
+            if(error) {
+                errorCallback(req, res, 500, error);
+            } else {
+                successCallback(req, res, result);
+            }
+        });
+    }
+
     searchMusics(title) {
     }
 }

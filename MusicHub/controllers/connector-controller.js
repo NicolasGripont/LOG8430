@@ -20,8 +20,8 @@ class ConnectorController {
             spotifyConfig.loginUrl, spotifyConfig.tokenUrl, spotifyConfig.scope);
     }
 
-    connection(req, res, api, action) {
-        if (validator.isIn(req.params.action, ["login", "loggedIn"])) {
+    executeAction(req, res, api, action) {
+        if (validator.isIn(req.params.action, ['login', 'loggedIn', 'logout'])) {
             if(validator.isIn(api,['deezer', 'spotify'])) {
                 switch (action) {
                     case 'login':
@@ -29,6 +29,9 @@ class ConnectorController {
                         break;
                     case 'loggedIn':
                         this.loggedIn(req,res,api);
+                        break;
+                    case 'logout':
+                        this.logout(req,res,api);
                         break;
                 }
             } else {
@@ -46,6 +49,10 @@ class ConnectorController {
 
     loggedIn(req, res, api) {
         this.connectors[api].loggedIn(req,res,this.succededLoggedIn,this.failedLoggedIn);
+    }
+
+    logout(req, res, api) {
+        this.connectors[api].logout(req,res,this.succededLoggedIn,this.failedLoggedIn);
     }
 
     succededLoggedIn(req, res, settings) {

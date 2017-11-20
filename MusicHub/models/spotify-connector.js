@@ -65,21 +65,17 @@ class SpotifyConnector extends AbstractConnector {
         });
     }
 
-    // saveToken(req, res, cb) {
-    //     var self = this;
-    //     SettingDB.find( { userEmail : req.session.email }, function(err, settings) {
-    //         var setting;
-    //         if(settings && settings.length && settings.length == 1) {
-    //             setting = settings[0];
-    //         } else {
-    //             setting = new SettingDB( {userEmail: req.session.email});
-    //         }
-    //         setting.spotify = {accessToken: self.accessToken, refreshToken : self.refreshToken, expires : self.expires};
-    //         setting.save(function(error, result){
-    //             return cb(error,result);
-    //         });
-    //     })
-    // }
+    logout(req, res, successCallback, errorCallback) {
+        var settings = new Settings(req.session.email);
+
+        settings.save("spotify", undefined, function (error,result) {
+            if(error) {
+                errorCallback(req, res, 500, error);
+            } else {
+                successCallback(req, res, result);
+            }
+        });
+    }
 
     searchMusics(title) {
     }

@@ -12,6 +12,9 @@ class AbstractConnector {
     loggedIn(req, res, successCallback, errorCallback) {
     }
 
+    logout(req, res, successCallback, errorCallback) {
+    }
+
     searchMusics(title) {
     }
 }
