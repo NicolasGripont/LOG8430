@@ -45,12 +45,10 @@ class ConnectorController {
     }
 
     loggedIn(req, res, api) {
-        console.log("-> ConnectorController.loggedIn");
         this.connectors[api].loggedIn(req,res,this.succededLoggedIn,this.failedLoggedIn);
     }
 
     succededLoggedIn(req, res, settings) {
-        console.log("-> ConnectorController.succededLoggedIn : " + settings);
         res.redirect('/views/settings');
     }
 

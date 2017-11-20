@@ -5,7 +5,7 @@
 var request = require('request');
 var queryString = require('querystring');
 var AbstractConnector = require('./abstract-connector');
-var SettingDB = require('../models_db/settings');
+var Settings = require('../models/settings');
 
 class DeezerConnector extends AbstractConnector{
 
@@ -51,24 +51,17 @@ class DeezerConnector extends AbstractConnector{
 
             request.get(options, function(error, response, body) {
                 self.accessToken = body.access_token;
-                self.expires = body.expires;
+                self.expires = body.expires * 1000 + Date.now();
 
-                SettingDB.find( { userEmail : req.session.email }, function(err, settings) {
-                    var setting;
-                    if(settings && settings.length && settings.length == 1) {
-                        setting = settings[0];
+                var deezerSetting = {accessToken: self.accessToken, expires : self.expires};
+                var settings = new Settings(req.session.email);
+                settings.save("deezer", deezerSetting, function (error,result) {
+                    if(error) {
+                        errorCallback(req, res, 500, error);
                     } else {
-                        setting = new SettingDB( {userEmail: req.session.email});
+                        successCallback(req, res, result);
                     }
-                    setting.deezer = {accessToken: self.accessToken, expires : self.expires};
-                    setting.save(function(error, result){
-                        if(error) {
-                            errorCallback(req, res, 500, error);
-                        } else {
-                            successCallback(req, res, result);
-                        }
-                    });
-                })
+                });
             });
 
         } else {

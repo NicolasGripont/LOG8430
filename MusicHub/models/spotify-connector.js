@@ -1,7 +1,7 @@
 var request = require('request');
 var querystring = require('querystring');
 var AbstractConnector = require('./abstract-connector');
-var SettingDB = require('../models_db/settings');
+var Settings = require('../models/settings');
 
 class SpotifyConnector extends AbstractConnector {
 
@@ -50,7 +50,9 @@ class SpotifyConnector extends AbstractConnector {
                 self.refreshToken = body.refresh_token;
                 self.expires = body.expires_in * 1000 + Date.now();
 
-                self.saveToken(req,res,function (error,result) {
+                var spotifySettings = {accessToken: self.accessToken, refreshToken : self.refreshToken, expires : self.expires};
+                var settings = new Settings(req.session.email);
+                settings.save("spotify", spotifySettings, function (error,result) {
                     if(error) {
                         errorCallback(req, res, 500, error);
                     } else {
@@ -63,21 +65,21 @@ class SpotifyConnector extends AbstractConnector {
         });
     }
 
-    saveToken(req, res, cb) {
-        var self = this;
-        SettingDB.find( { userEmail : req.session.email }, function(err, settings) {
-            var setting;
-            if(settings && settings.length && settings.length == 1) {
-                setting = settings[0];
-            } else {
-                setting = new SettingDB( {userEmail: req.session.email});
-            }
-            setting.spotify = {accessToken: self.accessToken, refreshToken : self.refreshToken, expires : self.expires};
-            setting.save(function(error, result){
-                return cb(error,result);
-            });
-        })
-    }
+    // saveToken(req, res, cb) {
+    //     var self = this;
+    //     SettingDB.find( { userEmail : req.session.email }, function(err, settings) {
+    //         var setting;
+    //         if(settings && settings.length && settings.length == 1) {
+    //             setting = settings[0];
+    //         } else {
+    //             setting = new SettingDB( {userEmail: req.session.email});
+    //         }
+    //         setting.spotify = {accessToken: self.accessToken, refreshToken : self.refreshToken, expires : self.expires};
+    //         setting.save(function(error, result){
+    //             return cb(error,result);
+    //         });
+    //     })
+    // }
 
     searchMusics(title) {
     }
