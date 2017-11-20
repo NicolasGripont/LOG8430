@@ -8,6 +8,7 @@ class PlaylistController {
 		if(name === "") {
 			return res.json({error:"The parameter name is invalid"});
 		}
+		console.log("session:"+ req.session.email);
 		var list = new Playlist(name,req.session.email,[]);
 		list.save(function(err) {
 			if(err) {
@@ -15,6 +16,10 @@ class PlaylistController {
 			}
 			return res.json({ok:"ok"});
 		});
+	}
+	
+	deletePlaylist(req,res) {
+		
 	}
 }
 

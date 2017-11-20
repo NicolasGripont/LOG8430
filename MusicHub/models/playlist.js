@@ -13,6 +13,7 @@ class Playlist {
 			userEmail : this.user,
 			musicList : this.musics
 		});
+		console.log(this.user,this.name);
 		DbPlaylist.find({
 			name:this.name,
 			userEmail: this.user
@@ -20,7 +21,7 @@ class Playlist {
 			if(error) {
 				return cb(error);
 			}
-			if(playlist) {
+			if(playlist && playlist.length > 0) {
 				return cb({error:"The playlist already exist"});
 			}
 			dbP.save(function (err) {

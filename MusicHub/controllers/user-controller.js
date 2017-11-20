@@ -22,6 +22,9 @@ class UserController {
 		var email = req.body.email || "";
 		var password = req.body.password || "";
 		var newUser = new User(email,password);
+		if(email === "" || password === "") {
+			return res.json("bad email or password");
+		}
 		newUser.logIn(function(isFound){
 			if(isFound) {
 				req.session.email = newUser.email;
