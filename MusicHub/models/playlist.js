@@ -13,7 +13,6 @@ class Playlist {
 			userEmail : this.user,
 			musicList : this.musics
 		});
-		console.log(this.user,this.name);
 		DbPlaylist.find({
 			name:this.name,
 			userEmail: this.user
@@ -30,8 +29,22 @@ class Playlist {
 		});
 	}
 	
-	delete() {
-		
+	remove(cb) {
+		let query = {
+			name:this.name,
+			userEmail: this.user
+		};
+		DbPlaylist.find(query,function(error, playlist) {
+			if(error) {
+				return cb(error);
+			}
+			if(playlist && playlist.length <= 0) {
+				return cb({error:"The playlist doesn't exist"});
+			}
+			DbPlaylist.remove(query,function (err) {
+				return cb(err);
+			});
+		});
 	}
 	
 	get name() {
