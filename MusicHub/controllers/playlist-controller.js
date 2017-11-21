@@ -6,20 +6,40 @@ class PlaylistController {
 	createPlaylist(req,res) {
 		var name = req.body.name || "";
 		if(name === "") {
-			return res.json({error:"The parameter name is invalid"});
+			return res.json({error:{message:"The parameter name is invalid"}});
 		}
-		console.log("session:"+ req.session.email);
 		var list = new Playlist(name,req.session.email,[]);
 		list.save(function(err) {
 			if(err) {
-				return res.json(err);
+				return res.json({error:err});
 			}
 			return res.json({ok:"ok"});
 		});
 	}
 	
 	deletePlaylist(req,res) {
-		
+		var name = req.body.name || "";
+		if(name === "") {
+			return res.json({error:{message:"The parameter name is invalid"}});
+		}
+		var list = new Playlist(name,req.session.email,[]);
+		list.remove(function(err) {
+			if(err) {
+				return res.json({error:err});
+			}
+			return res.json({ok:"ok"});
+		});
+	}
+
+    findPlaylists(req, res) {
+		var email = req.session.email;
+		var playlist = new Playlist("", email, []);
+		playlist.findAllPlaylists(function(error, playlists) {
+			if(error) {
+				return res.json({error : error});
+			}
+			return res.json(playlists);
+		});
 	}
 }
 

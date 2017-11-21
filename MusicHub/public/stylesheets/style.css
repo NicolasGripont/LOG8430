@@ -69,11 +69,17 @@ h1 {
   text-align: left;
 }
 
-img.platform {
-  width: 30px;
-  height: 30px;
+
+.alert {
+  display:none;
+  margin-top:25px;
 }
 
 /*
  * Dashboard
  */
+
+img.platform {
+    width: 30px;
+    height: 30px;
+}

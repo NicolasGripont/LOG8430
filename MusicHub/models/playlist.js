@@ -13,7 +13,6 @@ class Playlist {
 			userEmail : this.user,
 			musicList : this.musics
 		});
-		console.log(this.user,this.name);
 		DbPlaylist.find({
 			name:this.name,
 			userEmail: this.user
@@ -22,7 +21,7 @@ class Playlist {
 				return cb(error);
 			}
 			if(playlist && playlist.length > 0) {
-				return cb({error:"The playlist already exist"});
+				return cb({message:"The playlist already exist"});
 			}
 			dbP.save(function (err) {
 				return cb(err);
@@ -30,8 +29,32 @@ class Playlist {
 		});
 	}
 	
-	delete() {
-		
+	remove(cb) {
+		let query = {
+			name:this.name,
+			userEmail: this.user
+		};
+		DbPlaylist.find(query,function(error, playlist) {
+			if(error) {
+				return cb(error);
+			}
+			if(playlist && playlist.length <= 0) {
+				return cb({message:"The playlist doesn't exist"});
+			}
+			DbPlaylist.remove(query,function (err) {
+				return cb(err);
+			});
+		});
+	}
+
+	findAllPlaylists(cb) {
+		var query = {userEmail : this.user};
+		DbPlaylist.find(query, function(error, playlists) {
+			if(error) {
+				return cb(error, []);
+			}
+			return cb(null, playlists);
+        });
 	}
 	
 	get name() {
