@@ -6,6 +6,7 @@ var DeezerConnector = require('../models/deezer-connector');
 var SpotifyConnector = require('../models/spotify-connector');
 var config = require('../config.json');
 var SettingDB = require('../models_db/settings');
+var Promise =
 
 class ConnectorController {
     constructor(){
@@ -92,6 +93,17 @@ class ConnectorController {
                 var settings = settings[0];
                 //TODO test token expiration date
 
+                return Promise.map(self.connectors, function(feed){
+                    // I renamed your 'feed' fn to 'processFeed'
+                    return processFeed(feed)
+                })
+                .then(function(articles){
+                    // 'articles' is now an array w/ results of all 'processFeed' calls
+                    // do something with all the results...
+                })
+                .catch(function(e){
+                    // feed server was down, etc
+                })
                 // if(settings.spotify) {
                 //     self.connectors['spotify'].setSettings(settings.spotify);
                 //     self.connectors['spotify'].searchTracks(query, function (error, response) {
@@ -101,15 +113,15 @@ class ConnectorController {
                 //         return res.json(response);
                 //     });
                 // }
-                if(settings.deezer) {
-                    self.connectors['deezer'].setSettings(settings.deezer);
-                    self.connectors['deezer'].searchTracks(query, function (error, response) {
-                        if(error) {
-                            return res.json({ error : error});
-                        }
-                        return res.json(response);
-                    });
-                }
+                // if(settings.deezer) {
+                //     self.connectors['deezer'].setSettings(settings.deezer);
+                //     self.connectors['deezer'].searchTracks(query, function (error, response) {
+                //         if(error) {
+                //             return res.json({ error : error});
+                //         }
+                //         return res.json(response);
+                //     });
+                // }
 
 
             } else {

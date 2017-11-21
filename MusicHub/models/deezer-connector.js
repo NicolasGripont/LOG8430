@@ -86,7 +86,7 @@ class DeezerConnector extends AbstractConnector{
         this.expires = settings.expires;
     }
 
-    searchTracks(title, cb) {//
+    searchTracks(title, cb) {
         var self = this;
         var options = {
             url : "http://api.deezer.com/search/track?q=" + title,

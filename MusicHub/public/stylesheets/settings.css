@@ -1,0 +1,36 @@
+#login, #loggedin {
+    display: none;
+}
+.text-overflow {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    width: 500px;
+}
+
+.flex-row {
+    display: flex;
+    align-items : baseline;
+}
+
+.flex-row  * {
+    margin-right: 10px;
+    box-sizing: border-box;
+    margin-top:auto; margin-bottom:auto;
+}
+
+.setting-api {
+    width: 100%;
+    border-bottom: solid 1px #eee;
+    padding-bottom: 10px;
+    margin-bottom: 30px;
+}
+
+.setting-title img {
+    height: 60px;
+}
+
+.setting-title {
+    border-bottom: solid 1px #eee;
+    margin-bottom: 10px;
+}
