@@ -1,17 +1,20 @@
 var request = require('request');
-var querystring = require('querystring');
+var queryString = require('querystring');
 var AbstractConnector = require('./abstract-connector');
 var Settings = require('../models/settings');
+var SpotifyWebApi = require('spotify-web-api-node');
+
 
 class SpotifyConnector extends AbstractConnector {
 
-    constructor(clientId,clientSecret,loginUrl,tokenUrl,scope){
+    constructor(clientId,clientSecret,loginUrl,tokenUrl,scope, searchUrl){
         super();
         this.clientId = clientId;
         this.clientSecret = clientSecret;
         this.loginUrl = loginUrl;
         this.tokenUrl = tokenUrl;
         this.scope = scope;
+        this.searchUrl = searchUrl;
         this.accessToken = undefined;
         this.refreshToken = undefined;
         this.expires = undefined;
@@ -20,7 +23,7 @@ class SpotifyConnector extends AbstractConnector {
     login(req, res, redirectUri) {
         var scope = 'user-read-private user-read-email';
         res.redirect(this.loginUrl +
-            querystring.stringify({
+            queryString.stringify({
                 response_type: 'code',
                 client_id: this.clientId,
                 scope: this.scope,
@@ -77,7 +80,57 @@ class SpotifyConnector extends AbstractConnector {
         });
     }
 
-    searchMusics(title) {
+    setSettings(settings) {
+        this.accessToken = settings.accessToken;
+        this.refreshToken = settings.refreshToken;
+        this.expires = settings.expires;
+    }
+
+    searchTracks(title, cb) {
+        var self = this;
+        var spotifyApi = new SpotifyWebApi({
+            clientId : this.clientId,
+            clientSecret : this.clientSecret,
+        });
+        spotifyApi.setAccessToken(this.accessToken);
+        spotifyApi.searchTracks(title)
+        .then(function(result) {
+            var spotifyTracks = result.body.tracks.items;
+            var tracks = self.formatTracks(spotifyTracks);
+            cb(undefined, tracks);
+        }, function(err, undefined) {
+            cb(err,undefined);
+        });
+    }
+
+    formatTracks(spotifyTracks) {
+        var tracks = [];
+        for(var i = 0; i < spotifyTracks.length; i++) {
+            var id = -1;
+            var platform = "spotify";
+            var title = "";
+            var artists = [];
+            var album = ""
+            var duration = 0;
+
+            id = spotifyTracks[i].id;
+            title = spotifyTracks[i].name;
+            if(spotifyTracks[i].album) {
+                album = spotifyTracks[i].album.name;
+            }
+            if(spotifyTracks[i].artists) {
+                for(var j = 0; j < spotifyTracks[i].artists.length; j++) {
+                    artists.push(spotifyTracks[i].artists[j].name)
+                }
+            }
+            duration = spotifyTracks[i].duration_ms;
+
+            //TODO Créer un Objet Music dans Models ???
+            const track = {id : id, platform : platform, title : title, artists : artists, album : album, duration : duration};
+
+            tracks.push(track);
+        }
+        return tracks;
     }
 }
 

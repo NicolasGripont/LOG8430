@@ -12,7 +12,8 @@
     "clientSecret" : "50a9b3a41817406da7976a236d25afea",
     "loginUrl" : "https://accounts.spotify.com/authorize?",
     "tokenUrl" : "https://accounts.spotify.com/api/token",
-    "scope" : "user-read-private user-read-email"
+    "scope" : "user-read-private user-read-email",
+    "searchUrl" : "https://api.spotify.com/v1/search"
   },
 
   "deezer" : {

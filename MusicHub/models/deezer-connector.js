@@ -81,7 +81,53 @@ class DeezerConnector extends AbstractConnector{
         });
     }
 
-    searchMusics(title) {
+    setSettings(settings) {
+        this.accessToken = settings.accessToken;
+        this.expires = settings.expires;
+    }
+
+    searchTracks(title, cb) {//
+        var self = this;
+        var options = {
+            url : "http://api.deezer.com/search/track?q=" + title,
+            json: true
+        }
+        request.get(options, function (error, result, body) {
+            if(error) {
+                return cb(error,undefined);
+            }
+            var deezerTracks = result.body.data;
+            var tracks = self.formatTracks(deezerTracks);
+            return cb(undefined, tracks);
+        })
+    }
+
+    formatTracks(deezerTracks) {
+        var tracks = [];
+        for(var i = 0; i < deezerTracks.length; i++) {
+            var id = -1;
+            var platform = "deezer";
+            var title = "";
+            var artists = [];
+            var album = ""
+            var duration = 0;
+
+            id = deezerTracks[i].id;
+            title = deezerTracks[i].title;
+            if(deezerTracks[i].album) {
+                album = deezerTracks[i].album.title;
+            }
+            if(deezerTracks[i].artist) {
+                artists.push(deezerTracks[i].artist.name)
+            }
+            duration = deezerTracks[i].duration * 1000;
+
+            //TODO Créer un Objet Music dans Models ???
+            const track = {id : id, platform : platform, title : title, artists : artists, album : album, duration : duration};
+
+            tracks.push(track);
+        }
+        return tracks;
     }
 }
 

@@ -1,23 +1,20 @@
 extends layouts/layout
 
 block content
-    h1 Playlist 1
+    h1 Résultat
     .table-responsive
         table.table.table-striped
             thead
                 tr
-                    th #
-                    th Header
-                    th Header
-                    th Header
-                    th Header
-            tbody
-                tr
-                    td 1,001
-                    td Lorem
-                    td ipsum
-                    td dolor
-                    td sit
+                    th
+                    th Titre
+                    th Artiste
+                    th Album
+                    th Durée
+            tbody.tbody-musics
+
 block scripts
     script(src='https://code.jquery.com/jquery-3.2.1.min.js')
+    script(src='/javascripts/index.js')
     script(src='/javascripts/signout.js')
+

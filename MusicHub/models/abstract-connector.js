@@ -15,6 +15,10 @@ class AbstractConnector {
     logout(req, res, successCallback, errorCallback) {
     }
 
+    setSettings(settings) {
+
+    }
+
     searchMusics(title) {
     }
 }

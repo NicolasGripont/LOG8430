@@ -17,7 +17,7 @@ class ConnectorController {
 
         var spotifyConfig = config.spotify;
         this.connectors['spotify'] = new SpotifyConnector(spotifyConfig.clientId, spotifyConfig.clientSecret,
-            spotifyConfig.loginUrl, spotifyConfig.tokenUrl, spotifyConfig.scope);
+            spotifyConfig.loginUrl, spotifyConfig.tokenUrl, spotifyConfig.scope, spotifyConfig.searchUrl);
     }
 
     executeAction(req, res, api, action) {
@@ -81,6 +81,39 @@ class ConnectorController {
                 res.json(settings[0]);
             } else {
                 res.json({});
+            }
+        })
+    }
+
+    search(req, res, query) {
+        var self = this;
+        SettingDB.find( { userEmail : req.session.email }, function(err, settings) {
+            if(settings && settings.length === 1) {
+                var settings = settings[0];
+                //TODO test token expiration date
+
+                // if(settings.spotify) {
+                //     self.connectors['spotify'].setSettings(settings.spotify);
+                //     self.connectors['spotify'].searchTracks(query, function (error, response) {
+                //         if(error) {
+                //             return res.json({ error : error});
+                //         }
+                //         return res.json(response);
+                //     });
+                // }
+                if(settings.deezer) {
+                    self.connectors['deezer'].setSettings(settings.deezer);
+                    self.connectors['deezer'].searchTracks(query, function (error, response) {
+                        if(error) {
+                            return res.json({ error : error});
+                        }
+                        return res.json(response);
+                    });
+                }
+
+
+            } else {
+                return res.json({});
             }
         })
     }
