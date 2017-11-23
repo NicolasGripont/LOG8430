@@ -6,7 +6,7 @@ var DeezerConnector = require('../models/deezer-connector');
 var SpotifyConnector = require('../models/spotify-connector');
 var config = require('../config.json');
 var SettingDB = require('../models_db/settings');
-var Promise =
+var Promise = require('promise');
 
 class ConnectorController {
     constructor(){
@@ -92,37 +92,25 @@ class ConnectorController {
             if(settings && settings.length === 1) {
                 var settings = settings[0];
                 //TODO test token expiration date
+                if(settings.spotify) {
+                    self.connectors['spotify'].setSettings(settings.spotify);
 
-                return Promise.map(self.connectors, function(feed){
-                    // I renamed your 'feed' fn to 'processFeed'
-                    return processFeed(feed)
-                })
-                .then(function(articles){
+                }
+                if(settings.deezer) {
+                    self.connectors['deezer'].setSettings(settings.deezer);
+                }
+                return Promise.all([self.connectors['spotify'].searchTracks(query), self.connectors['deezer'].searchTracks(query)])
+                .then(function(tracks){
                     // 'articles' is now an array w/ results of all 'processFeed' calls
                     // do something with all the results...
+                    var result = {};
+                    result.spotify = tracks[0];
+                    result.deezer = tracks[1];
+                    return res.json(result);
                 })
-                .catch(function(e){
-                    // feed server was down, etc
+                .catch(function(error){
+                    return res.json({ error : error});
                 })
-                // if(settings.spotify) {
-                //     self.connectors['spotify'].setSettings(settings.spotify);
-                //     self.connectors['spotify'].searchTracks(query, function (error, response) {
-                //         if(error) {
-                //             return res.json({ error : error});
-                //         }
-                //         return res.json(response);
-                //     });
-                // }
-                // if(settings.deezer) {
-                //     self.connectors['deezer'].setSettings(settings.deezer);
-                //     self.connectors['deezer'].searchTracks(query, function (error, response) {
-                //         if(error) {
-                //             return res.json({ error : error});
-                //         }
-                //         return res.json(response);
-                //     });
-                // }
-
 
             } else {
                 return res.json({});

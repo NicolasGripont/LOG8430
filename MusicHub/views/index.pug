@@ -20,11 +20,26 @@ block content
                     button.btn.btn-secondary(type="button", data-dismiss="modal") Close
                     button.btn.btn-primary#save-playlist(type="submit") Save
 
-    .table-responsive
+    .api-title.flex-row
+        img(src='/images/spotify.png' alt='/images/spotify.png')
+        h2.api-title.flex-row Spotify
+    .table-responsive.spotify
         table.table.table-striped
             thead
                 tr
-                    th
+                    th Titre
+                    th Artiste
+                    th Album
+                    th Durée
+            tbody.tbody-musics
+
+    .api-title.flex-row
+        img(src='/images/deezer.png' alt='/images/deezer.png')
+        h2 Deezer
+    .table-responsive.deezer
+        table.table.table-striped
+            thead
+                tr
                     th Titre
                     th Artiste
                     th Album

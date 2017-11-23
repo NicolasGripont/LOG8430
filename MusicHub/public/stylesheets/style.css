@@ -83,3 +83,36 @@ img.platform {
     width: 30px;
     height: 30px;
 }
+
+table tbody {
+    display:block;
+    max-height:300px;
+    overflow-y:scroll;
+}
+
+table thead, tbody tr {
+    display:table;
+    width:100%;
+    table-layout:fixed;
+}
+
+
+.flex-row {
+    display: flex;
+    align-items : baseline;
+}
+
+.flex-row > * {
+    margin-right: 10px;
+    box-sizing: border-box;
+    margin-top:auto;
+    margin-bottom:auto;
+}
+
+.api-title img {
+    height: 60px;
+}
+
+.api-title {
+    margin-bottom: 10px;
+}

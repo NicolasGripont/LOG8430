@@ -3,7 +3,7 @@ var queryString = require('querystring');
 var AbstractConnector = require('./abstract-connector');
 var Settings = require('../models/settings');
 var SpotifyWebApi = require('spotify-web-api-node');
-
+var Promise = require('promise');
 
 class SpotifyConnector extends AbstractConnector {
 
@@ -86,21 +86,24 @@ class SpotifyConnector extends AbstractConnector {
         this.expires = settings.expires;
     }
 
-    searchTracks(title, cb) {
+    searchTracks(title) {
         var self = this;
-        var spotifyApi = new SpotifyWebApi({
-            clientId : this.clientId,
-            clientSecret : this.clientSecret,
-        });
-        spotifyApi.setAccessToken(this.accessToken);
-        spotifyApi.searchTracks(title)
-        .then(function(result) {
-            var spotifyTracks = result.body.tracks.items;
-            var tracks = self.formatTracks(spotifyTracks);
-            cb(undefined, tracks);
-        }, function(err, undefined) {
-            cb(err,undefined);
-        });
+        return new Promise(function(resolve, reject) {
+            var spotifyApi = new SpotifyWebApi({
+                clientId: self.clientId,
+                clientSecret: self.clientSecret,
+            });
+            spotifyApi.setAccessToken(self.accessToken);
+            spotifyApi.searchTracks(title)
+                .then(function (result) {
+                    var spotifyTracks = result.body.tracks.items;
+                    var tracks = self.formatTracks(spotifyTracks);
+                    return resolve(tracks);
+                }, function (err, undefined) {
+                    return reject(err);
+                });
+            }
+        );
     }
 
     formatTracks(spotifyTracks) {

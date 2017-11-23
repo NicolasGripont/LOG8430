@@ -19,7 +19,7 @@ class AbstractConnector {
 
     }
 
-    searchMusics(title) {
+    searchTracks(title) {
     }
 }
 

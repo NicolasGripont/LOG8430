@@ -6,6 +6,7 @@ var request = require('request');
 var queryString = require('querystring');
 var AbstractConnector = require('./abstract-connector');
 var Settings = require('../models/settings');
+var Promise = require('promise');
 
 class DeezerConnector extends AbstractConnector{
 
@@ -86,20 +87,26 @@ class DeezerConnector extends AbstractConnector{
         this.expires = settings.expires;
     }
 
-    searchTracks(title, cb) {
+    searchTracks(title) {
         var self = this;
-        var options = {
-            url : "http://api.deezer.com/search/track?q=" + title,
-            json: true
-        }
-        request.get(options, function (error, result, body) {
-            if(error) {
-                return cb(error,undefined);
+        return new Promise(function(resolve, reject) {
+
+                var options = {
+                    url: "http://api.deezer.com/search/track?q=" + title,
+                    json: true
+                }
+                request.get(options, function (error, result, body) {
+                    if (error) {
+                        // return cb(error,undefined);
+                        return reject(error);
+                    }
+                    var deezerTracks = result.body.data;
+                    var tracks = self.formatTracks(deezerTracks);
+                    // return cb(undefined, tracks);
+                    return resolve(tracks);
+                })
             }
-            var deezerTracks = result.body.data;
-            var tracks = self.formatTracks(deezerTracks);
-            return cb(undefined, tracks);
-        })
+        );
     }
 
     formatTracks(deezerTracks) {
