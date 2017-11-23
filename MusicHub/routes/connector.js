@@ -9,7 +9,6 @@ router.get('/connection/:api/:action', function(req, res, next) {
     connectorController.executeAction(req,res,req.params.api,req.params.action);
 });
 
-
 router.get('/settings', function(req, res, next) {
     var connectorController = new ConnectorController();
     connectorController.sendSettings(req,res);

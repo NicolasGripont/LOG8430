@@ -1,9 +1,14 @@
+/**
+ * Created by Nico on 05/11/2017.
+ */
+
 var request = require('request');
 var queryString = require('querystring');
 var AbstractConnector = require('./abstract-connector');
 var Settings = require('../models/settings');
 var SpotifyWebApi = require('spotify-web-api-node');
 var Promise = require('promise');
+var Music = require('../models/music');
 
 class SpotifyConnector extends AbstractConnector {
 
@@ -115,6 +120,8 @@ class SpotifyConnector extends AbstractConnector {
             var artists = [];
             var album = ""
             var duration = 0;
+            var previewUrl = "";
+
 
             id = spotifyTracks[i].id;
             title = spotifyTracks[i].name;
@@ -127,14 +134,15 @@ class SpotifyConnector extends AbstractConnector {
                 }
             }
             duration = spotifyTracks[i].duration_ms;
+            previewUrl = spotifyTracks[i].preview_url;
 
-            //TODO Créer un Objet Music dans Models ???
-            const track = {id : id, platform : platform, title : title, artists : artists, album : album, duration : duration};
+            const track = new Music(id, platform, title, artists, album, duration, previewUrl);
 
             tracks.push(track);
         }
         return tracks;
     }
+
 }
 
 module.exports = SpotifyConnector;

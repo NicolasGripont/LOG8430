@@ -7,6 +7,7 @@ var queryString = require('querystring');
 var AbstractConnector = require('./abstract-connector');
 var Settings = require('../models/settings');
 var Promise = require('promise');
+var Music = require('../models/music');
 
 class DeezerConnector extends AbstractConnector{
 
@@ -95,14 +96,12 @@ class DeezerConnector extends AbstractConnector{
                     url: "http://api.deezer.com/search/track?q=" + title,
                     json: true
                 }
-                request.get(options, function (error, result, body) {
+                request.get(options, function (error, result) {
                     if (error) {
-                        // return cb(error,undefined);
                         return reject(error);
                     }
                     var deezerTracks = result.body.data;
                     var tracks = self.formatTracks(deezerTracks);
-                    // return cb(undefined, tracks);
                     return resolve(tracks);
                 })
             }
@@ -118,6 +117,7 @@ class DeezerConnector extends AbstractConnector{
             var artists = [];
             var album = ""
             var duration = 0;
+            var previewUrl = "";
 
             id = deezerTracks[i].id;
             title = deezerTracks[i].title;
@@ -128,9 +128,9 @@ class DeezerConnector extends AbstractConnector{
                 artists.push(deezerTracks[i].artist.name)
             }
             duration = deezerTracks[i].duration * 1000;
+            previewUrl = deezerTracks[i].preview;
 
-            //TODO Créer un Objet Music dans Models ???
-            const track = {id : id, platform : platform, title : title, artists : artists, album : album, duration : duration};
+            const track = new Music(id, platform, title, artists, album, duration, previewUrl);
 
             tracks.push(track);
         }

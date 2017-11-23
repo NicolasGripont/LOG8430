@@ -94,7 +94,6 @@ class ConnectorController {
                 //TODO test token expiration date
                 if(settings.spotify) {
                     self.connectors['spotify'].setSettings(settings.spotify);
-
                 }
                 if(settings.deezer) {
                     self.connectors['deezer'].setSettings(settings.deezer);
@@ -117,6 +116,7 @@ class ConnectorController {
             }
         })
     }
+
 }
 
 module.exports = ConnectorController;

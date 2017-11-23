@@ -12,10 +12,9 @@
             }
 
             $(".deezer .tbody-musics").empty();
-            for(var i = 0; i < tracks.spotify.length; i++) {
+            for(var i = 0; i < tracks.deezer.length; i++) {
                 $(".deezer .tbody-musics").append(createTrackLine(tracks.deezer[i]));
             }
-
         }).fail(function (error) {
 
         })
@@ -60,5 +59,6 @@
                 "</tr>";
         return lign;
     }
+
 
 })();

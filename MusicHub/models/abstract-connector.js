@@ -21,6 +21,8 @@ class AbstractConnector {
 
     searchTracks(title) {
     }
+
+
 }
 
 module.exports = AbstractConnector;
