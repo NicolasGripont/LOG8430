@@ -17,6 +17,9 @@ h1 {
   /*border-bottom: 1px solid #eee;*/
 }
 
+main {
+    bottom: 62px;
+}
 /*
  * Sidebar
  */
@@ -24,7 +27,7 @@ h1 {
 .sidebar {
   position: fixed;
   top: 51px;
-  bottom: 0;
+    bottom: 62px;
   left: 0;
   z-index: 1000;
   padding: 20px 0;
@@ -115,4 +118,19 @@ table thead, tbody tr {
 
 .api-title {
     margin-bottom: 10px;
+}
+
+/*
+ Player
+*/
+
+.sm2-bar-ui {
+    font-size: 22px;
+}
+.sm2-bar-ui .sm2-main-controls,
+.sm2-bar-ui .sm2-playlist-drawer {
+    background-color: #343a40;
+}
+.sm2-bar-ui .sm2-inline-texture {
+    background: transparent;
 }
