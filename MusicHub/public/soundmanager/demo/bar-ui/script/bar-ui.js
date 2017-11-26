@@ -992,12 +992,14 @@
 
         // haaaack - if null due to no event, OR '#' due to play/pause link, get first link from playlist
         if (!href || href.indexOf('#') !== -1) {
-          href = dom.playlist.getElementsByTagName('a')[0].href;
+          if(href = dom.playlist.getElementsByTagName('a').length > 0) {
+              href = dom.playlist.getElementsByTagName('a')[0].href;
+          }
         }
 
-        if (!soundObject) {
+        // if (!soundObject) {
           soundObject = makeSound(href);
-        }
+        // }
 
         // edge case: if the current sound is not playing, stop all others.
         if (!soundObject.playState) {
