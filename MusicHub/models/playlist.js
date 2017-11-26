@@ -56,6 +56,16 @@ class Playlist {
 			return cb(null, playlists);
         });
 	}
+
+	findPlaylist(cb) {
+		var query = {name : this.name};
+        DbPlaylist.find(query, function(error, playlist) {
+            if(error || playlist.length !== 1) {
+                return cb(error, null);
+            }
+            return cb(null, playlist[0]);
+        });
+	}
 	
 	get name() {
 		return this._name;

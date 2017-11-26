@@ -1,0 +1,80 @@
+extends layouts/layout
+
+block content
+    h1 Playlist Name
+    .modal.fade#modalPlaylistName
+        .modal-dialog(role="document")
+            .modal-content
+                .modal-header
+                    h5.modal-title Playlist name
+                    button.close(type="button", data-dismiss="modal", aria-label="Close")
+                        span(aria-hidden="true") ×
+                .modal-body
+                    form#form-name-playlist
+                        .form-group.row
+                            .col-sm-12
+                                input#name-playlist.form-control.form-control-lg(type='text', placeholder='Playlist name', required='')
+                        .alert.alert-success.col-sm-12
+                        .alert.alert-danger.col-sm-12
+                .modal-footer
+                    button.btn.btn-secondary(type="button", data-dismiss="modal") Close
+                    button.btn.btn-primary#save-playlist(type="submit") Save
+
+    .table-responsive
+        table.table.table-striped
+            thead
+                tr
+                    th Titre
+                    th Artiste
+                    th Album
+                    th Durée
+            tbody.tbody-musics
+
+
+block footer
+    .sm2-bar-ui.flat.full-width.fixed
+        .bd.sm2-main-controls(style="background-color: rgb(52, 58, 64);")
+            .sm2-inline-texture
+            .sm2-inline-gradient
+            .sm2-inline-element.sm2-button-element
+                .sm2-button-bd
+                    a.sm2-inline-button.sm2-icon-play-pause(href="#play") Play / pause
+            .sm2-inline-element.sm2-inline-status
+                .sm2-playlist
+                    .sm2-playlist-target
+                        ul.sm2-playlist-bd
+                            li
+                                b No Sound
+                                //|  - Seven Or Eight Days
+                .sm2-progress
+                    .sm2-row
+                        .sm2-inline-time 0:00
+                        .sm2-progress-bd
+                            .sm2-progress-track
+                                .sm2-progress-bar(style="width: 1.16118%;")
+                                .sm2-progress-ball(style="left: 1.16118%;")
+                                    .icon-overlay
+                        .sm2-inline-duration 0:00
+            .sm2-inline-element.sm2-button-element.sm2-volume
+                .sm2-button-bd
+                    span.sm2-inline-button.sm2-volume-control.volume-shade
+                    a.sm2-inline-button.sm2-volume-control(href="#volume", style="clip: rect(0px 23px 42px 9.24px);") volume
+        .bd.sm2-playlist-drawer.sm2-element
+            .sm2-inline-texture
+                .sm2-box-shadow
+            // playlist content is mirrored here
+            .sm2-playlist-wrapper
+                ul.sm2-playlist-bd
+                    li.selected
+                        a(href='http://e-cdn-preview-7.deezer.com/stream/79e6f771ff55d4eb832d3217083428cc-3.mp3')
+                            b Ninho
+                            |  - Comme prévu
+
+
+block scripts
+    script(src='https://code.jquery.com/jquery-3.2.1.min.js')
+    script(src='/soundmanager/script/soundmanager2-jsmin.js')
+    script(src='/soundmanager/demo/bar-ui/script/bar-ui.js')
+    script(src='/javascripts/index.js')
+    script(src='/javascripts/signout.js')
+    script(src='/javascripts/playlist.js')

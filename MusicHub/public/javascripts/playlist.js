@@ -9,10 +9,8 @@ $(function() {
         .done(function(json) {
             if (json && !json.error) {
                 $("ul.nav.nav-pills.flex-column").html("");
-                console.log(json);
                 var playlistsHTML = "";
                 json.forEach(function(playlist) {
-                    console.log(playlist);
                     playlistsHTML += "<li class='nav-item'>" +
                                      "  <a class='nav-link' href='#'>" + playlist.name + "</a>" +
                                      "</li>";
@@ -22,7 +20,35 @@ $(function() {
         })
     }
 
+    function getPlaylist(nameP) {
+        $.ajax({
+            url: "/playlist/" + nameP,
+            type: "get",
+            dataType: "json"
+        })
+        .done(function(json) {
+            if (json && !json.error) {
+                alert(json.name);
+                /*$("ul.nav.nav-pills.flex-column").html("");
+                var playlistsHTML = "";
+                json.forEach(function(playlist) {
+                    playlistsHTML += "<li class='nav-item'>" +
+                        "  <a class='nav-link' href='#'>" + playlist.name + "</a>" +
+                        "</li>";
+                });
+                $("ul.nav.nav-pills.flex-column").append(playlistsHTML);*/
+            }
+        })
+    }
+
+    function afficherPlaylist(e) {
+        var name = $(this).children("a.nav-link").html();
+        getPlaylist(name);
+    }
+
     getAllPlaylists();
+
+    $("ul.nav.nav-pills.flex-column").on("click", "li", afficherPlaylist);
 
     $("#save-playlist").click(function(event) {
         var nameFilled = $("#name-playlist").val();
@@ -43,9 +69,10 @@ $(function() {
             }
             else {
                 $(".alert-success").append("Playlist créée.").fadeIn(1000);
+                getAllPlaylists();
                 setTimeout(function(){
-                    $("#modalPlaylistName").modal("hide");
-                }, 3000);
+                    $("[data-dismiss='modal']").click()
+                }, 2000);
             }
         })
         .fail(function (xhr, status, errorThrown) {

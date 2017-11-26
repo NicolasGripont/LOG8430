@@ -41,6 +41,17 @@ class PlaylistController {
 			return res.json(playlists);
 		});
 	}
+
+	findPlaylistByName(nameP, req, res) {
+        var email = req.session.email;
+		var playlist = new Playlist(nameP, email, []);
+		playlist.findPlaylist(function(error, playlist) {
+			if(error) {
+				return res.json({error : error});
+			}
+			return res.json(playlist);
+		});
+	}
 }
 
 module.exports = PlaylistController;
