@@ -47,6 +47,9 @@ var musicHub = musicHub || {};
             template += "       <img class='img-btn play' src='/images/play.png' alt='/images/play.png'/>";
         }
         template += "   </td>" +
+                    "   <td>" +
+                    "       <img class='img-btn plus' src='/images/plus.png' alt='/images/plus.png'/>" +
+                    "   </td>" +
                     "   <td>" + track.title + "</td>" +
                     "   <td>";
         for(var i = 0; i < track.artists.length; i++) {
@@ -58,9 +61,6 @@ var musicHub = musicHub || {};
         template += "   </td>" +
             "   <td>" + track.album + "</td>" +
             "   <td>" + minutes + ":" + ("0" + seconds).slice(-2) + "</td>" +
-            "   <td>" +
-            "       <img class='img-btn plus' src='/images/plus.png' alt='/images/plus.png'/>" +
-            "   </td>" +
             "</tr>";
         return $(template);
     }

@@ -997,9 +997,9 @@
           }
         }
 
-        // if (!soundObject) {
+        if (!soundObject || (soundObject && href !== soundObject.url)) {
           soundObject = makeSound(href);
-        // }
+        }
 
         // edge case: if the current sound is not playing, stop all others.
         if (!soundObject.playState) {
