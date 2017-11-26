@@ -1,4 +1,4 @@
-extends layouts/layout
+extends layouts/musics-layout
 
 block content
     h1 Résultats
@@ -27,10 +27,12 @@ block content
         table.table.table-striped
             thead
                 tr
+                    th
                     th Titre
                     th Artiste
                     th Album
                     th Durée
+                    th
             tbody.tbody-musics
 
     .api-title.flex-row
@@ -40,10 +42,12 @@ block content
         table.table.table-striped
             thead
                 tr
+                    th
                     th Titre
                     th Artiste
                     th Album
                     th Durée
+                    th
             tbody.tbody-musics
 
 
@@ -61,8 +65,7 @@ block footer
                     .sm2-playlist-target
                         ul.sm2-playlist-bd
                             li
-                                b No Sound
-                                //|  - Seven Or Eight Days
+                                b No Sound1
                 .sm2-progress
                     .sm2-row
                         .sm2-inline-time 0:00
@@ -83,15 +86,15 @@ block footer
             .sm2-playlist-wrapper
                 ul.sm2-playlist-bd
                     li.selected
-                        a(href='http://e-cdn-preview-7.deezer.com/stream/79e6f771ff55d4eb832d3217083428cc-3.mp3')
-                            b Ninho
-                            |  - Comme prévu
+                        b No Sound
 
 
 block scripts
     script(src='https://code.jquery.com/jquery-3.2.1.min.js')
     script(src='/soundmanager/script/soundmanager2-jsmin.js')
     script(src='/soundmanager/demo/bar-ui/script/bar-ui.js')
-    script(src='/javascripts/index.js')
+    //script(src='/javascripts/index.js')
+    script(src='/javascripts/musics-service.js')
+    script(src='/javascripts/musics-controller.js')
     script(src='/javascripts/signout.js')
     script(src='/javascripts/playlist.js')

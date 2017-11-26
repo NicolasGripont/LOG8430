@@ -1,6 +1,6 @@
 (function() {
     $("form").submit(function () {
-        var query = $("#search-input").val();
+        var query = $("#search-tracks-input").val();
 
         $.ajax({
             url: "/connector/search/" + query,

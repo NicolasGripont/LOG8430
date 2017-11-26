@@ -4,7 +4,7 @@
 
 /* Move down content because we have a fixed navbar that is 3.5rem tall */
 body {
-  padding-top: 3.5rem;
+    padding-top: 3.5rem;
 }
 
 /*
@@ -12,70 +12,74 @@ body {
  */
 
 h1 {
-  padding-bottom: 9px;
-  margin-bottom: 20px;
-  /*border-bottom: 1px solid #eee;*/
+    padding-bottom: 9px;
+    margin-bottom: 20px;
 }
 
-main {
-    bottom: 62px;
-}
+/*main {*/
+    /*top: 0px;*/
+    /*bottom: 62px;*/
+/*}*/
 /*
  * Sidebar
  */
 
 .sidebar {
-  position: fixed;
-  top: 51px;
+    position: fixed;
+    top: 51px;
     bottom: 62px;
-  left: 0;
-  z-index: 1000;
-  padding: 20px 0;
-  overflow-x: hidden;
-  overflow-y: auto; /* Scrollable contents if viewport is shorter than content. */
-  border-right: 1px solid #eee;
-  box-sizing: border-box;
+    left: 0;
+    z-index: 1000;
+    padding: 20px 0;
+    overflow-x: hidden;
+    overflow-y: auto; /* Scrollable contents if viewport is shorter than content. */
+    border-right: 1px solid #eee;
+    box-sizing: border-box;
+}
+
+.bottom-up {
+    margin-bottom: 62px;
 }
 
 .sidebar .nav-menu {
-  cursor: pointer;
+    cursor: pointer;
 }
 
 .sidebar .nav {
-  margin-bottom: 20px;
-  box-sizing: border-box;
+    margin-bottom: 20px;
+    box-sizing: border-box;
 }
 
 .sidebar .nav-item {
-  width: 100%;
+    width: 100%;
 }
 
 .sidebar .nav-link {
-  border-radius: 0;
+    border-radius: 0;
 }
 
 .sidebar form {
-  padding: 5px;
-  box-sizing: border-box;
+    padding: 5px;
+    box-sizing: border-box;
 }
 
 .sidebar .aside-btn {
-  text-decoration: none;
-  border: 0px;
-  font-size: 24px;
-  margin: 5px;
-  padding: 0;
-  background-color: transparent;
-  cursor: pointer;
-  width: 100%;
-  box-sizing: border-box;
-  text-align: left;
+    text-decoration: none;
+    border: 0px;
+    font-size: 24px;
+    margin: 5px;
+    padding: 0;
+    background-color: transparent;
+    cursor: pointer;
+    width: 100%;
+    box-sizing: border-box;
+    text-align: left;
 }
 
 
 .alert {
-  display:none;
-  margin-top:25px;
+    display:none;
+    margin-top:25px;
 }
 
 /*
@@ -87,18 +91,21 @@ img.platform {
     height: 30px;
 }
 
-table tbody {
-    display:block;
-    max-height:300px;
-    overflow-y:scroll;
+table tbody {  display:block;  max-height:300px;  overflow-y:scroll;
 }
 
-table thead, tbody tr {
-    display:table;
-    width:100%;
-    table-layout:fixed;
+table thead, tbody tr {  display:table;  width:100%;  table-layout:fixed;
 }
 
+
+.img-btn {
+    width: 32px;
+    height: 32px;
+}
+
+.img-btn:hover {
+    opacity: 0.8;
+}
 
 .flex-row {
     display: flex;
@@ -134,3 +141,4 @@ table thead, tbody tr {
 .sm2-bar-ui .sm2-inline-texture {
     background: transparent;
 }
+
