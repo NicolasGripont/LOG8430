@@ -10,7 +10,6 @@ musicHub.musicsService = (function($) {
 
     var self = {};
 
-
     /**
      * Gets all products associated with the category and order by the sortingCriteria
      * @param query     The search query, keyword
@@ -33,7 +32,7 @@ musicHub.musicsService = (function($) {
     /**
      * Gets the track associated with the track ID and api specified.
      * @param api         The api associated with the track to retrieve.
-     * @param productId   The track ID associated with the track to retrieve.
+     * @param trackId   The track ID associated with the track to retrieve.
      * @param callback    Function called when result is gotten. Called with the json of track if success or
      *                    null value if fail as parameter.
      */
@@ -52,6 +51,53 @@ musicHub.musicsService = (function($) {
         return callback(null);
     };
 
+    self.getPlaylists = function(callback) {
+        $.ajax({
+            url: "/playlist/",
+            type: "get",
+            dataType: "json"
+        }).done(function(json) {
+            if(json.error) {
+                return callback([]);
+            }
+            return callback(json);
+        }).fail(function (error) {
+            return callback([]);
+        })
+    }
+
+    self.getPlaylist = function(playlistName, callback) {
+        $.ajax({
+            url: "/playlist/" + playlistName,
+            type: "get",
+            dataType: "json"
+        }).done(function(json) {
+            if(json.error) {
+                return callback(null);
+            }
+            return callback(json);
+        }).fail(function(error) {
+            return callback(null);
+        })
+    }
+
+    self.createPlaylist = function(playlistName, callback) {
+        $.ajax({
+            url: "/playlist/create",
+            type: "POST",
+            dataType: "json",
+            contentType: "application/json; charset=utf-8",
+            data: JSON.stringify({
+                name: playlistName
+            })
+        })
+        .done(function (json) {
+            callback(json.error);
+        })
+        .fail(function (xhr, status, errorThrown) {
+            callback({message:"Connection Error."});
+        });
+    }
 
     return self;
 })(jQuery);

@@ -2,7 +2,7 @@ extends layouts/musics-layout
 
 block content
     h1 Résultats
-    .modal.fade#modalPlaylistName
+    .modal.fade#modal-create-playlist
         .modal-dialog(role="document")
             .modal-content
                 .modal-header
@@ -10,10 +10,10 @@ block content
                     button.close(type="button", data-dismiss="modal", aria-label="Close")
                         span(aria-hidden="true") ×
                 .modal-body
-                    form#form-name-playlist
+                    form
                         .form-group.row
                             .col-sm-12
-                                input#name-playlist.form-control.form-control-lg(type='text', placeholder='Playlist name', required='')
+                                input#playlist-name.form-control.form-control-lg(type='text', placeholder='Playlist name', required='')
                         .alert.alert-success.col-sm-12
                         .alert.alert-danger.col-sm-12
                 .modal-footer
@@ -49,7 +49,8 @@ block content
                     th Album
                     th Durée
             tbody.tbody-musics
-
+    #toast.toast
+        | Toast Message
 
 
 block footer
@@ -65,7 +66,7 @@ block footer
                     .sm2-playlist-target
                         ul.sm2-playlist-bd
                             li
-                                b No Sound1
+                                b No Sound
                 .sm2-progress
                     .sm2-row
                         .sm2-inline-time 0:00
@@ -90,11 +91,8 @@ block footer
 
 
 block scripts
-    script(src='https://code.jquery.com/jquery-3.2.1.min.js')
     script(src='/soundmanager/script/soundmanager2-jsmin.js')
     script(src='/soundmanager/demo/bar-ui/script/bar-ui.js')
-    //script(src='/javascripts/index.js')
-    script(src='/javascripts/musics-service.js')
-    script(src='/javascripts/musics-controller.js')
+    script(src='/javascripts/services/musics-service.js')
+    script(src='/javascripts/controllers/musics-controller.js')
     script(src='/javascripts/signout.js')
-    script(src='/javascripts/playlist.js')
