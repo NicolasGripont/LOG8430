@@ -12,6 +12,7 @@ var Music = require('../models/music');
 
 class SpotifyConnector extends AbstractConnector {
 
+    //TODO object parameter : cf cours de clean code
     constructor(clientId,clientSecret,loginUrl,tokenUrl,scope, searchUrl){
         super();
         this.clientId = clientId;
