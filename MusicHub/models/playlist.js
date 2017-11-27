@@ -51,7 +51,20 @@ class Playlist {
 		var query = {userEmail : this.user};
 		DbPlaylist.find(query, function(error, playlists) {
 			if(error) {
-				return cb(error, []);
+				return cb(error);
+			}
+			return cb(null, playlists);
+        });
+	}
+	
+	findPlaylist(cb) {
+		var query = {
+			userEmail : this.user,
+			name: this.name
+		};
+		DbPlaylist.find(query, function(error, playlists) {
+			if(error) {
+				return cb(error);
 			}
 			return cb(null, playlists);
         });

@@ -41,17 +41,24 @@ class PlaylistController {
 			return res.json(playlists);
 		});
 	}
-
-	findPlaylistByName(nameP, req, res) {
-        var email = req.session.email;
-		var playlist = new Playlist(nameP, email, []);
-		playlist.findPlaylist(function(error, playlist) {
+    
+    findOnePlaylist(req, res) {
+    	var email = req.session.email;
+    	var name = req.params.name || "";
+    	if(name === "") {
+    		return res.json({error:{message:"The name is not valid"}});
+    	}
+		var playlist = new Playlist(name, email, []);
+		playlist.findPlaylist(function(error, playlists) {
 			if(error) {
 				return res.json({error : error});
 			}
-			return res.json(playlist);
+			if(!playlists || playlists.length <= 0) {
+				return res.json({error:{message:"The playlist doesn't exist"}});
+			}
+			return res.json(playlist[0]);
 		});
-	}
+    }
 }
 
 module.exports = PlaylistController;
