@@ -56,7 +56,7 @@ class PlaylistController {
 			if(!playlists || playlists.length <= 0) {
 				return res.json({error:{message:"The playlist doesn't exist"}});
 			}
-			return res.json(playlist[0]);
+			return res.json(playlists[0]);
 		});
     }
 }
