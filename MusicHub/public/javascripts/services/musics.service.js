@@ -31,14 +31,14 @@ musicHub.musicsService = (function($) {
     }
 
     /**
-     * Gets the track associated with the track ID and api specified.
+     * Gets the track associated with the track ID and api specified from 'tracks' stored in sessionStorage.
      *
      * @param api         The api associated with the track to retrieve.
-     * @param trackId   The track ID associated with the track to retrieve.
+     * @param trackId     The track ID associated with the track to retrieve.
      * @param callback    Function called when result is gotten. Called with the json of track if success or
      *                    null value if fail as parameter.
      */
-    self.getTrack = function(api, trackId, callback) {
+    self.getTrackFromSearchResultInSessionStrorage = function(api, trackId, callback) {
         var tracks = JSON.parse(sessionStorage.getItem("tracks"));
         if(tracks) {
             var apiTracks = tracks[api];
@@ -47,6 +47,27 @@ musicHub.musicsService = (function($) {
                     if(apiTracks[i].id == trackId) {
                         return callback(apiTracks[i]);
                     }
+                }
+            }
+        }
+        return callback(null);
+    };
+
+    /**
+     * Gets the track associated with the track ID and api specified from 'playlist' stored in sessionStorage.
+     *
+     * @param api         The api associated with the track to retrieve.
+     * @param trackId     The track ID associated with the track to retrieve.
+     * @param callback    Function called when result is gotten. Called with the json of track if success or
+     *                    null value if fail as parameter.
+     */
+    self.getTrackFromPlaylistInSessionStrorage = function(api, trackId, callback) {
+        var playlist = JSON.parse(sessionStorage.getItem("playlist"));
+        if(playlist) {
+            var musics = playlist.musics;
+            for(var i = 0; i < musics.length; i++) {
+                if(musics[i].id == trackId && musics[i].platform === api) {
+                    return callback(musics[i]);
                 }
             }
         }
@@ -85,6 +106,7 @@ musicHub.musicsService = (function($) {
             type: "get",
             dataType: "json"
         }).done(function(playlist) {
+            sessionStorage.setItem("playlist",JSON.stringify(playlist));
             return callback(playlist);
         }).fail(function(error) {
             return callback(null);

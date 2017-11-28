@@ -86,26 +86,32 @@ h1 {
  * Dashboard
  */
 
-img.platform {
-    width: 30px;
-    height: 30px;
-}
-
 table tbody {  display:block;  max-height:300px;  overflow-y:scroll;
 }
 
 table thead, tbody tr {  display:table;  width:100%;  table-layout:fixed;
 }
 
-table thead tr th:nth-child(1), table tbody tr td:nth-child(1),table thead tr th:nth-child(2), table tbody tr td:nth-child(2)  {
+table.result thead tr th:nth-child(1), table.result tbody tr td:nth-child(1),
+table.result thead tr th:nth-child(2), table.result tbody tr td:nth-child(2) {
     width: 50px;
 }
 
-table thead tr th:nth-child(6), table tbody tr td:nth-child(6) { 
+table.result thead tr th:nth-child(6), table.result tbody tr td:nth-child(6) {
     width: 100px;
 }
 
-.img-btn {
+table.playlist thead tr th:nth-child(1), table.playlist tbody tr td:nth-child(1),
+table.playlist thead tr th:nth-child(2), table.playlist tbody tr td:nth-child(2),
+table.playlist thead tr th:nth-child(3), table.playlist tbody tr td:nth-child(3) {
+    width: 50px;
+}
+
+table.playlist thead tr th:nth-child(7), table.playlist tbody tr td:nth-child(7) {
+    width: 100px;
+}
+
+.img-btn, table.playlist .img-platform  {
     width: 32px;
     height: 32px;
 }

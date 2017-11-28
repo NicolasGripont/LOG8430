@@ -14,7 +14,6 @@ var musicHub = musicHub || {};
         body : $('body'),
         spotifySearchResultElement : $(".spotify .tbody-musics"),
         deezerSearchResultElement : $(".deezer .tbody-musics"),
-        playMusicElement : $('.sm2-playlist-bd'),
         navPlaylistsElement : $("ul.nav.nav-pills.flex-column"),
         toastElement : $("#toast"),
         searchTracksInput : $("#search-tracks-input"),
@@ -41,7 +40,8 @@ var musicHub = musicHub || {};
         playImageButtons : ".img-btn.play",
         plusImageButtons : ".img-btn.plus",
         inputs : "input",
-        li : "li"
+        li : "li",
+        playMusicSelector : '.sm2-playlist-bd'
     }
 
 
@@ -51,18 +51,18 @@ var musicHub = musicHub || {};
      * @param tracks  The tracks lists to render.
      * @private
      */
-    function _updateTrackTablesView(tracks) {
+    function _updateTracksSearchResultTablesView(tracks) {
         var spotifyElement = _elements.spotifySearchResultElement;
         var deezerElement = _elements.deezerSearchResultElement;
 
         spotifyElement.empty();
         for(var i = 0; i < tracks.spotify.length; i++) {
-            spotifyElement.append(_createTrackTableElement(tracks.spotify[i]));
+            spotifyElement.append(_createTrackSearchResultTableElement(tracks.spotify[i]));
         }
 
         deezerElement.empty();
         for(var i = 0; i < tracks.deezer.length; i++) {
-            deezerElement.append(_createTrackTableElement(tracks.deezer[i]));
+            deezerElement.append(_createTrackSearchResultTableElement(tracks.deezer[i]));
         }
     }
 
@@ -73,7 +73,7 @@ var musicHub = musicHub || {};
      * @returns {*|jQuery|HTMLElement}  A jQuery element.
      * @private
      */
-    function _createTrackTableElement(track) {
+    function _createTrackSearchResultTableElement(track) {
         var duration = track.duration / 1000;
         var minutes = Math.floor(duration / 60);
         var seconds = Math.floor(duration % 60);
@@ -89,13 +89,13 @@ var musicHub = musicHub || {};
                     "   <td>" + track.title + "</td>" +
                     "   <td>";
         for(var i = 0; i < track.artists.length; i++) {
-            template += track.artists[i];
+            template += track.artists[i].name;
             if(i < track.artists.length -1) {
                 template += ", ";
             }
         }
         template += "   </td>" +
-            "   <td>" + track.album + "</td>" +
+            "   <td>" + track.album.name + "</td>" +
             "   <td>" + minutes + ":" + ("0" + seconds).slice(-2) + "</td>" +
             "</tr>";
         return $(template);
@@ -108,7 +108,8 @@ var musicHub = musicHub || {};
      * @private
      */
     function _updateCurrentTrackInPlayer(track){
-        var elements = _elements.playMusicElement;
+        var elements = $(_selectors.playMusicSelector);
+
         elements.each(function (i, element) {
             $(element).empty();
             $(element).append(_createPlayerTrackElement(track));
@@ -129,7 +130,7 @@ var musicHub = musicHub || {};
                 "     <a href='" + track.previewUrl + "'>" +
                 "       <b>";
             for(var i = 0; i < track.artists.length; i++) {
-                template += track.artists[i];
+                template += track.artists[i].name;
                 if(i < track.artists.length -1) {
                     template += ", ";
                 }
@@ -200,7 +201,7 @@ var musicHub = musicHub || {};
         setTimeout(function(){ toastElement.removeClass("show"); }, 3000);
     }
 
-    function _createTrackTableElementPlaylist(track) {
+    function _createTrackPlaylistTableElement(track) {
         var duration = track.duration / 1000;
         var minutes = Math.floor(duration / 60);
         var seconds = Math.floor(duration % 60);
@@ -212,24 +213,30 @@ var musicHub = musicHub || {};
             imgSrc = "/images/spotify.png";
         }
 
-        var template = "<tr api='" + track.platform + "' id='" + track.id + "'>" +
-            "   <td> <img class='platform-img' src='" + imgSrc + "'></td>";
+        var template =  "<tr api='" + track.platform + "' id='" + track.id + "'>" +
+                        "  <td> " +
+                        "     <img class='img-platform' src='" + imgSrc + "' alt='" + imgSrc + "'/>" +
+                        "  </td>";
+        template +=     "  <td>";
         if(track.previewUrl) {
-            template += "  <td><img class='img-btn play' src='/images/play.png' alt='/images/play.png'/>";
+            template += "    <img class='img-btn play' src='/images/play.png' alt='/images/play.png'/>";
         }
-        template += "   </td>" +
-            "   <td>" + track.title + "</td>" +
-            "   <td>";
+        template +=     "  </td>" +
+                        "  <td> " +
+                        "     <img class='img-btn minus' src='/images/minus.png' alt='/images/minus.png'/>" +
+                        "  </td>" +
+                        "   <td>" + track.title + "</td>" +
+                        "   <td>";
         for(var i = 0; i < track.artists.length; i++) {
-            template += track.artists[i];
+            template += track.artists[i].name;
             if(i < track.artists.length -1) {
                 template += ", ";
             }
         }
-        template += "   </td>" +
-            "   <td>" + track.album + "</td>" +
-            "   <td>" + minutes + ":" + ("0" + seconds).slice(-2) + "</td>" +
-            "</tr>";
+        template +=     "   </td>" +
+                        "   <td>" + track.album.name + "</td>" +
+                        "   <td>" + minutes + ":" + ("0" + seconds).slice(-2) + "</td>" +
+                        "</tr>";
         return $(template);
     }
 
@@ -241,7 +248,7 @@ var musicHub = musicHub || {};
         musicsService.getPlaylist(name, function(playlist) {
             _elements.playlistDetailName.html(name);
             for(var i = 0; i < playlist.musics.length; i++) {
-                listMusics.append(_createTrackTableElementPlaylist(playlist.musics[i]));
+                listMusics.append(_createTrackPlaylistTableElement(playlist.musics[i]));
             }
             _elements.playlistDetailElement.show();
             _elements.searchMusicResultElement.hide();
@@ -265,26 +272,34 @@ var musicHub = musicHub || {};
         var query = _elements.searchTracksInput.val();
         _elements.playlistDetailElement.hide();
         _elements.searchMusicResultElement.show();
-        musicsService.searchTracks(query, _updateTrackTablesView);
+        musicsService.searchTracks(query, _updateTracksSearchResultTablesView);
         return false;
     });
 
     /**
      * Link the play track buttons click event
      */
-    // TODO
     _elements.body.on('click',_selectors.playImageButtons,function (e) {
         window.sm2BarPlayers[0].actions.stop();
-        var trackElement = $(e.target).parent().parent();
-        var trackId = trackElement.attr("id");
-        var trackApi = trackElement.attr("api");
-        musicsService.getTrack(trackApi, trackId, function (track) {
+        var tableElement = $(e.target).parent().parent().parent().parent();
+        var trElement = $(e.target).parent().parent();
+        var trackId = trElement.attr("id");
+        var trackApi = trElement.attr("api");
+
+        var callback = function (track) {
             _updateCurrentTrackInPlayer(track);
             if(track) {
                 window.sm2BarPlayers[0].playlistController.refresh();
                 window.sm2BarPlayers[0].actions.play();
             }
-        })
+        };
+
+        if(tableElement.hasClass("result")) {
+            musicsService.getTrackFromSearchResultInSessionStrorage(trackApi, trackId, callback);
+        } else {
+            musicsService.getTrackFromPlaylistInSessionStrorage(trackApi, trackId, callback);
+        }
+
     });
 
     /**
@@ -294,7 +309,7 @@ var musicHub = musicHub || {};
         var api =  $(this).closest("tr").attr("api");
         var id =  $(this).closest("tr").attr("id");
         if(api && id) {
-            musicsService.getTrack(api, id, function(track) {
+            musicsService.getTrackFromPlaylistInSessionStrorage(api, id, function(track) {
                 if(track !== null) {
                     currentTrack.id = id;
                     currentTrack.platform = api;
