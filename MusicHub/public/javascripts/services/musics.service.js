@@ -170,5 +170,31 @@ musicHub.musicsService = (function($) {
 
     };
 
+
+    self.deleteMusicFromPlaylist = function(playlistApi, playlistName, musicId, callback) {
+        $.ajax({
+            url: "/playlist/music",
+            type: "Delete",
+            dataType: "json",
+            contentType: "application/json; charset=utf-8",
+            data: JSON.stringify({
+                //TODO refactoring json api names
+                name: playlistName,
+                id: musicId,
+                platform: playlistApi
+            })
+        })
+        .done(function(success) {
+            callback(null);
+        })
+        .fail(function (error) {
+            if(error.responseJSON.message) {
+                return callback(error.responseJSON);
+            }
+            return callback({message: "Server Error."});
+        });
+
+    };
+
     return self;
 })(jQuery);
