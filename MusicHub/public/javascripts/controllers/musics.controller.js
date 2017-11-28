@@ -33,13 +33,15 @@ var musicHub = musicHub || {};
         playlistDetailTitle : $("#playlist-detail-name"),
         playlistTracksElement : $(".playlist .tbody-musics"),
         addTrackButton : $("#add-track"),
-        deletePlaylistButton : $("#deletePLaylistImage")
-    }
+        deletePlaylistButton : $("#deletePLaylistImage"),
+        deletePlaylistModal : $("#modal-remove-playlist"),
+        removePlaylistButtonValidate : $("#remove-playlist")
+    };
 
     var _apiImageSources = {
         deezer : "/images/deezer.png",
         spotify : "/images/spotify.png",
-    }
+    };
 
     var _selectors = {
         playImageButton : ".img-btn.play",
@@ -50,7 +52,7 @@ var musicHub = musicHub || {};
         playMusicSelector : '.sm2-playlist-bd',
         playlistNameLink : "a.nav-link",
         options : "option"
-    }
+    };
 
 
     /**
@@ -400,6 +402,25 @@ var musicHub = musicHub || {};
     });
 
     /**
+     * Link the validate remove playlist button click event
+     */
+    _elements.removePlaylistButtonValidate.click(function(event) {
+        var playlistName = _elements.playlistDetailTitle[0].innerText;
+        musicsService.deletePlaylist(playlistName, function(error) {
+            if(error) {
+                _showToast(error.message);
+            } else {
+                //TODO voir avec autre vue
+                _elements.playlistDetailElement.hide();
+                _elements.searchMusicResultElement.show();
+                _elements.deletePlaylistModal.modal('hide');
+                _showToast("Playlist deleted with success.");
+                musicsService.retrievePlaylists(_updateNavPlaylistsView);
+            }
+        })
+    });
+
+    /**
      * Link the create playlist modal hide event
      */
     _elements.createPlaylistModal.on('hidden.bs.modal', function () {
@@ -452,9 +473,8 @@ var musicHub = musicHub || {};
      * Link the show playlist by clicking on the name event
      */
     _elements.deletePlaylistButton.click(function () {
-        var playlistName = _elements.playlistDetailTitle[0].innerText;
-        //TODO delete
-    })
+        _elements.deletePlaylistModal.modal('show');
+    });
 
 
     /**

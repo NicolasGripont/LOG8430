@@ -171,6 +171,14 @@ musicHub.musicsService = (function($) {
     };
 
 
+    /**
+     * Delete a music from the playlist associated with playlistName
+     * @param playlistApi   Api name of the music to delete
+     * @param playlistName  Playlist name of the music to delete
+     * @param musicId       Id of the music to delete
+     * @param callback      Function called when music is removed or if failed.
+     *                      Called with the error json with "message" attribute if fail or null if success as parameter.
+     */
     self.deleteMusicFromPlaylist = function(playlistApi, playlistName, musicId, callback) {
         $.ajax({
             url: "/playlist/music",
@@ -196,7 +204,13 @@ musicHub.musicsService = (function($) {
 
     };
 
-    self.deletePLaylist = function(playlistName, callback) {
+    /**
+     * Delete the playlist associated with playlistName
+     * @param playlistName  Playlist name to delete
+     * @param callback      Function called when playlist is removed or if failed.
+     *                      Called with the error json with "message" attribute if fail or null if success as parameter.
+     */
+    self.deletePlaylist = function(playlistName, callback) {
         $.ajax({
             url: "/playlist/delete",
             type: "Delete",
