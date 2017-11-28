@@ -8,6 +8,7 @@ var musicHub = musicHub || {};
 (function($, musicsService) {
     "use strict";
 
+    var currentTrack = {};
 
     /**
      * Updates the tracks result tables view.
@@ -164,11 +165,71 @@ var musicHub = musicHub || {};
         setTimeout(function(){ dialog.removeClass("show"); }, 3000);
     }
 
+    function _createTrackTableElementPlaylist(track) {
+        var duration = track.duration / 1000;
+        var minutes = Math.floor(duration / 60);
+        var seconds = Math.floor(duration % 60);
+        var imgSrc = "";
+        //TODO : ajouter nouvelle plateforme
+        if(track.platform === "deezer") {
+            imgSrc = "/images/deezer.png";
+        } else {
+            imgSrc = "/images/spotify.png";
+        }
+
+        var template = "<tr api='" + track.platform + "' id='" + track.id + "'>" +
+            "   <td> <img class='platform-img' src='" + imgSrc + "'></td>";
+        if(track.previewUrl) {
+            template += "  <td><img class='img-btn play' src='/images/play.png' alt='/images/play.png'/>";
+        }
+        template += "   </td>" +
+            "   <td>" + track.title + "</td>" +
+            "   <td>";
+        for(var i = 0; i < track.artists.length; i++) {
+            template += track.artists[i];
+            if(i < track.artists.length -1) {
+                template += ", ";
+            }
+        }
+        template += "   </td>" +
+            "   <td>" + track.album + "</td>" +
+            "   <td>" + minutes + ":" + ("0" + seconds).slice(-2) + "</td>" +
+            "</tr>";
+        return $(template);
+    }
+
+    function _showPlaylistDetail() {
+        var name = $(this).children("a.nav-link").html();
+        $("#playlist-detail h1").html(name);
+        var listMusics = $(".playlist .tbody-musics");
+        listMusics.empty();
+        musicsService.getPlaylist(name, function(playlist) {
+            $("#playlist-detail-name").html(name);
+            for(var i = 0; i < playlist.musics.length; i++) {
+                listMusics.append(_createTrackTableElementPlaylist(playlist.musics[i]));
+            }
+            $("#playlist-detail").show();
+            $("#search-musics").hide();
+        });
+    }
+
+    function _updateModalAddMusic(playlists) {
+        var selectPlaylist = $("#playlist-name-select");
+        selectPlaylist.find("option").remove();
+        if (playlists) {
+            playlists.forEach(function(playlist) {
+                selectPlaylist.append("<option>" + playlist.name + "</option>");
+            });
+        }
+    }
+
     /**
      * Link the search track form submit event
      */
     $("#search-tracks-form").submit(function () {
         var query = $("#search-tracks-input").val();
+        $("#playlist-detail").hide();
+        $("#search-musics").show();
         musicsService.searchTracks(query, _updateTrackTablesView);
         return false;
     });
@@ -193,8 +254,20 @@ var musicHub = musicHub || {};
     /**
      * Link the add track to playlist button click event
      */
-    $('body').on('click','.img-btn.plus',function (e) {
-        alert("Plus");
+    $('body').on('click','.img-btn.plus',function (event) {
+        var api =  $(this).closest("tr").attr("api");
+        var id =  $(this).closest("tr").attr("id");
+        if(api && id) {
+            musicsService.getTrack(api, id, function(track) {
+                if(track !== null) {
+                    currentTrack.id = id;
+                    currentTrack.platform = api;
+                    musicsService.getPlaylists(_updateModalAddMusic);
+                    $("#modal-add-music").modal('show');
+                }
+            });
+        }
+
     });
 
     /**
@@ -214,6 +287,23 @@ var musicHub = musicHub || {};
     });
 
     /**
+     * Link the add music to playlist button click event
+     */
+    $("#add-track").click(function(event) {
+        var playlistName = $("#playlist-name-select").val();
+        if(currentTrack.id && currentTrack.platform) {
+            musicsService.addMusicToPlaylist(playlistName, currentTrack, function(error) {
+                if(error) {
+                    return $(".alert-danger").append(error.message).fadeIn(1000);
+                }
+                $("#modal-add-music").modal('hide');
+                _showToast("Musique ajoutée à la playlist " + playlistName + ".");
+                currentTrack = {};
+            });
+        }
+    });
+
+    /**
      * Link the create playlist modal hide event
      */
     $('#modal-create-playlist').on('hidden.bs.modal', function () {
@@ -229,18 +319,40 @@ var musicHub = musicHub || {};
     })
 
     /**
+     * Link the add music to playlist modal hide event
+     */
+    $('#modal-add-music').on('hidden.bs.modal', function () {
+        //TODO RESET MODAL
+        $("#modal-add-music .alert").hide().html("");
+        $(this).find("input").val('').end();
+    });
+
+    /**
+     * Link the add music to playlist modal show event
+     */
+    $('#modal-add-music').on('shown.bs.modal', function() {
+        $("#playlist-name-select").focus();
+    });
+
+    /**
      * Link the create playlist form submit event
      */
     $('#create-playlist-form').submit(function (event) {
         event.preventDefault();
         $("#save-playlist-button").click();
-    })
+    });
+
+    /**
+     * Link the show playlist by clicking on the name event
+     */
+    $("ul.nav.nav-pills.flex-column").on("click", "li", _showPlaylistDetail);
 
 
     /**
      * Init View
      */
     musicsService.getPlaylists(_updateNavPlaylistsView);
+    $("#playlist-detail").hide();
 
 
     /**

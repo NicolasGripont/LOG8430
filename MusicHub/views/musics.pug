@@ -1,54 +1,88 @@
 extends layouts/musics-layout
 
 block content
-    h1 Résultats
-    .modal.fade#modal-create-playlist
-        .modal-dialog(role="document")
-            .modal-content
-                .modal-header
-                    h5.modal-title Playlist name
-                    button.close(type="button", data-dismiss="modal", aria-label="Close")
-                        span(aria-hidden="true") ×
-                .modal-body
-                    form#create-playlist-form
-                        .form-group.row
-                            .col-sm-12
-                                input#playlist-name-input.form-control.form-control-lg(type='text', placeholder='Playlist name', required='')
-                        .alert.alert-success.col-sm-12
-                        .alert.alert-danger.col-sm-12
-                .modal-footer
-                    button.btn.btn-secondary(type="button", data-dismiss="modal") Close
-                    button.btn.btn-primary#save-playlist-button(type="submit") Save
+    #search-musics
+        h1 Résultats
+        .modal.fade#modal-create-playlist
+            .modal-dialog(role="document")
+                .modal-content
+                    .modal-header
+                        h5.modal-title Playlist name
+                        button.close(type="button", data-dismiss="modal", aria-label="Close")
+                            span(aria-hidden="true") ×
+                    .modal-body
+                        form#create-playlist-form
+                            .form-group.row
+                                .col-sm-12
+                                    input#playlist-name-input.form-control.form-control-lg(type='text', placeholder='Playlist name', required='')
+                            .alert.alert-success.col-sm-12
+                            .alert.alert-danger.col-sm-12
+                    .modal-footer
+                        button.btn.btn-secondary(type="button", data-dismiss="modal") Close
+                        button.btn.btn-primary#save-playlist-button(type="submit") Save
+        .modal.fade#modal-add-music
+                    .modal-dialog(role="document")
+                        .modal-content
+                            .modal-header
+                                h5.modal-title Choose the playlist
+                                button.close(type="button", data-dismiss="modal", aria-label="Close")
+                                    span(aria-hidden="true") ×
+                            .modal-body
+                                form
+                                    .form-group.row
+                                        .col-sm-12
+                                            select#playlist-name-select.form-control.form-control-lg(type='select', required='')
+                                    .alert.alert-success.col-sm-12
+                                    .alert.alert-danger.col-sm-12
+                            .modal-footer
+                                button.btn.btn-secondary(type="button", data-dismiss="modal") Close
+                                button.btn.btn-primary#add-track(type="submit") Add
 
-    .api-title.flex-row
-        img(src='/images/spotify.png' alt='/images/spotify.png')
-        h2.api-title.flex-row Spotify
-    .table-responsive.spotify
-        table.table.table-striped
-            thead
-                tr
-                    th
-                    th
-                    th Titre
-                    th Artiste
-                    th Album
-                    th Durée
-            tbody.tbody-musics
+        .api-title.flex-row
+            img(src='/images/spotify.png' alt='/images/spotify.png')
+            h2.api-title.flex-row Spotify
+        .table-responsive.spotify
+            table.table.table-striped
+                thead
+                    tr
+                        th
+                        th
+                        th Titre
+                        th Artiste
+                        th Album
+                        th Durée
+                tbody.tbody-musics
 
-    .api-title.flex-row
-        img(src='/images/deezer.png' alt='/images/deezer.png')
-        h2 Deezer
-    .table-responsive.deezer
-        table.table.table-striped
-            thead
-                tr
-                    th
-                    th
-                    th Titre
-                    th Artiste
-                    th Album
-                    th Durée
-            tbody.tbody-musics
+        .api-title.flex-row
+            img(src='/images/deezer.png' alt='/images/deezer.png')
+            h2 Deezer
+        .table-responsive.deezer
+            table.table.table-striped
+                thead
+                    tr
+                        th
+                        th
+                        th Titre
+                        th Artiste
+                        th Album
+                        th Durée
+                tbody.tbody-musics
+
+    #playlist-detail
+        h1#playlist-detail-name Playlist 1
+        .table-responsive.playlist
+            table.table.table-striped
+                thead
+                    tr
+                        th Plateforme
+                        th
+                        th
+                        th Titre
+                        th Artiste
+                        th Album
+                        th Durée
+                tbody.tbody-musics
+
     #toast.toast
         | Toast Message
 

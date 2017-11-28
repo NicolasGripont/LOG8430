@@ -117,7 +117,36 @@ musicHub.musicsService = (function($) {
             }
             return callback({message: "Server Error."});
         });
-    }
+    };
+
+    /**
+     * Add a music to the playlist associated to the name.
+     *
+     * @param playlistName  The playlist name of the playlist where the music will be added
+     * @param music         The music to add, the format is {id:someId, platform:somePlatform}
+     * @param callback      Function called when playlist is added or if failed.
+     *                      Called with the error json with "message" attribute if fail or null if success as parameter.
+     */
+    self.addMusicToPlaylist = function(playlistName, music, callback) {
+        $.ajax({
+            url: "/playlist/music",
+            type: "PUT",
+            dataType: "json",
+            contentType: "application/json; charset=utf-8",
+            data: JSON.stringify({
+                name: playlistName,
+                id: music.id,
+                platform: music.platform
+            })
+        })
+        .done(function(music) {
+            callback(music.error);
+        })
+        .fail(function (xhr, status, errorThrown) {
+            callback({message:"Connection Error."});
+        });
+
+    };
 
     return self;
 })(jQuery);
