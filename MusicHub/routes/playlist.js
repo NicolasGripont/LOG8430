@@ -19,7 +19,7 @@ router.get('/:name', function(req, res) {
 	controller.findOnePlaylist(req, res);
 });
 
-router.post('/music', function(req, res) {
+router.put('/music', function(req, res) {
 	controller.addMusic(req,res);
 });
 
