@@ -8,7 +8,7 @@ class User {
 	
 	logIn(cb) {
 		DbUser.find({email:this.email, password:this.password}, function(err, foundUser) {
-			if(foundUser) {
+			if(foundUser.length  === 1) {
 				return cb(true);
 			}
 			return cb(false);
