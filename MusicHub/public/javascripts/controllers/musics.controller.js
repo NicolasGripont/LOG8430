@@ -225,18 +225,17 @@ var musicHub = musicHub || {};
      * Link the create playlist modal show event
      */
     $('#modal-create-playlist').on('shown.bs.modal', function() {
-        $("#playlist-name").focus();
+        $("#playlist-name-input").focus();
     })
 
     /**
-     * Link the create playlist input keypress event
+     * Link the create playlist form submit event
      */
-    $('#playlist-name').keypress(function(event) {
-        var keycode = event.keyCode || event.which;
-        if(keycode == '13') {
-            $("#save-playlist").click();
-        }
+    $('#create-playlist-form').submit(function (event) {
+        event.preventDefault();
+        $("#save-playlist-button").click();
     })
+
 
     /**
      * Init View
