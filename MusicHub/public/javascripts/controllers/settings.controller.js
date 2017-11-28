@@ -39,6 +39,6 @@ var musicHub = musicHub || {};
         }
     }
 
-    settingsService.getSettings(_updateSettingsView);
+    settingsService.retrieveSettings(_updateSettingsView);
 
 })(jQuery, musicHub.settingsService);

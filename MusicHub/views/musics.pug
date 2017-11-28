@@ -43,7 +43,7 @@ block content
             img(src='/images/spotify.png' alt='/images/spotify.png')
             h2.api-title.flex-row Spotify
         .table-responsive.spotify
-            table.table.table-striped
+            table.table.table-striped.result
                 thead
                     tr
                         th
@@ -58,7 +58,7 @@ block content
             img(src='/images/deezer.png' alt='/images/deezer.png')
             h2 Deezer
         .table-responsive.deezer
-            table.table.table-striped
+            table.table.table-striped.result
                 thead
                     tr
                         th
@@ -72,10 +72,10 @@ block content
     #playlist-detail
         h1#playlist-detail-name Playlist 1
         .table-responsive.playlist
-            table.table.table-striped
+            table.table.table-striped.playlist
                 thead
                     tr
-                        th Plateforme
+                        th
                         th
                         th
                         th Titre
@@ -100,7 +100,7 @@ block footer
                 .sm2-playlist
                     .sm2-playlist-target
                         ul.sm2-playlist-bd
-                            li
+                            li.selected
                                 b No Sound
                 .sm2-progress
                     .sm2-row

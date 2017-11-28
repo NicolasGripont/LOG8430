@@ -31,14 +31,14 @@ musicHub.musicsService = (function($) {
     }
 
     /**
-     * Gets the track associated with the track ID and api specified.
+     * Finds the track associated with the track ID and api specified from 'tracks' stored in sessionStorage.
      *
      * @param api         The api associated with the track to retrieve.
-     * @param trackId   The track ID associated with the track to retrieve.
+     * @param trackId     The track ID associated with the track to retrieve.
      * @param callback    Function called when result is gotten. Called with the json of track if success or
      *                    null value if fail as parameter.
      */
-    self.getTrack = function(api, trackId, callback) {
+    self.findTrackFromSearchResultInSessionStrorage = function(api, trackId, callback) {
         var tracks = JSON.parse(sessionStorage.getItem("tracks"));
         if(tracks) {
             var apiTracks = tracks[api];
@@ -53,14 +53,35 @@ musicHub.musicsService = (function($) {
         return callback(null);
     };
 
+    /**
+     * Finds the track associated with the track ID and api specified from 'playlist' stored in sessionStorage.
+     *
+     * @param api         The api associated with the track to retrieve.
+     * @param trackId     The track ID associated with the track to retrieve.
+     * @param callback    Function called when result is gotten. Called with the json of track if success or
+     *                    null value if fail as parameter.
+     */
+    self.findTrackFromPlaylistInSessionStrorage = function(api, trackId, callback) {
+        var playlist = JSON.parse(sessionStorage.getItem("playlist"));
+        if(playlist) {
+            var musics = playlist.musics;
+            for(var i = 0; i < musics.length; i++) {
+                if(musics[i].id == trackId && musics[i].platform === api) {
+                    return callback(musics[i]);
+                }
+            }
+        }
+        return callback(null);
+    };
+
 
     /**
-     * Gets the playlists
+     * Retrieves the playlists associated with the current connected user.
      *
      * @param callback    Function called when result is gotten. Called with the json array of playlists if success or
      *                    an empty json array if fail as parameter.
      */
-    self.getPlaylists = function(callback) {
+    self.retrievePlaylists = function(callback) {
         $.ajax({
             url: "/playlist/",
             type: "get",
@@ -73,18 +94,19 @@ musicHub.musicsService = (function($) {
     }
 
     /**
-     * Gets the playlist associated with the playlist name specified and current connected user.
+     * Retrieves the playlist associated with the playlist name specified and current connected user.
      *
      * @param playlistName  The playlist name of the playlist to retrieve.
      * @param callback      Function called when result is gotten. Called with the json of the playlist if success or
      *                      null value if fail as parameter.
      */
-    self.getPlaylist = function(playlistName, callback) {
+    self.retrievePlaylist = function(playlistName, callback) {
         $.ajax({
             url: "/playlist/" + playlistName,
             type: "get",
             dataType: "json"
         }).done(function(playlist) {
+            sessionStorage.setItem("playlist",JSON.stringify(playlist));
             return callback(playlist);
         }).fail(function(error) {
             return callback(null);

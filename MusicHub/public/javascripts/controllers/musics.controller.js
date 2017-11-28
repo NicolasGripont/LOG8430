@@ -14,7 +14,6 @@ var musicHub = musicHub || {};
         body : $('body'),
         spotifySearchResultElement : $(".spotify .tbody-musics"),
         deezerSearchResultElement : $(".deezer .tbody-musics"),
-        playMusicElement : $('.sm2-playlist-bd'),
         navPlaylistsElement : $("ul.nav.nav-pills.flex-column"),
         toastElement : $("#toast"),
         searchTracksInput : $("#search-tracks-input"),
@@ -31,38 +30,48 @@ var musicHub = musicHub || {};
         addMusicDangerAlert : $("#modal-add-music .alert-danger"),
         addMusicSuccessAlert : $("#modal-add-music .alert-success"),
         searchMusicResultElement : $("#search-musics"),
-        playlistDetailName : $("#playlist-detail-name"),
-        playlistDetailTitleElement : $("#playlist-detail h1"),
+        playlistDetailTitle : $("#playlist-detail-name"),
         playlistTracksElement : $(".playlist .tbody-musics"),
         addTrackButton : $("#add-track")
     }
 
+    var _apiImageSources = {
+        deezer : "/images/deezer.png",
+        spotify : "/images/spotify.png",
+    }
+
     var _selectors = {
-        playImageButtons : ".img-btn.play",
-        plusImageButtons : ".img-btn.plus",
+        playImageButton : ".img-btn.play",
+        plusImageButton : ".img-btn.plus",
         inputs : "input",
-        li : "li"
+        li : "li",
+        playMusicSelector : '.sm2-playlist-bd',
+        playlistNameLink : "a.nav-link",
+        options : "option"
     }
 
 
     /**
-     * Updates the tracks result tables view.
+     * Show the tracks result tables view.
      *
      * @param tracks  The tracks lists to render.
      * @private
      */
-    function _updateTrackTablesView(tracks) {
+    function _showTracksSearchResultTablesView(tracks) {
         var spotifyElement = _elements.spotifySearchResultElement;
         var deezerElement = _elements.deezerSearchResultElement;
 
+        _elements.playlistDetailElement.hide();
+        _elements.searchMusicResultElement.show();
+
         spotifyElement.empty();
         for(var i = 0; i < tracks.spotify.length; i++) {
-            spotifyElement.append(_createTrackTableElement(tracks.spotify[i]));
+            spotifyElement.append(_createTrackSearchResultTableElement(tracks.spotify[i]));
         }
 
         deezerElement.empty();
         for(var i = 0; i < tracks.deezer.length; i++) {
-            deezerElement.append(_createTrackTableElement(tracks.deezer[i]));
+            deezerElement.append(_createTrackSearchResultTableElement(tracks.deezer[i]));
         }
     }
 
@@ -73,7 +82,7 @@ var musicHub = musicHub || {};
      * @returns {*|jQuery|HTMLElement}  A jQuery element.
      * @private
      */
-    function _createTrackTableElement(track) {
+    function _createTrackSearchResultTableElement(track) {
         var duration = track.duration / 1000;
         var minutes = Math.floor(duration / 60);
         var seconds = Math.floor(duration % 60);
@@ -89,13 +98,13 @@ var musicHub = musicHub || {};
                     "   <td>" + track.title + "</td>" +
                     "   <td>";
         for(var i = 0; i < track.artists.length; i++) {
-            template += track.artists[i];
+            template += track.artists[i].name;
             if(i < track.artists.length -1) {
                 template += ", ";
             }
         }
         template += "   </td>" +
-            "   <td>" + track.album + "</td>" +
+            "   <td>" + track.album.name + "</td>" +
             "   <td>" + minutes + ":" + ("0" + seconds).slice(-2) + "</td>" +
             "</tr>";
         return $(template);
@@ -108,7 +117,8 @@ var musicHub = musicHub || {};
      * @private
      */
     function _updateCurrentTrackInPlayer(track){
-        var elements = _elements.playMusicElement;
+        var elements = $(_selectors.playMusicSelector);
+
         elements.each(function (i, element) {
             $(element).empty();
             $(element).append(_createPlayerTrackElement(track));
@@ -129,7 +139,7 @@ var musicHub = musicHub || {};
                 "     <a href='" + track.previewUrl + "'>" +
                 "       <b>";
             for(var i = 0; i < track.artists.length; i++) {
-                template += track.artists[i];
+                template += track.artists[i].name;
                 if(i < track.artists.length -1) {
                     template += ", ";
                 }
@@ -200,57 +210,81 @@ var musicHub = musicHub || {};
         setTimeout(function(){ toastElement.removeClass("show"); }, 3000);
     }
 
-    function _createTrackTableElementPlaylist(track) {
+    /**
+     * Create a playlist table track line.
+     *
+     * @param track             Track to put in the table line.
+     * @returns {*|HTMLElement} A jQuery element.
+     * @private
+     */
+    function _createTrackPlaylistTableElement(track) {
         var duration = track.duration / 1000;
         var minutes = Math.floor(duration / 60);
         var seconds = Math.floor(duration % 60);
-        var imgSrc = "";
-        //TODO : ajouter nouvelle plateforme
-        if(track.platform === "deezer") {
-            imgSrc = "/images/deezer.png";
-        } else {
-            imgSrc = "/images/spotify.png";
-        }
+        var apiImageSource = _apiImageSources[track.platform];
 
         var template = "<tr api='" + track.platform + "' id='" + track.id + "'>" +
-            "   <td> <img class='platform-img' src='" + imgSrc + "'></td>";
-        if(track.previewUrl) {
-            template += "  <td><img class='img-btn play' src='/images/play.png' alt='/images/play.png'/>";
+                       "  <td> ";
+        if(apiImageSource)
+        {
+            template += "     <img class='img-platform' src='" + apiImageSource + "' alt='" + apiImageSource + "'/>";
         }
-        template += "   </td>" +
-            "   <td>" + track.title + "</td>" +
-            "   <td>";
+                        "  </td>";
+        template +=     "  <td>";
+        if(track.previewUrl) {
+            template += "    <img class='img-btn play' src='/images/play.png' alt='/images/play.png'/>";
+        }
+        template +=     "  </td>" +
+                        "  <td> " +
+                        "     <img class='img-btn minus' src='/images/minus.png' alt='/images/minus.png'/>" +
+                        "  </td>" +
+                        "   <td>" + track.title + "</td>" +
+                        "   <td>";
         for(var i = 0; i < track.artists.length; i++) {
-            template += track.artists[i];
+            template += track.artists[i].name;
             if(i < track.artists.length -1) {
                 template += ", ";
             }
         }
-        template += "   </td>" +
-            "   <td>" + track.album + "</td>" +
-            "   <td>" + minutes + ":" + ("0" + seconds).slice(-2) + "</td>" +
-            "</tr>";
+        template +=     "   </td>" +
+                        "   <td>" + track.album.name + "</td>" +
+                        "   <td>" + minutes + ":" + ("0" + seconds).slice(-2) + "</td>" +
+                        "</tr>";
         return $(template);
     }
 
-    function _showPlaylistDetail() {
-        var name = $(this).children("a.nav-link").html();
-        _elements.playlistDetailTitleElement.html(name);
+    /**
+     * Show the playlist.
+     *
+     * @param playlist Playlist to show
+     * @private
+     */
+    function _showPlaylistDetail(playlist) {
+        var titleElement = _elements.playlistDetailTitle;
         var listMusics = _elements.playlistTracksElement;
+        titleElement.empty();
         listMusics.empty();
-        musicsService.getPlaylist(name, function(playlist) {
-            _elements.playlistDetailName.html(name);
+        if(playlist) {
+            titleElement.html(playlist.name);
             for(var i = 0; i < playlist.musics.length; i++) {
-                listMusics.append(_createTrackTableElementPlaylist(playlist.musics[i]));
+                listMusics.append(_createTrackPlaylistTableElement(playlist.musics[i]));
             }
             _elements.playlistDetailElement.show();
             _elements.searchMusicResultElement.hide();
-        });
+        } else {
+            _showToast("Une erreur est survenue.");
+        }
     }
 
+    /**
+     * Update the add track to playlist modal view
+     *
+     * @param playlists The playlist whe the user can add tracks
+     * @private
+     */
     function _updateModalAddMusic(playlists) {
         var selectPlaylist = _elements.playlistNameSelect;
-        selectPlaylist.find("option").remove();
+        selectPlaylist.find(_selectors.option).remove();
         if (playlists) {
             playlists.forEach(function(playlist) {
                 selectPlaylist.append("<option>" + playlist.name + "</option>");
@@ -263,42 +297,48 @@ var musicHub = musicHub || {};
      */
     _elements.searchTrackForm.submit(function () {
         var query = _elements.searchTracksInput.val();
-        _elements.playlistDetailElement.hide();
-        _elements.searchMusicResultElement.show();
-        musicsService.searchTracks(query, _updateTrackTablesView);
+        musicsService.searchTracks(query, _showTracksSearchResultTablesView);
         return false;
     });
 
     /**
      * Link the play track buttons click event
      */
-    // TODO
-    _elements.body.on('click',_selectors.playImageButtons,function (e) {
+    _elements.body.on('click',_selectors.playImageButton,function (e) {
         window.sm2BarPlayers[0].actions.stop();
-        var trackElement = $(e.target).parent().parent();
-        var trackId = trackElement.attr("id");
-        var trackApi = trackElement.attr("api");
-        musicsService.getTrack(trackApi, trackId, function (track) {
+        var tableElement = $(e.target).parent().parent().parent().parent();
+        var trElement = $(e.target).parent().parent();
+        var trackId = trElement.attr("id");
+        var trackApi = trElement.attr("api");
+
+        var callback = function (track) {
             _updateCurrentTrackInPlayer(track);
             if(track) {
                 window.sm2BarPlayers[0].playlistController.refresh();
                 window.sm2BarPlayers[0].actions.play();
             }
-        })
+        };
+
+        if(tableElement.hasClass("result")) {
+            musicsService.findTrackFromSearchResultInSessionStrorage(trackApi, trackId, callback);
+        } else {
+            musicsService.findTrackFromPlaylistInSessionStrorage(trackApi, trackId, callback);
+        }
+
     });
 
     /**
      * Link the add track to playlist button click event
      */
-    _elements.body.on('click',_selectors.plusImageButtons,function (e) {
+    _elements.body.on('click',_selectors.plusImageButton,function (e) {
         var api =  $(this).closest("tr").attr("api");
         var id =  $(this).closest("tr").attr("id");
         if(api && id) {
-            musicsService.getTrack(api, id, function(track) {
+            musicsService.findTrackFromPlaylistInSessionStrorage(api, id, function(track) {
                 if(track !== null) {
                     currentTrack.id = id;
                     currentTrack.platform = api;
-                    musicsService.getPlaylists(_updateModalAddMusic);
+                    musicsService.retrievePlaylists(_updateModalAddMusic);
                     _elements.addMusicModal.modal('show');
                 }
             });
@@ -381,13 +421,16 @@ var musicHub = musicHub || {};
     /**
      * Link the show playlist by clicking on the name event
      */
-    _elements.navPlaylistsElement.on("click", _selectors.li, _showPlaylistDetail);
+    _elements.navPlaylistsElement.on("click", _selectors.li, function() {
+        var playlistName = $(this).children(_selectors.playlistNameLink).html();
+        musicsService.retrievePlaylist(playlistName,_showPlaylistDetail);
+    });
 
 
     /**
      * Init View
      */
-    musicsService.getPlaylists(_updateNavPlaylistsView);
+    musicsService.retrievePlaylists(_updateNavPlaylistsView);
     _elements.playlistDetailElement.hide();
 
 
