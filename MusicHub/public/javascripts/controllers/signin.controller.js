@@ -8,6 +8,11 @@ var musicHub = musicHub || {};
 (function($, connectionService) {
     "use strict";
 
+    var _elements = {
+        alertDanger : $(".alert-danger"),
+        inputEmail : $("#input-email"),
+        inputPassword : $("#input-password")
+    };
 
     /**
      * Updates the signin view.
@@ -17,9 +22,8 @@ var musicHub = musicHub || {};
      */
     function _signedIn(error) {
         if(error) {
-            var alertDangerElement = $(".alert-danger");
-            alertDangerElement.empty();
-            alertDangerElement.append(error.message).fadeIn(1000);
+            _elements.alertDanger.empty();
+            _elements.alertDanger.append(error.message).fadeIn(1000);
         } else {
             window.location.replace("/views");
         }
@@ -30,8 +34,8 @@ var musicHub = musicHub || {};
      */
     $('form').submit(function (event) {
         event.preventDefault();
-        var email = $("#input-email").val();
-        var password = $("#input-password").val();
+        var email = _elements.inputEmail.val();
+        var password = _elements.inputPassword.val();
         connectionService.signin(email,password,_signedIn);
     })
 

@@ -8,6 +8,13 @@ var musicHub = musicHub || {};
 (function($, settingsService) {
     "use strict";
 
+    var _elements = {
+        spotifyLogin : $('.spotify .login'),
+        spotifyLoggedIn : $('.spotify .loggedIn'),
+        deezerLogin : $('.deezer .login'),
+        deezerLoggedIn : $('.deezer .loggedIn')
+    };
+
 
     /**
      * Updates the user settings view.
@@ -17,18 +24,18 @@ var musicHub = musicHub || {};
      */
     function _updateSettingsView(settings) {
         if(settings && settings.spotify) {
-            $('.spotify .login').hide();
-            $('.spotify .loggedIn').show();
+            _elements.spotifyLogin.hide();
+            _elements.spotifyLoggedIn.show();
         } else {
-            $('.spotify .login').show();
-            $('.spotify .loggedIn').hide();
+            _elements.spotifyLogin.show();
+            _elements.spotifyLoggedIn.hide();
         }
         if(settings && settings.deezer) {
-            $('.deezer .login').hide();
-            $('.deezer .loggedIn').show();
+            _elements.deezerLogin.hide();
+            _elements.deezerLoggedIn.show();
         } else {
-            $('.deezer .login').show();
-            $('.deezer .loggedIn').hide();
+            _elements.deezerLogin.show();
+            _elements.deezerLoggedIn.hide();
         }
     }
 

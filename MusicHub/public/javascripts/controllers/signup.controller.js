@@ -8,6 +8,13 @@ var musicHub = musicHub || {};
 (function($, connectionService) {
     "use strict";
 
+    var _elements = {
+        alertDanger : $(".alert-danger"),
+        alertSuccess : $(".alert-success"),
+        inputEmail : $("#input-email"),
+        inputPassword : $("#input-password"),
+        inputRePassword : $("#input-re-password")
+    };
 
     /**
      * Updates the signup view.
@@ -16,16 +23,13 @@ var musicHub = musicHub || {};
      * @private
      */
     function _signedUp(error) {
-        var alertDangerElement = $(".alert-danger");
-        var alertSuccessElement = $(".alert-success");
         if (error) {
-            alertDangerElement.empty();
-            alertDangerElement.append(error.message).fadeIn(1000);
+            _elements.alertDanger.empty();
+            _elements.alertDanger.append(error.message).fadeIn(1000);
         }
         else {
-            alertSuccessElement.empty();
-            alertDangerElement.hide();
-            alertSuccessElement.append("Successful registration.").fadeIn(1000);
+            _elements.alertSuccess.empty();
+            _elements.alertSuccess.append("Successful registration.").fadeIn(1000);
             setTimeout(function(){
                 window.location.replace("/views/signin");
             }, 1000);
@@ -38,13 +42,12 @@ var musicHub = musicHub || {};
      */
     $('form').submit(function (event) {
         event.preventDefault();
-        var alertDangerElement = $(".alert-danger");
-        var email = $("#input-email").val();
-        var password = $("#input-password").val();
-        var rePassword = $("#input-re-password").val();
+        var email = _elements.inputEmail.val();
+        var password = _elements.inputPassword.val();
+        var rePassword = _elements.inputRePassword.val();
         if(password !== rePassword) {
-            alertDangerElement.empty();
-            alertDangerElement.append("The passwords have to be the same.").fadeIn(1000);
+            _elements.alertDanger.empty();
+            _elements.alertDanger.append("The passwords have to be the same.").fadeIn(1000);
         } else {
             connectionService.signup(email, password, _signedUp);
         }
