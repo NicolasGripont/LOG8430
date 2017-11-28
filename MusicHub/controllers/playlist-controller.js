@@ -1,5 +1,6 @@
 var Playlist = require('../models/playlist');
 var ControllerConnector = require('./connector-controller');
+var Music = require('../models/music');
 
 class PlaylistController {
 	constructor() {}
@@ -66,7 +67,7 @@ class PlaylistController {
     	var platform = req.body.platform || "";
     	var namePlaylist = req.body.name || "";
     	if(id === "" || platform === "" || namePlaylist === "") {
-    		return res.json({error:{message:"The parameters are not valid."}});
+    		return res.status(400).json({message:"The parameters are not valid."});
     	}
 		var playlist = new Playlist(namePlaylist, req.session.email, []);
 		var connector = new ControllerConnector();
@@ -74,13 +75,29 @@ class PlaylistController {
 			if(err) {
                 return res.status(500).json({message:"Error during song recovery."});
 			}
-			playlist.addMusic(music);
-			playlist.update(function(err) {
+			playlist.addMusic(music, function(err) {
 				if(err) {
-                    return res.status(400).json({message:"Error during the update."});
+                    return res.status(500).json({message:"Error during the update."});
 				}
 				return res.status(200).json(music);
 			});
+		});
+    }
+    
+    deleteMusic(req,res) {
+    	var id = req.body.id || "";
+    	var platform = req.body.platform || "";
+    	var namePlaylist = req.body.name || "";
+    	if(id === "" || platform === "" || namePlaylist === "") {
+    		return res.status(400).json({message:"The parameters are not valid."});
+    	}
+    	var music = new Music(id, platform, "", [], {}, 0, "");
+		var playlist = new Playlist(namePlaylist, req.session.email, []);
+		playlist.deleteMusic(music, function(err) {
+			if(err) {
+                return res.status(500).json({message:"Error during the update."});
+			}
+			return res.status(200).json({message:"ok"});
 		});
     }
 }

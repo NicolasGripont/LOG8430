@@ -159,7 +159,6 @@ class SpotifyConnector extends AbstractConnector {
                 }
                 var body = result.body;
                 var tracks = self.formatTracks([body]);
-                console.log(tracks);
                 return resolve(tracks[0]);
             })
        });

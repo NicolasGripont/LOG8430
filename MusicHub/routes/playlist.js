@@ -23,4 +23,8 @@ router.put('/music', function(req, res) {
 	controller.addMusic(req,res);
 });
 
+router.delete('/music', function(req, res) {
+	controller.deleteMusic(req,res);
+});
+
 module.exports = router;

@@ -1,3 +1,4 @@
+var _ = require('lodash');
 var DbPlaylist = require('../models_db/playlist');
 
 class Playlist {
@@ -11,7 +12,7 @@ class Playlist {
 		var dbP = new DbPlaylist({
 			name : this.name,
 			userEmail : this.user,
-			musicList : this.musics
+			musics : this.musics
 		});
 		DbPlaylist.find({
 			name:this.name,
@@ -25,26 +26,6 @@ class Playlist {
 			}
 			dbP.save(function (err) {
 				return cb(err);
-			});
-		});
-	}
-	
-	update(cb) {
-		var query = {
-			name : this.name,
-			userEmail : this.user
-		};
-		var that = this;
-		DbPlaylist.find(query,function(err,playlist) {
-			if(err) {
-				return cb(err);
-			}
-			if(playlist.length !==1) {
-				return cb ({message:"The playlist doesn't exist"});
-			}
-			playlist[0].musics.push(that.musics[0]);
-			playlist[0].save(function(err) {
-				return cb(err,that.musics[0]);
 			});
 		});
 	}
@@ -90,8 +71,46 @@ class Playlist {
         });
 	}
 	
-	addMusic(music) {
-		this.musics.push(music);
+	addMusic(music, cb) {
+		var query = {
+			name : this.name,
+			userEmail : this.user
+		};
+		DbPlaylist.find(query,function(err,playlist) {
+			if(err) {
+				return cb(err);
+			}
+			if(playlist.length !==1) {
+				return cb ({message:"The playlist doesn't exist"});
+			}
+			playlist[0].musics.push(music);
+			playlist[0].save(function(err) {
+				return cb(err,music);
+			});
+		});
+	}
+	
+	deleteMusic(music, cb) {
+		var query = {
+			name : this.name,
+			userEmail : this.user
+		};
+		DbPlaylist.find(query,function(err,playlist) {
+			if(err) {
+				return cb(err);
+			}
+			if(playlist.length !==1) {
+				return cb ({message:"The playlist doesn't exist"});
+			}
+			var index = _.findIndex(playlist[0].musics, function(m) { return m.id === music.id && m.platform === music.platform; });
+			if(index === -1) {
+				return cb({message:"The music is not in the playlist"});
+			}
+			playlist[0].musics.splice(index, 1);
+			playlist[0].save(function(err) {
+				return cb(err,music);
+			});
+		});
 	}
 	
 	get name() {
