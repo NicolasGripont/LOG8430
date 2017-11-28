@@ -43,6 +43,7 @@ var musicHub = musicHub || {};
     var _selectors = {
         playImageButton : ".img-btn.play",
         plusImageButton : ".img-btn.plus",
+        minusImageButton : ".img-btn.minus",
         inputs : "input",
         li : "li",
         playMusicSelector : '.sm2-playlist-bd',
@@ -340,6 +341,25 @@ var musicHub = musicHub || {};
                     currentTrack.platform = api;
                     musicsService.retrievePlaylists(_updateModalAddMusic);
                     _elements.addMusicModal.modal('show');
+                }
+            });
+        }
+    });
+
+    /**
+     * Link the remove track from playlist button click event
+     */
+    _elements.body.on('click',_selectors.minusImageButton,function (e) {
+        var api =  $(this).closest("tr").attr("api");
+        var musicId =  $(this).closest("tr").attr("id");
+        var playlistName = _elements.playlistDetailTitle[0].innerText;
+        if(api && musicId && playlistName) {
+            musicsService.deleteMusicFromPlaylist(api, playlistName, musicId, function(error) {
+                if(error) {
+                    _showToast(error.message);
+                } else {
+                    _showToast("Music deleted.");
+                    musicsService.retrievePlaylist(playlistName,_showPlaylistDetail);
                 }
             });
         }
