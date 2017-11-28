@@ -116,6 +116,24 @@ class ConnectorController {
             }
         })
     }
+    
+    findTrack(id, platform, email, cb) {
+    	var self = this;
+    	SettingDB.find( { userEmail : email }, function(err, settings) {
+    		if(!settings || settings.length !== 1) {
+            	 return cb({message:"No settings"});
+			} 		
+			var settings = settings[0];
+			self.connectors[platform].setSettings(settings[platform]);
+			var requestSong = self.connectors[platform].findTrack(id); 
+			requestSong.then(function(track){
+			    return cb(null,track);
+			})
+			.catch(function(error){
+			     return cb(error);
+			});
+    	});
+    }
 
 }
 

@@ -19,4 +19,8 @@ router.get('/:name', function(req, res) {
 	controller.findOnePlaylist(req, res);
 });
 
+router.post('/music', function(req, res) {
+	controller.addMusic(req,res);
+});
+
 module.exports = router;

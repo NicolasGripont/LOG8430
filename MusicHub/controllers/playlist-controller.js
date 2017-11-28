@@ -1,4 +1,5 @@
 var Playlist = require('../models/playlist');
+var ControllerConnector = require('./connector-controller');
 
 class PlaylistController {
 	constructor() {}
@@ -30,7 +31,7 @@ class PlaylistController {
 			return res.json({ok:"ok"});
 		});
 	}
-
+	//TODO : Creer un objet error
     findPlaylists(req, res) {
 		var email = req.session.email;
 		var playlist = new Playlist("", email, []);
@@ -57,6 +58,31 @@ class PlaylistController {
 				return res.json({error:{message:"The playlist doesn't exist"}});
 			}
 			return res.json(playlists[0]);
+		});
+    }
+    
+    addMusic(req,res) {
+    	var id = req.body.id || "";
+    	var platform = req.body.platform || "";
+    	var namePlaylist = req.body.name || "";
+    	if(id === "" || platform === "" || namePlaylist === "") {
+    		return res.json({error:{message:"The parameters are not valid"}});
+    	}
+		var playlist = new Playlist(namePlaylist, req.session.email, []);
+		var connector = new ControllerConnector();
+		console.log(req.session.email);
+		connector.findTrack(id,platform,req.session.email, function(err,music) {
+			if(err) {
+				return res.json({error:err});
+			}
+			playlist.addMusic(music);
+			playlist.update(function(err) {
+				if(err) {
+					return res.json({error:err});
+				}
+				return res.json(music);
+			});
+			
 		});
     }
 }

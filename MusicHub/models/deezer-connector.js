@@ -115,17 +115,18 @@ class DeezerConnector extends AbstractConnector{
             var platform = "deezer";
             var title = "";
             var artists = [];
-            var album = ""
+            var album = {}
             var duration = 0;
             var previewUrl = "";
 
             id = deezerTracks[i].id;
             title = deezerTracks[i].title;
             if(deezerTracks[i].album) {
-                album = deezerTracks[i].album.title;
+                album.name = deezerTracks[i].album.title;
+                album.artists = [];
             }
             if(deezerTracks[i].artist) {
-                artists.push(deezerTracks[i].artist.name)
+                artists.push({name:deezerTracks[i].artist.name});
             }
             duration = deezerTracks[i].duration * 1000;
             previewUrl = deezerTracks[i].preview;
@@ -135,6 +136,28 @@ class DeezerConnector extends AbstractConnector{
             tracks.push(track);
         }
         return tracks;
+    }
+    
+    findTrack(id) {
+    	var self = this;
+        return new Promise(function(resolve, reject) {
+
+                var options = {
+                    url: "http://api.deezer.com/track/" + id,
+                    json: true
+                }
+                request.get(options, function (error, result) {
+                    if (error) {
+                        return reject(error);
+                    }
+                    var body = result.body;
+                    console.log(body);
+                    var tracks = self.formatTracks([body]);
+                    console.log(tracks);
+                    return resolve(tracks[0]);
+                })
+            }
+        );
     }
 }
 

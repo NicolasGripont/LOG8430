@@ -20,6 +20,11 @@ class AbstractConnector {
     }
 
     searchTracks(title) {
+    	
+    }
+    
+    findTrack(id) {
+    	
     }
 
 

@@ -2,18 +2,20 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
 var artist = {
-	artistName: {type: String, required: true}
+	name: {type: String, required: true}
 };
 
 var album = {
-	albumName: {type: String, required: true},
+	name: {type: String, required: true},
 	artists: [artist]
 };
 
 var music = {
-	musicName: {type: String, required: true},
+	title: {type: String, required: true},
+	platform: {type: String, required: true},
 	duration: {type: Number, required: true},
 	url: {type: String, required: true},
+	previewUrl:{type: String},
 	album: album,
 	artists:[artist]
 };
@@ -21,7 +23,7 @@ var music = {
 var playlistSchema = new Schema({
     name: {type: String, required: true},
     userEmail: {type: String, required: true},
-    musicList: [music]
+    musics: [music]
 });
 
 playlistSchema.index({ name: 1, userEmail: 1}, { unique: true });

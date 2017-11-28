@@ -29,6 +29,17 @@ class Playlist {
 		});
 	}
 	
+	update(cb) {
+		var query = {
+			name : this.name,
+			userEmail : this.user,
+		};
+		var that = this;
+		DbPlaylist.findOneAndUpdate(query, { $set: { musics: this.musics }},function(err) {
+			return cb(err);
+		});
+	}
+	
 	remove(cb) {
 		let query = {
 			name:this.name,
@@ -68,6 +79,10 @@ class Playlist {
 			}
 			return cb(null, playlists);
         });
+	}
+	
+	addMusic(music) {
+		this.musics.push(music);
 	}
 	
 	get name() {
