@@ -14,7 +14,6 @@ router.get('/settings', function(req, res, next) {
     connectorController.sendSettings(req,res);
 });
 
-
 router.get('/search/:query', function(req, res, next) {
     var connectorController = new ConnectorController();
     connectorController.search(req,res,req.params.query);
