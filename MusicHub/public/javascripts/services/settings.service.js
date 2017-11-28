@@ -11,11 +11,11 @@ musicHub.settingsService = (function($) {
     var self = {};
 
     /**
-     * Gets the user settings
+     * Retrieves the user settings
      * @param callback    Function called when result is gotten. Called with the json of settings if success or
      *                    null value if fail as parameter.
      */
-    self.getSettings = function(callback) {
+    self.retrieveSettings = function(callback) {
         $.ajax({
             url: "/connector/settings",
             type: "GET"

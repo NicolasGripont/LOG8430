@@ -104,8 +104,13 @@ class SpotifyConnector extends AbstractConnector {
                 if (error) {
                     return reject(error);
                 }
-                var spotifyTracks = result.body.tracks.items;
-                var tracks = self.formatTracks(spotifyTracks);
+
+                var tracks = [];
+                if(result.body.tracks && result.body.tracks.items) {
+                    var spotifyTracks = result.body.tracks.items;
+                    tracks = self.formatTracks(spotifyTracks);
+                }
+
                 return resolve(tracks);
             })
         });
