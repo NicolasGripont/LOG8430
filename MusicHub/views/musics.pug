@@ -1,42 +1,43 @@
 extends layouts/musics-layout
 
 block content
+    .modal.fade#modal-create-playlist
+                .modal-dialog(role="document")
+                    .modal-content
+                        .modal-header
+                            h5.modal-title Playlist name
+                            button.close(type="button", data-dismiss="modal", aria-label="Close")
+                                span(aria-hidden="true") ×
+                        .modal-body
+                            form#create-playlist-form
+                                .form-group.row
+                                    .col-sm-12
+                                        input#playlist-name-input.form-control.form-control-lg(type='text', placeholder='Playlist name', required='')
+                                .alert.alert-success.col-sm-12
+                                .alert.alert-danger.col-sm-12
+                        .modal-footer
+                            button.btn.btn-secondary(type="button", data-dismiss="modal") Close
+                            button.btn.btn-primary#save-playlist-button(type="submit") Save
+    .modal.fade#modal-add-music
+                .modal-dialog(role="document")
+                    .modal-content
+                        .modal-header
+                            h5.modal-title Choose the playlist
+                            button.close(type="button", data-dismiss="modal", aria-label="Close")
+                                span(aria-hidden="true") ×
+                        .modal-body
+                            form
+                                .form-group.row
+                                    .col-sm-12
+                                        select#playlist-name-select.form-control.form-control-lg(type='select', required='')
+                                .alert.alert-success.col-sm-12
+                                .alert.alert-danger.col-sm-12
+                        .modal-footer
+                            button.btn.btn-secondary(type="button", data-dismiss="modal") Close
+                            button.btn.btn-primary#add-track(type="submit") Add
     #search-musics
         h1 Résultats
-        .modal.fade#modal-create-playlist
-            .modal-dialog(role="document")
-                .modal-content
-                    .modal-header
-                        h5.modal-title Playlist name
-                        button.close(type="button", data-dismiss="modal", aria-label="Close")
-                            span(aria-hidden="true") ×
-                    .modal-body
-                        form#create-playlist-form
-                            .form-group.row
-                                .col-sm-12
-                                    input#playlist-name-input.form-control.form-control-lg(type='text', placeholder='Playlist name', required='')
-                            .alert.alert-success.col-sm-12
-                            .alert.alert-danger.col-sm-12
-                    .modal-footer
-                        button.btn.btn-secondary(type="button", data-dismiss="modal") Close
-                        button.btn.btn-primary#save-playlist-button(type="submit") Save
-        .modal.fade#modal-add-music
-                    .modal-dialog(role="document")
-                        .modal-content
-                            .modal-header
-                                h5.modal-title Choose the playlist
-                                button.close(type="button", data-dismiss="modal", aria-label="Close")
-                                    span(aria-hidden="true") ×
-                            .modal-body
-                                form
-                                    .form-group.row
-                                        .col-sm-12
-                                            select#playlist-name-select.form-control.form-control-lg(type='select', required='')
-                                    .alert.alert-success.col-sm-12
-                                    .alert.alert-danger.col-sm-12
-                            .modal-footer
-                                button.btn.btn-secondary(type="button", data-dismiss="modal") Close
-                                button.btn.btn-primary#add-track(type="submit") Add
+
 
         .api-title.flex-row
             img(src='/images/spotify.png' alt='/images/spotify.png')
