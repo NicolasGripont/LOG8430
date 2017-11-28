@@ -32,7 +32,8 @@ var musicHub = musicHub || {};
         searchMusicResultElement : $("#search-musics"),
         playlistDetailTitle : $("#playlist-detail-name"),
         playlistTracksElement : $(".playlist .tbody-musics"),
-        addTrackButton : $("#add-track")
+        addTrackButton : $("#add-track"),
+        deletePlaylistButton : $("#deletePLaylistImage")
     }
 
     var _apiImageSources = {
@@ -445,6 +446,15 @@ var musicHub = musicHub || {};
         var playlistName = $(this).children(_selectors.playlistNameLink).html();
         musicsService.retrievePlaylist(playlistName,_showPlaylistDetail);
     });
+
+
+    /**
+     * Link the show playlist by clicking on the name event
+     */
+    _elements.deletePlaylistButton.click(function () {
+        var playlistName = _elements.playlistDetailTitle[0].innerText;
+        //TODO delete
+    })
 
 
     /**

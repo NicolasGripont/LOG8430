@@ -132,13 +132,30 @@ table.playlist thead tr th:nth-child(7), table.playlist tbody tr td:nth-child(7)
     margin-bottom:auto;
 }
 
-.api-title img {
+.flex-space-between {
+    display: flex;
+    justify-content: space-between;
+}
+
+.img-delete{
+    height: 40px;
+    margin-top:auto;
+    margin-bottom:auto;
+}
+
+.img-delete:hover{
+    opacity: 0.8;
+}
+
+
+.api-title img{
     height: 60px;
 }
 
 .api-title {
     margin-bottom: 10px;
 }
+
 
 /*
  Player
@@ -154,6 +171,7 @@ table.playlist thead tr th:nth-child(7), table.playlist tbody tr td:nth-child(7)
 .sm2-bar-ui .sm2-inline-texture {
     background: transparent;
 }
+
 
 /*
 Toast
