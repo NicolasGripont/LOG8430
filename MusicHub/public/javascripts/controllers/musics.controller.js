@@ -334,7 +334,7 @@ var musicHub = musicHub || {};
         var api =  $(this).closest("tr").attr("api");
         var id =  $(this).closest("tr").attr("id");
         if(api && id) {
-            musicsService.findTrackFromPlaylistInSessionStrorage(api, id, function(track) {
+            musicsService.findTrackFromSearchResultInSessionStrorage(api, id, function(track) {
                 if(track !== null) {
                     currentTrack.id = id;
                     currentTrack.platform = api;
