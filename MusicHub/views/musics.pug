@@ -35,6 +35,16 @@ block content
                         .modal-footer
                             button.btn.btn-secondary(type="button", data-dismiss="modal") Close
                             button.btn.btn-primary#add-track(type="submit") Add
+    .modal.fade#modal-remove-playlist
+                    .modal-dialog(role="document")
+                        .modal-content
+                            .modal-header
+                                button.close(type="button", data-dismiss="modal", aria-label="Close")
+                                    span(aria-hidden="true") ×
+                            .modal-footer
+                                button.btn.btn-secondary(type="button", data-dismiss="modal") Close
+                                button.btn.btn-primary#remove-track(type="submit") Remove
+
     #search-musics
         h1 Résultats
 
