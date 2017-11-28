@@ -21,6 +21,9 @@ var musicHub = musicHub || {};
         }
     }
 
+    /**
+     * Link view sign out button
+     */
     $('.deconnexion').click(function (event) {
         event.preventDefault();
         connectionService.signout(_signedOut);

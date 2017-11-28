@@ -32,8 +32,10 @@ var musicHub = musicHub || {};
         }
     }
 
-    //TODO créer un fichier messages
 
+    /**
+     * Link view sign up form
+     */
     $('form').submit(function (event) {
         event.preventDefault();
         var alertDangerElement = $(".alert-danger");

@@ -12,6 +12,7 @@ musicHub.musicsService = (function($) {
 
     /**
      * Gets all products associated with the category and order by the sortingCriteria
+     *
      * @param query     The search query, keyword
      * @param callback            Function called when result is gotten. Called with the json object of
      *                            {API_name : [Tracks],...} if success or an empty json objct if fail as parameter.
@@ -31,6 +32,7 @@ musicHub.musicsService = (function($) {
 
     /**
      * Gets the track associated with the track ID and api specified.
+     *
      * @param api         The api associated with the track to retrieve.
      * @param trackId   The track ID associated with the track to retrieve.
      * @param callback    Function called when result is gotten. Called with the json of track if success or
@@ -51,36 +53,51 @@ musicHub.musicsService = (function($) {
         return callback(null);
     };
 
+
+    /**
+     * Gets the playlists
+     *
+     * @param callback    Function called when result is gotten. Called with the json array of playlists if success or
+     *                    an empty json array if fail as parameter.
+     */
     self.getPlaylists = function(callback) {
         $.ajax({
             url: "/playlist/",
             type: "get",
             dataType: "json"
-        }).done(function(json) {
-            if(json.error) {
-                return callback([]);
-            }
-            return callback(json);
+        }).done(function(playlists) {
+            return callback(playlists);
         }).fail(function (error) {
             return callback([]);
         })
     }
 
+    /**
+     * Gets the playlist associated with the playlist name specified and current connected user.
+     *
+     * @param playlistName  The playlist name of the playlist to retrieve.
+     * @param callback      Function called when result is gotten. Called with the json of the playlist if success or
+     *                      null value if fail as parameter.
+     */
     self.getPlaylist = function(playlistName, callback) {
         $.ajax({
             url: "/playlist/" + playlistName,
             type: "get",
             dataType: "json"
-        }).done(function(json) {
-            if(json.error) {
-                return callback(null);
-            }
-            return callback(json);
+        }).done(function(playlist) {
+            return callback(playlist);
         }).fail(function(error) {
             return callback(null);
         })
     }
 
+    /**
+     * Create a playlist associated with the playlist name specified and current connected user.
+     *
+     * @param playlistName  The playlist name of the playlist to create.
+     * @param callback      Function called when playlist is created or if failed.
+     *                      Called with the error json with "message" attribute if fail or null if success as parameter.
+     */
     self.createPlaylist = function(playlistName, callback) {
         $.ajax({
             url: "/playlist/create",
@@ -91,11 +108,14 @@ musicHub.musicsService = (function($) {
                 name: playlistName
             })
         })
-        .done(function (json) {
-            callback(json.error);
+        .done(function (success) {
+            return callback(null);
         })
-        .fail(function (xhr, status, errorThrown) {
-            callback({message:"Connection Error."});
+        .fail(function (error) {
+            if(error.responseJSON.message) {
+                return callback(error.responseJSON);
+            }
+            return callback({message: "Server Error."});
         });
     }
 

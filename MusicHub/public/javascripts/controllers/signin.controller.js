@@ -25,6 +25,9 @@ var musicHub = musicHub || {};
         }
     }
 
+    /**
+     * Link view sign in form
+     */
     $('form').submit(function (event) {
         event.preventDefault();
         var email = $("#input-email").val();

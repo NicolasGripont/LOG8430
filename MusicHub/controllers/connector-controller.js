@@ -79,9 +79,9 @@ class ConnectorController {
                 if(settings.spotify && now >= settings.spotify.expires) {
                     settings.spotify = undefined;
                 }
-                res.json(settings[0]);
+                res.status(200).json(settings[0]);
             } else {
-                res.json({});
+                res.status(200).json({});
             }
         })
     }
@@ -105,14 +105,14 @@ class ConnectorController {
                     var result = {};
                     result.spotify = tracks[0];
                     result.deezer = tracks[1];
-                    return res.json(result);
+                    return res.status(200).json(result);
                 })
                 .catch(function(error){
-                    return res.json({ error : error});
+                    return res.status(400).json({ message : "Error when search on APIs."});
                 })
 
             } else {
-                return res.json({});
+                return res.status(200).json({});
             }
         })
     }

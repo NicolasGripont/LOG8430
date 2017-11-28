@@ -13,12 +13,12 @@ block content
                     form
                         .form-group.row
                             .col-sm-12
-                                input#playlist-name.form-control.form-control-lg(type='text', placeholder='Playlist name', required='')
+                                input#playlist-name-input.form-control.form-control-lg(type='text', placeholder='Playlist name', required='')
                         .alert.alert-success.col-sm-12
                         .alert.alert-danger.col-sm-12
                 .modal-footer
                     button.btn.btn-secondary(type="button", data-dismiss="modal") Close
-                    button.btn.btn-primary#save-playlist(type="submit") Save
+                    button.btn.btn-primary#save-playlist-button(type="submit") Save
 
     .api-title.flex-row
         img(src='/images/spotify.png' alt='/images/spotify.png')

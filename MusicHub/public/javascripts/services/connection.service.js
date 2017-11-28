@@ -10,12 +10,12 @@ musicHub.connectionService = (function($) {
 
     var self = {};
 
-    /**TODO
-     * Gets the track associated with the track ID and api specified.
-     * @param api         The api associated with the track to retrieve.
-     * @param trackId   The track ID associated with the track to retrieve.
-     * @param callback    Function called when result is gotten. Called with the json of track if success or
-     *                    null value if fail as parameter.
+    /**
+     * Connect the client and create a session for the user email/password.
+     * @param email       Email of the user to connect.
+     * @param password    Passaword of the user to connect.
+     * @param callback    Function called when the user is signed in or if fail.
+     *                    Called with the error fail or null if success as parameter.
      */
     self.signin = function(email, password, callback) {
         $.ajax({
@@ -27,16 +27,23 @@ musicHub.connectionService = (function($) {
                 email: email,
                 password: password
             })
-        }).done(function (json) {
-            if(json && json.error) {
-                return callback(json.error);
-            }
+        }).done(function (success) {
             return callback(null);
-        }).fail(function (xhr, status, errorThrown) {
-            return callback({message : "Connection Error."});
+        }).fail(function (error) {
+            if(error.responseJSON.message) {
+                return callback(error.responseJSON);
+            }
+            return callback({message : "Server error."});
         });
     };
 
+    /**
+     * Create a client account for the user email/password.
+     * @param email       Email of the user to connect.
+     * @param password    Passaword of the user to connect.
+     * @param callback    Function called when the user account is created or if fail.
+     *                    Called with the error fail or null if success as parameter.
+     */
     self.signup = function(email, password, callback) {
         $.ajax({
             url: "/user/signup",
@@ -47,29 +54,35 @@ musicHub.connectionService = (function($) {
                 email: email,
                 password: password
             })
-        }).done(function (json) {
-            if(json && json.error) {
-                return callback(json.error);
-            }
+        }).done(function (success) {
             return callback(null);
-        }).fail(function (xhr, status, errorThrown) {
-            return callback({message : "Connection Error."});
+        }).fail(function (error) {
+            if(error.responseJSON.message) {
+                return callback(error.responseJSON);
+            }
+            return callback({message : "Server error."});
         });
     };
 
+    /**
+     * Disconnect the client and delete the session.
+     * @param callback    Function called when the user is signed out.
+     *                    Called with the error if fail or null if success as parameter.
+     */
     self.signout = function(callback) {
         $.ajax({
             url: "/user/signout",
             type: "GET",
             dataType: "json",
             contentType: "application/json; charset=utf-8"
-        }).done(function (json) {
-            if(json && json.error) {
-                return callback(json.error);
-            }
+        }).done(function (success) {
+            sessionStorage.clear();
             return callback(null);
-        }).fail(function (xhr, status, errorThrown) {
-            return callback({message : "Connection Error."});
+        }).fail(function (error) {
+            if(error.responseJSON.message) {
+                return callback(error.responseJSON);
+            }
+            return callback({message : "Server error."});
         });
     };
 

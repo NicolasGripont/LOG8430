@@ -65,6 +65,12 @@ var musicHub = musicHub || {};
         return $(template);
     }
 
+    /**
+     * Updates the current track in player.
+     *
+     * @param track Track to put in player.
+     * @private
+     */
     function _updateCurrentTrackInPlayer(track){
         var elements = $('.sm2-playlist-bd');
         elements.each(function (i, element) {
@@ -104,6 +110,12 @@ var musicHub = musicHub || {};
         return $(template);
     }
 
+    /**
+     * Updates the playlists list in nav menu.
+     *
+     * @param playlists Playlists to put in the menu.
+     * @private
+     */
     function _updateNavPlaylistsView(playlists) {
         var navPlaylistsElement = $("ul.nav.nav-pills.flex-column");
         navPlaylistsElement.empty();
@@ -114,11 +126,24 @@ var musicHub = musicHub || {};
         }
     }
 
+    /**
+     * Add a playlist to the playlists list in nav menu.
+     *
+     * @param playlistName to put in the nav.
+     * @private
+     */
     function _addPlaylistInNavPlaylistsView(playlistName) {
         var navPlaylistsElement = $("ul.nav.nav-pills.flex-column");
         navPlaylistsElement.append(_createNavPlaylistElement(playlistName));
     }
 
+    /**
+     * Create a playlist nav menu element.
+     *
+     * @param playlistName              Playlist name to put in the nav.
+     * @returns {*|jQuery|HTMLElement}  A jQuery element.
+     * @private
+     */
     function _createNavPlaylistElement(playlistName) {
         var template = "<li class='nav-item'>" +
             "  <a class='nav-link' href='#'>" + playlistName + "</a>" +
@@ -126,6 +151,12 @@ var musicHub = musicHub || {};
         return $(template);
     }
 
+    /**
+     * Show a message on the view.
+     *
+     * @param message  Message to show
+     * @private
+     */
     function _showToast(message) {
         var dialog = $("#toast");
         dialog.html(message);
@@ -134,7 +165,7 @@ var musicHub = musicHub || {};
     }
 
     /**
-     * Links events
+     * Link the search track form submit event
      */
     $("#search-tracks-form").submit(function () {
         var query = $("#search-tracks-input").val();
@@ -142,7 +173,9 @@ var musicHub = musicHub || {};
         return false;
     });
 
-
+    /**
+     * Link the play track buttons click event
+     */
     $('body').on('click','.img-btn.play',function (e) {
         window.sm2BarPlayers[0].actions.stop();
         var trackElement = $(e.target).parent().parent();
@@ -157,12 +190,18 @@ var musicHub = musicHub || {};
         })
     });
 
+    /**
+     * Link the add track to playlist button click event
+     */
     $('body').on('click','.img-btn.plus',function (e) {
         alert("Plus");
     });
 
-    $("#save-playlist").click(function(event) {
-        var playlistName = $("#playlist-name").val();
+    /**
+     * Link the create playlist button click event
+     */
+    $("#save-playlist-button").click(function(event) {
+        var playlistName = $("#playlist-name-input").val();
         musicsService.createPlaylist(playlistName,function (error) {
             if(error) {
                 return $(".alert-danger").append(error.message).fadeIn(1000);
@@ -174,16 +213,24 @@ var musicHub = musicHub || {};
         })
     });
 
+    /**
+     * Link the create playlist modal hide event
+     */
     $('#modal-create-playlist').on('hidden.bs.modal', function () {
-        //TODO RESET MODAL
         $("#modal-create-playlist .alert").hide().html("");
         $(this).find("input").val('').end();
     });
 
+    /**
+     * Link the create playlist modal show event
+     */
     $('#modal-create-playlist').on('shown.bs.modal', function() {
         $("#playlist-name").focus();
     })
 
+    /**
+     * Link the create playlist input keypress event
+     */
     $('#playlist-name').keypress(function(event) {
         var keycode = event.keyCode || event.which;
         if(keycode == '13') {
@@ -192,7 +239,7 @@ var musicHub = musicHub || {};
     })
 
     /**
-     * Init View :
+     * Init View
      */
     musicsService.getPlaylists(_updateNavPlaylistsView);
 

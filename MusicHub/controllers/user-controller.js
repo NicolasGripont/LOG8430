@@ -7,14 +7,14 @@ class UserController {
 		var email = req.body.email || "";
 		var password = req.body.password || "";
 		if(email === "" || password === "") {
-			return res.status(200).json({error:{message:"Bad Email or password"}});
+			return res.status(400).json({message:"Bad Email or password."});
 		}
 		var newUser = new User(email,password);
 		newUser.save(function(err) {
 			if(err) {
-				return res.status(400).json({error:{message:"Email is already used by another User"}});
+				return res.status(400).json({message:"Email is already used by another user."});
 			}
-			res.status(200).json({ok:"ok"});
+			res.status(200).json({message:"OK"});
 		});
 	}
 	
@@ -23,24 +23,26 @@ class UserController {
 		var password = req.body.password || "";
 		var newUser = new User(email,password);
 		if(email === "" || password === "") {
-			return res.status(400).json({error:{message:"bad email or password"}});
+			return res.status(400).json({error:{message:"Bad email or password."}});
 		}
 		newUser.logIn(function(isFound){
 			if(isFound) {
 				req.session.email = newUser.email;
-				return res.status(200).json({ok:"ok"});
+				return res.status(200).json({message:"OK"});
 			}
-			return res.status(400).json({error:{message:"bad email or password"}});
+			return res.status(400).json({message:"Bad email or password."});
 		});
 	}
 	
 	logOut(req, res) {
         req.session.destroy(function(err) {
             if(err) {
-                console.log(err);
-                return res.status(400).json({error:err});
+            	if(err.message) {
+                    return res.status(400).json({message:err.message});
+				}
+                return res.status(400).json({message:"Sign out error."});
             }
-            res.status(200).json({ok:"ok"});
+            res.status(200).json({message:"OK"});
         });
 	}
 }

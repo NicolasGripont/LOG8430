@@ -20,9 +20,9 @@ musicHub.settingsService = (function($) {
             url: "/connector/settings",
             type: "GET"
         }).done(function (setting) {
-            callback(setting);
+            return callback(setting);
         }).fail(function (error) {
-            callback(null);
+            return callback(null);
         })
     };
 
