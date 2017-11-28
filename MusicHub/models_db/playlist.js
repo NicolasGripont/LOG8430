@@ -14,8 +14,7 @@ var music = {
 	title: {type: String, required: true},
 	platform: {type: String, required: true},
 	duration: {type: Number, required: true},
-	url: {type: String, required: true},
-	previewUrl:{type: String},
+	previewUrl:{type: String, required: true},
 	album: album,
 	artists:[artist]
 };

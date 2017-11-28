@@ -70,7 +70,6 @@ class PlaylistController {
     	}
 		var playlist = new Playlist(namePlaylist, req.session.email, []);
 		var connector = new ControllerConnector();
-		console.log(req.session.email);
 		connector.findTrack(id,platform,req.session.email, function(err,music) {
 			if(err) {
 				return res.json({error:err});

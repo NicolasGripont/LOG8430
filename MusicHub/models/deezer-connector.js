@@ -34,8 +34,8 @@ class DeezerConnector extends AbstractConnector{
 
     loggedIn(req, res, successCallback, errorCallback) {
         var self = this;
-        var errorReason = req.param('error_reason');
-        var code = req.param('code');
+        var errorReason = req.param.error_reason;
+        var code = req.params.code;
 
         if(!errorReason) {
             var options = {

@@ -3,7 +3,6 @@ var User = require('../models/user');
 class UserController {
 	constructor() {}
 
-	//TODO ERROR si mail deja existant
 	createUser(req, res) {
 		var email = req.body.email || "";
 		var password = req.body.password || "";
@@ -19,7 +18,7 @@ class UserController {
 		});
 	}
 	
-	logIn(req, res, cb) {
+	logIn(req, res) {
 		var email = req.body.email || "";
 		var password = req.body.password || "";
 		var newUser = new User(email,password);

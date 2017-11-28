@@ -32,11 +32,20 @@ class Playlist {
 	update(cb) {
 		var query = {
 			name : this.name,
-			userEmail : this.user,
+			userEmail : this.user
 		};
 		var that = this;
-		DbPlaylist.findOneAndUpdate(query, { $set: { musics: this.musics }},function(err) {
-			return cb(err);
+		DbPlaylist.find(query,function(err,playlist) {
+			if(err) {
+				return cb(err);
+			}
+			if(playlist.length !==1) {
+				return cb ({message:"The playlist doesn't exist"});
+			}
+			playlist[0].musics.push(that.musics[0]);
+			playlist[0].save(function(err) {
+				return cb(err,that.musics[0]);
+			});
 		});
 	}
 	
