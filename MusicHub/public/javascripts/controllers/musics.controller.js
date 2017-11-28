@@ -10,6 +10,41 @@ var musicHub = musicHub || {};
 
     var currentTrack = {};
 
+    var _elements = {
+        body : $('body'),
+        spotifySearchResultElement : $(".spotify .tbody-musics"),
+        deezerSearchResultElement : $(".deezer .tbody-musics"),
+        playMusicElement : $('.sm2-playlist-bd'),
+        navPlaylistsElement : $("ul.nav.nav-pills.flex-column"),
+        toastElement : $("#toast"),
+        searchTracksInput : $("#search-tracks-input"),
+        searchTrackForm : $("#search-tracks-form"),
+        playlistNameInput : $("#playlist-name-input"),
+        createPlaylistDangerAlert : $("#modal-create-playlist .alert-danger"),
+        createPlaylistSuccessAlert : $("#modal-create-playlist .alert-success"),
+        createPlaylistModal : $("#modal-create-playlist"),
+        createPlaylistForm : $('#create-playlist-form'),
+        savePlaylistButton : $("#save-playlist-button"),
+        addMusicModal : $('#modal-add-music'),
+        playlistNameSelect : $("#playlist-name-select"),
+        playlistDetailElement : $("#playlist-detail"),
+        addMusicDangerAlert : $("#modal-add-music .alert-danger"),
+        addMusicSuccessAlert : $("#modal-add-music .alert-success"),
+        searchMusicResultElement : $("#search-musics"),
+        playlistDetailName : $("#playlist-detail-name"),
+        playlistDetailTitleElement : $("#playlist-detail h1"),
+        playlistTracksElement : $(".playlist .tbody-musics"),
+        addTrackButton : $("#add-track")
+    }
+
+    var _selectors = {
+        playImageButtons : ".img-btn.play",
+        plusImageButtons : ".img-btn.plus",
+        inputs : "input",
+        li : "li"
+    }
+
+
     /**
      * Updates the tracks result tables view.
      *
@@ -17,8 +52,8 @@ var musicHub = musicHub || {};
      * @private
      */
     function _updateTrackTablesView(tracks) {
-        var spotifyElement = $(".spotify .tbody-musics");
-        var deezerElement = $(".deezer .tbody-musics");
+        var spotifyElement = _elements.spotifySearchResultElement;
+        var deezerElement = _elements.deezerSearchResultElement;
 
         spotifyElement.empty();
         for(var i = 0; i < tracks.spotify.length; i++) {
@@ -73,7 +108,7 @@ var musicHub = musicHub || {};
      * @private
      */
     function _updateCurrentTrackInPlayer(track){
-        var elements = $('.sm2-playlist-bd');
+        var elements = _elements.playMusicElement;
         elements.each(function (i, element) {
             $(element).empty();
             $(element).append(_createPlayerTrackElement(track));
@@ -118,7 +153,7 @@ var musicHub = musicHub || {};
      * @private
      */
     function _updateNavPlaylistsView(playlists) {
-        var navPlaylistsElement = $("ul.nav.nav-pills.flex-column");
+        var navPlaylistsElement = _elements.navPlaylistsElement;
         navPlaylistsElement.empty();
         if (playlists) {
             playlists.forEach(function(playlist) {
@@ -134,7 +169,7 @@ var musicHub = musicHub || {};
      * @private
      */
     function _addPlaylistInNavPlaylistsView(playlistName) {
-        var navPlaylistsElement = $("ul.nav.nav-pills.flex-column");
+        var navPlaylistsElement = _elements.navPlaylistsElement;
         navPlaylistsElement.append(_createNavPlaylistElement(playlistName));
     }
 
@@ -159,10 +194,10 @@ var musicHub = musicHub || {};
      * @private
      */
     function _showToast(message) {
-        var dialog = $("#toast");
-        dialog.html(message);
-        dialog.addClass("show");
-        setTimeout(function(){ dialog.removeClass("show"); }, 3000);
+        var toastElement = _elements.toastElement;
+        toastElement.html(message);
+        toastElement.addClass("show");
+        setTimeout(function(){ toastElement.removeClass("show"); }, 3000);
     }
 
     function _createTrackTableElementPlaylist(track) {
@@ -200,21 +235,21 @@ var musicHub = musicHub || {};
 
     function _showPlaylistDetail() {
         var name = $(this).children("a.nav-link").html();
-        $("#playlist-detail h1").html(name);
-        var listMusics = $(".playlist .tbody-musics");
+        _elements.playlistDetailTitleElement.html(name);
+        var listMusics = _elements.playlistTracksElement;
         listMusics.empty();
         musicsService.getPlaylist(name, function(playlist) {
-            $("#playlist-detail-name").html(name);
+            _elements.playlistDetailName.html(name);
             for(var i = 0; i < playlist.musics.length; i++) {
                 listMusics.append(_createTrackTableElementPlaylist(playlist.musics[i]));
             }
-            $("#playlist-detail").show();
-            $("#search-musics").hide();
+            _elements.playlistDetailElement.show();
+            _elements.searchMusicResultElement.hide();
         });
     }
 
     function _updateModalAddMusic(playlists) {
-        var selectPlaylist = $("#playlist-name-select");
+        var selectPlaylist = _elements.playlistNameSelect;
         selectPlaylist.find("option").remove();
         if (playlists) {
             playlists.forEach(function(playlist) {
@@ -226,10 +261,10 @@ var musicHub = musicHub || {};
     /**
      * Link the search track form submit event
      */
-    $("#search-tracks-form").submit(function () {
-        var query = $("#search-tracks-input").val();
-        $("#playlist-detail").hide();
-        $("#search-musics").show();
+    _elements.searchTrackForm.submit(function () {
+        var query = _elements.searchTracksInput.val();
+        _elements.playlistDetailElement.hide();
+        _elements.searchMusicResultElement.show();
         musicsService.searchTracks(query, _updateTrackTablesView);
         return false;
     });
@@ -237,7 +272,8 @@ var musicHub = musicHub || {};
     /**
      * Link the play track buttons click event
      */
-    $('body').on('click','.img-btn.play',function (e) {
+    // TODO
+    _elements.body.on('click',_selectors.playImageButtons,function (e) {
         window.sm2BarPlayers[0].actions.stop();
         var trackElement = $(e.target).parent().parent();
         var trackId = trackElement.attr("id");
@@ -254,7 +290,7 @@ var musicHub = musicHub || {};
     /**
      * Link the add track to playlist button click event
      */
-    $('body').on('click','.img-btn.plus',function (event) {
+    _elements.body.on('click',_selectors.plusImageButtons,function (e) {
         var api =  $(this).closest("tr").attr("api");
         var id =  $(this).closest("tr").attr("id");
         if(api && id) {
@@ -263,23 +299,22 @@ var musicHub = musicHub || {};
                     currentTrack.id = id;
                     currentTrack.platform = api;
                     musicsService.getPlaylists(_updateModalAddMusic);
-                    $("#modal-add-music").modal('show');
+                    _elements.addMusicModal.modal('show');
                 }
             });
         }
-
     });
 
     /**
      * Link the create playlist button click event
      */
-    $("#save-playlist-button").click(function(event) {
-        var playlistName = $("#playlist-name-input").val();
+    _elements.savePlaylistButton.click(function(event) {
+        var playlistName = _elements.playlistNameInput.val();
         musicsService.createPlaylist(playlistName,function (error) {
             if(error) {
-                return $(".alert-danger").append(error.message).fadeIn(1000);
+                return _elements.createPlaylistDangerAlert.append(error.message).fadeIn(1000);
             }
-            $("#modal-create-playlist").modal('hide');
+            _elements.createPlaylistModal.modal('hide');
             _showToast("Playlist créée.");
             _addPlaylistInNavPlaylistsView(playlistName);
 
@@ -289,14 +324,14 @@ var musicHub = musicHub || {};
     /**
      * Link the add music to playlist button click event
      */
-    $("#add-track").click(function(event) {
-        var playlistName = $("#playlist-name-select").val();
+   _elements.addTrackButton.click(function(event) {
+        var playlistName = _elements.playlistNameSelect.val();
         if(currentTrack.id && currentTrack.platform) {
             musicsService.addMusicToPlaylist(playlistName, currentTrack, function(error) {
                 if(error) {
-                    return $(".alert-danger").append(error.message).fadeIn(1000);
+                    return _elements.addMusicDangerAlert.append(error.message).fadeIn(1000);
                 }
-                $("#modal-add-music").modal('hide');
+                _elements.addMusicModal.modal('hide');
                 _showToast("Musique ajoutée à la playlist " + playlistName + ".");
                 currentTrack = {};
             });
@@ -306,53 +341,54 @@ var musicHub = musicHub || {};
     /**
      * Link the create playlist modal hide event
      */
-    $('#modal-create-playlist').on('hidden.bs.modal', function () {
-        $("#modal-create-playlist .alert").hide().html("");
-        $(this).find("input").val('').end();
+    _elements.createPlaylistModal.on('hidden.bs.modal', function () {
+        _elements.createPlaylistDangerAlert.hide().html("");
+        _elements.createPlaylistSuccessAlert.hide().html("");
+        $(this).find(_selectors.inputs).val('').end();
     });
 
     /**
      * Link the create playlist modal show event
      */
-    $('#modal-create-playlist').on('shown.bs.modal', function() {
-        $("#playlist-name-input").focus();
+    _elements.createPlaylistModal.on('shown.bs.modal', function() {
+        _elements.playlistNameInput.focus();
     })
 
     /**
      * Link the add music to playlist modal hide event
      */
-    $('#modal-add-music').on('hidden.bs.modal', function () {
-        //TODO RESET MODAL
-        $("#modal-add-music .alert").hide().html("");
-        $(this).find("input").val('').end();
+    _elements.addMusicModal.on('hidden.bs.modal', function () {
+        _elements.createPlaylistDangerAlert.hide().html("");
+        _elements.createPlaylistSuccessAlert.hide().html("");
+        $(this).find(_selectors.inputs).val('').end();
     });
 
     /**
      * Link the add music to playlist modal show event
      */
-    $('#modal-add-music').on('shown.bs.modal', function() {
-        $("#playlist-name-select").focus();
+    _elements.addMusicModal.on('shown.bs.modal', function() {
+        _elements.playlistNameSelect.focus();
     });
 
     /**
      * Link the create playlist form submit event
      */
-    $('#create-playlist-form').submit(function (event) {
+    _elements.createPlaylistForm.submit(function (event) {
         event.preventDefault();
-        $("#save-playlist-button").click();
+        _elements.savePlaylistButton.click();
     });
 
     /**
      * Link the show playlist by clicking on the name event
      */
-    $("ul.nav.nav-pills.flex-column").on("click", "li", _showPlaylistDetail);
+    _elements.navPlaylistsElement.on("click", _selectors.li, _showPlaylistDetail);
 
 
     /**
      * Init View
      */
     musicsService.getPlaylists(_updateNavPlaylistsView);
-    $("#playlist-detail").hide();
+    _elements.playlistDetailElement.hide();
 
 
     /**
