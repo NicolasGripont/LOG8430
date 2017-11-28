@@ -196,5 +196,28 @@ musicHub.musicsService = (function($) {
 
     };
 
+    self.deletePLaylist = function(playlistName, callback) {
+        $.ajax({
+            url: "/playlist/delete",
+            type: "Delete",
+            dataType: "json",
+            contentType: "application/json; charset=utf-8",
+            data: JSON.stringify({
+                //TODO refactoring json api names
+                name: playlistName,
+            })
+        })
+        .done(function(success) {
+            callback(null);
+        })
+        .fail(function (error) {
+            if(error.responseJSON.message) {
+                return callback(error.responseJSON);
+            }
+            return callback({message: "Server Error."});
+        });
+
+    };
+
     return self;
 })(jQuery);
