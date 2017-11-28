@@ -29,6 +29,7 @@ var musicHub = musicHub || {};
         }
         else {
             _elements.alertSuccess.empty();
+            _elements.alertDanger.hide();
             _elements.alertSuccess.append("Successful registration.").fadeIn(1000);
             setTimeout(function(){
                 window.location.replace("/views/signin");
