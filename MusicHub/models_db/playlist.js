@@ -11,10 +11,11 @@ var album = {
 };
 
 var music = {
+	id: {type: String, required: true},
 	title: {type: String, required: true},
 	platform: {type: String, required: true},
 	duration: {type: Number, required: true},
-	previewUrl:{type: String, required: true},
+	previewUrl:{type: String},
 	album: album,
 	artists:[artist]
 };

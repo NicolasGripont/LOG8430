@@ -119,7 +119,7 @@ class SpotifyConnector extends AbstractConnector {
             var platform = "spotify";
             var title = "";
             var artists = [];
-            var album = ""
+            var album = {};
             var duration = 0;
             var previewUrl = "";
 
@@ -127,11 +127,12 @@ class SpotifyConnector extends AbstractConnector {
             id = spotifyTracks[i].id;
             title = spotifyTracks[i].name;
             if(spotifyTracks[i].album) {
-                album = spotifyTracks[i].album.name;
+            	album.name = spotifyTracks[i].album.name;
+            	album.artists = [];
             }
             if(spotifyTracks[i].artists) {
                 for(var j = 0; j < spotifyTracks[i].artists.length; j++) {
-                    artists.push(spotifyTracks[i].artists[j].name)
+                    artists.push({name:spotifyTracks[i].artists[j].name});
                 }
             }
             duration = spotifyTracks[i].duration_ms;
@@ -142,6 +143,26 @@ class SpotifyConnector extends AbstractConnector {
             tracks.push(track);
         }
         return tracks;
+    }
+    
+    findTrack(id) {
+    	var self = this;
+        return new Promise(function(resolve, reject) {
+            var options = {
+                url: "https://api.spotify.com/v1/tracks/" + id,
+                json: true,
+                headers: {Authorization: "Bearer "+self.accessToken}
+            }
+            request.get(options, function (error, result) {
+                if (error) {
+                    return reject(error);
+                }
+                var body = result.body;
+                var tracks = self.formatTracks([body]);
+                console.log(tracks);
+                return resolve(tracks[0]);
+            })
+       });
     }
 
 }
