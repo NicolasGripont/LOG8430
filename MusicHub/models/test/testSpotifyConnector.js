@@ -87,7 +87,6 @@ describe('Spotify Connector Model', function() {
            ];
 
            var results = JSON.stringify(spotifyConnector.formatTracks(tracks));
-            console.log(results);
            assert.equal(results, JSON.stringify(resultsExpected));
        });
     });

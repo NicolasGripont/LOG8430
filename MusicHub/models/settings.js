@@ -8,23 +8,18 @@ class Settings {
     save(platform, apiSettings, cb) {
         var self = this;
         SettingsDB.find( { userEmail : self._userEmail }, function(err, settings) {
+        	if(err) {
+        		return cb(err);
+        	}
             var setting;
-            if(settings && settings.length && settings.length == 1) {
+            if(settings && settings.length && settings.length === 1) {
                 setting = settings[0];
             } else {
                 setting = new SettingsDB( {userEmail: self._userEmail});
             }
-            switch (platform){
-                case "spotify":
-                    setting.spotify = apiSettings;
-                    break;
-                case "deezer":
-                    setting.deezer = apiSettings;
-                    break;
-            }
-
-            setting.save(function(error, result){
-                return cb(error,result);
+            setting[platform] = apiSettings;
+            setting.save(function(error){
+                return cb(error);
             });
         })
     }
