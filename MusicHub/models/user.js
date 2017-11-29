@@ -1,4 +1,4 @@
-var DbUser = require('../models_db/user');
+var DbUser = require('../models_db/modelSingleton').DbUser;
 
 class User {
 	constructor(email, password) {

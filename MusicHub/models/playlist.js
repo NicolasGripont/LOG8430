@@ -1,5 +1,5 @@
 var _ = require('lodash');
-var DbPlaylist = require('../models_db/playlist');
+var DbPlaylist = require('../models_db/modelSingleton').DbPlaylist;
 
 class Playlist {
 	constructor(name, user, musics) {

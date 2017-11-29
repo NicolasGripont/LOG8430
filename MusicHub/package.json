@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "start": "node ./bin/www",
-    "test" : "mocha --recursive ./models --colors && mocha --recursive ./controllers --colors && mocha --recursive ./routes --colors"
+    "test" : "nyc --reporter=html --reporter=text mocha --recursive ./models ./controllers ./routes --colors"
   },
   "dependencies": {
     "body-parser": "~1.18.2",
@@ -29,9 +29,12 @@
     "request": "~2.34.0",
     "serve-favicon": "~2.4.5",
     "validator": "^9.1.1",
-    "sinon":"latest"
+    "spotify-web-api-node": "^2.5.0"
   },
   "devDependencies": {
-    "mocha": "^4.0.1"
+    "mocha": "^4.0.1",
+    "nyc": "latest",
+    "sinon":"latest",
+    "chai": "latest"
   }
 }

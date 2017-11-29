@@ -1,4 +1,4 @@
-var SettingsDB = require('../models_db/settings');
+var SettingsDB = require('../models_db/modelSingleton').DbSettings;
 
 class Settings {
     constructor(userEmail) {
