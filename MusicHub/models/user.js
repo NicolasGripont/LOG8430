@@ -23,10 +23,10 @@ class User {
      */
 	logIn(cb) {
 		DbUser.find({email:this.email, password:this.password}, function(err, foundUser) {
-			if(foundUser.length  === 1) {
-				return cb(true);
+			if(err) {
+				return cb(err);
 			}
-			return cb(false);
+			return cb(null, foundUser.length  === 1);
 		});
 	}
 

@@ -25,7 +25,10 @@ class UserController {
 		if(email === "" || password === "") {
 			return res.status(400).json({error:{message:"Bad email or password."}});
 		}
-		newUser.logIn(function(isFound){
+		newUser.logIn(function(err,isFound){
+			if(err) {
+				return res.status(500).json({message:"Connection to database failed"});
+			}
 			if(isFound) {
 				req.session.email = newUser.email;
 				return res.status(200).json({message:"OK"});
