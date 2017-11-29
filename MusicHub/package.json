@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "start": "node ./bin/www",
-    "test" : "nyc --reporter=html --reporter=text mocha --recursive ./models ./controllers ./routes --colors"
+    "test" : "nyc --reporter=html --reporter=text mocha --recursive ./models/ ./controllers ./routes --colors"
   },
   "dependencies": {
     "body-parser": "~1.18.2",
