@@ -1,11 +1,21 @@
 var _ = require('lodash');
 var DbPlaylist = require('../models_db/modelSingleton').DbPlaylist;
 
+/**
+ * Represent a user Playlist
+ */
 class Playlist {
-	constructor(name, user, musics) {
+    /**
+     * Constructor
+     *
+     * @param name        Name of the user.
+     * @param userEmail   Email of the user who own the playlist.
+     * @param musics      Musics of the playlist.
+     */
+	constructor(name, userEmail, musics) {
 		this._name = name;
 		this._musics = musics;
-		this._user = user;
+		this._userEmail = userEmail;
 	}
 	
 	save(cb) {
@@ -112,15 +122,30 @@ class Playlist {
 			});
 		});
 	}
-	
+
+    /**
+     * Getter of the playlist name
+     *
+     * @returns {*} The email
+     */
 	get name() {
 		return this._name;
 	}
-	
+
+    /**
+     * Getter of the email of the playlist owning user
+     *
+     * @returns {*} The owning user
+     */
 	get user() {
-		return this._user;
+		return this._userEmail;
 	}
-	
+
+    /**
+     * Getter of the playlist musics/tracks list
+     *
+     * @returns {*} The musics/tracks lists
+     */
 	get musics() {
 		return this._musics;
 	}
