@@ -1,4 +1,4 @@
-component_depth: 1
+component_depth: 2
 languages:
 - javascript
 
@@ -9,3 +9,5 @@ exclude:
 - /MusicHub/public/soundmanager/script/soundmanager2\.js
 - /MusicHub/public/soundmanager/demo/bar-ui/script/demo\.js
 - /MusicHub/public/soundmanager/demo/bar-ui/script/bar-ui\.js
+- /MusicHub/seed/seed\.js
+- /MusicHub/Gruntfile\.js
