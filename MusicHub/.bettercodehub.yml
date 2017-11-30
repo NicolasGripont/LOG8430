@@ -5,4 +5,9 @@ languages:
 - name: javascript
   production:
     exclude:
-    	- /public/soundmanager/*.js
+      - /public/soundmanager/script/soundmanager2-nodebug-jsmin.js
+      - /public/soundmanager/script/soundmanager2-nodebug.js
+      - /public/soundmanager/script/soundmanager2-jsmin.js
+      - /public/soundmanager/script/soundmanager2.js
+      - /public/soundmanager/demo/bar-ui/script/bar-ui.js
+      - /public/soundmanager/demo/bar-ui/script/bar-ui.js
