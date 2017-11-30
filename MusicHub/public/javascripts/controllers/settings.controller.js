@@ -48,7 +48,6 @@ var musicHub = musicHub || {};
         settingsService.retrieveSettings(_updateSettingsView);
     }
 
-
-
+    _init();
 
 })(jQuery, musicHub.settingsService);
