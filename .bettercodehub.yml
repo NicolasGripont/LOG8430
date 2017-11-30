@@ -1,0 +1,11 @@
+component_depth: 2
+languages:
+  - javascript
+
+exclude:
+  - /public/soundmanager/script/soundmanager2-nodebug-jsmin.js
+  - /public/soundmanager/script/soundmanager2-nodebug.js
+  - /public/soundmanager/script/soundmanager2-jsmin.js
+  - /public/soundmanager/script/soundmanager2.js
+  - /public/soundmanager/demo/bar-ui/script/bar-ui.js
+  - /public/soundmanager/demo/bar-ui/script/bar-ui.js
