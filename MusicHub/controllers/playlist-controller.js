@@ -2,9 +2,24 @@ var Playlist = require('../models/playlist');
 var ControllerConnector = require('./connector-controller');
 var Music = require('../models/music');
 
+/**
+ * Define Playlist Controller for MVC
+ */
 class PlaylistController {
-	constructor() {}
-	
+
+    /**
+     * Constructor
+     */
+    constructor() {}
+
+    /**
+     * Create the playlist with eq.body.playlistName as name for the user corresponding the session.email
+     * If success, send an OK json message with the status code 200
+     * If fail, send an error json message with the status code 400
+     *
+     * @param req  Http request
+     * @param res  Http response
+     */
 	createPlaylist(req,res) {
 		var playlistName = req.body.playlistName || "";
 		if(playlistName === "") {
@@ -18,7 +33,15 @@ class PlaylistController {
 			return res.status(200).json({message:"OK"});
 		});
 	}
-	
+
+    /**
+     * Delete the playlist corresponding to req.body.playlistName for the user corresponding the session.email
+     * If success, send an OK json message with the status code 200
+     * If fail, send an error json message with the status code 400
+     *
+     * @param req  Http request
+     * @param res  Http response
+     */
 	deletePlaylist(req,res) {
 		var playlistName = req.body.playlistName || "";
 		if(playlistName === "") {
@@ -32,7 +55,17 @@ class PlaylistController {
 			return res.status(200).json({message:"OK"});
 		});
 	}
+
+
 	//TODO : Creer un objet error
+    /**
+     * Find all playlists corresponding of the user corresponding the session.email
+     * If success, send an OK json message with the status code 200
+     * If fail, send an error json message with the status code 500
+     *
+     * @param req  Http request
+     * @param res  Http response
+     */
     findPlaylists(req, res) {
 		var email = req.session.email;
 		var playlist = new Playlist("", email, []);
@@ -43,7 +76,16 @@ class PlaylistController {
 			return res.status(200).json(playlists);
 		});
 	}
-    
+
+    /**
+     * Find the playlist corresponding to req.body.playlistName for the user corresponding the session.email
+     * If success, send an OK json message with the status code 200
+     * If fail, send an error json message with the status code 500
+     * If no playlist corresponding, send an error json message with the status code 400
+     *
+     * @param req  Http request
+     * @param res  Http response
+     */
     findOnePlaylist(req, res) {
     	var email = req.session.email;
     	var playlistName = req.params.playlistName || "";
@@ -56,12 +98,21 @@ class PlaylistController {
                 return res.status(500).json({message:"Error during the playlist recovery."});
 			}
 			if(!playlists || playlists.length <= 0) {
-				return res.json({message:"The playlist doesn't exist"});
+				return res.status(400).json({message:"The playlist doesn't exist"});
 			}
 			return res.status(200).json(playlists[0]);
 		});
     }
-    
+
+    /**
+     * Add a music corresponding to req.body.musicId, req.body.musicPlatform to the playlist corresponding
+     * to req.body.playlistName for the user corresponding the session.email
+     * If success, send an OK json message with the status code 200
+     * If fail, send an error json message with the status code 500
+     *
+     * @param req  Http request
+     * @param res  Http response
+     */
     addMusic(req,res) {
     	var musicId = req.body.musicId || "";
     	var musicPlatform = req.body.musicPlatform || "";
@@ -83,7 +134,17 @@ class PlaylistController {
 			});
 		});
     }
-    
+
+    /**
+     * Delete a music (first apparition) corresponding to req.body.musicId, req.body.musicPlatform from the playlist
+     * corresponding to req.body.playlistName for the user corresponding the session.email
+     * If success, send an OK json message with the status code 200
+     * If fail, send an error json message with the status code 500
+     * If no playlist corresponding, send an error json message with the status code 400
+     *
+     * @param req  Http request
+     * @param res  Http response
+     */
     deleteMusic(req,res) {
         var musicId = req.body.musicId || "";
         var musicPlatform = req.body.musicPlatform || "";
@@ -103,7 +164,7 @@ class PlaylistController {
 }
 
 /**
- * Export the Playlist class
- * @type {PlaylistController} Model class of an user music Playlist
+ * Export the PlaylistController class
+ * @type {PlaylistController} Controller class of PlaylistController
  */
 module.exports = PlaylistController;
