@@ -1,7 +1,10 @@
 var request = require('request');
 var queryString = require('querystring');
 var Promise = require('promise');
-var Music = require('../models/music');
+var AbstractConnector = require('./abstract-connector');
+var modelsRequireMusicSettings = require('./modelsRequireMusicSettings');
+var Settings = modelsRequireMusicSettings.Settings;
+var Music = modelsRequireMusicSettings.Music;
 
 /**
  * Define the Deezer Music API Connector Class
