@@ -127,7 +127,7 @@ musicHub.musicsService = (function($) {
             dataType: "json",
             contentType: "application/json; charset=utf-8",
             data: JSON.stringify({
-                name: playlistName
+                playlistName: playlistName
             })
         })
         .done(function (success) {
@@ -156,8 +156,8 @@ musicHub.musicsService = (function($) {
             dataType: "json",
             contentType: "application/json; charset=utf-8",
             data: JSON.stringify({
-                name: playlistName,
-                id: music.id,
+                playlistName: playlistName,
+                musicId: music.id,
                 platform: music.platform
             })
         })
@@ -173,23 +173,22 @@ musicHub.musicsService = (function($) {
 
     /**
      * Delete a music from the playlist associated with playlistName
-     * @param playlistApi   Api name of the music to delete
-     * @param playlistName  Playlist name of the music to delete
-     * @param musicId       Id of the music to delete
-     * @param callback      Function called when music is removed or if failed.
-     *                      Called with the error json with "message" attribute if fail or null if success as parameter.
+     * @param musicPlatform    Platform/   Api name of the music to delete
+     * @param playlistName     Playlist name of the music to delete
+     * @param musicId          Id of the music to delete
+     * @param callback         Function called when music is removed or if failed. Called with the error json
+     *                         with "message" attribute if fail or null if success as parameter.
      */
-    self.deleteMusicFromPlaylist = function(playlistApi, playlistName, musicId, callback) {
+    self.deleteMusicFromPlaylist = function(musicPlatform, playlistName, musicId, callback) {
         $.ajax({
             url: "/playlist/music",
             type: "Delete",
             dataType: "json",
             contentType: "application/json; charset=utf-8",
             data: JSON.stringify({
-                //TODO refactoring json api names
-                name: playlistName,
-                id: musicId,
-                platform: playlistApi
+                playlistName: playlistName,
+                musicId: musicId,
+                musicPlatform: musicPlatform
             })
         })
         .done(function(success) {
@@ -217,8 +216,7 @@ musicHub.musicsService = (function($) {
             dataType: "json",
             contentType: "application/json; charset=utf-8",
             data: JSON.stringify({
-                //TODO refactoring json api names
-                name: playlistName,
+                playlistName: playlistName,
             })
         })
         .done(function(success) {

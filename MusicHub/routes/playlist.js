@@ -15,7 +15,7 @@ router.get('/', function(req, res) {
 	controller.findPlaylists(req, res);
 });
 
-router.get('/:name', function(req, res) {
+router.get('/:playlistName', function(req, res) {
 	controller.findOnePlaylist(req, res);
 });
 

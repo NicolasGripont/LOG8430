@@ -1,7 +1,3 @@
-/**
- * Created by Nico on 05/11/2017.
- */
-
 var request = require('request');
 var queryString = require('querystring');
 var AbstractConnector = require('./abstract-connector');

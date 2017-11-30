@@ -6,11 +6,11 @@ class PlaylistController {
 	constructor() {}
 	
 	createPlaylist(req,res) {
-		var name = req.body.name || "";
-		if(name === "") {
-			return res.status(400).json({message:"The parameter name is invalid."});
+		var playlistName = req.body.playlistName || "";
+		if(playlistName === "") {
+			return res.status(400).json({message:"The parameter playlistName is invalid."});
 		}
-		var list = new Playlist(name,req.session.email,[]);
+		var list = new Playlist(playlistName,req.session.email,[]);
 		list.save(function(err) {
 			if(err) {
                 return res.status(400).json({message:"Playlist name already used."});
@@ -20,11 +20,11 @@ class PlaylistController {
 	}
 	
 	deletePlaylist(req,res) {
-		var name = req.body.name || "";
-		if(name === "") {
-            return res.status(400).json({message:"The parameter name is invalid."});
+		var playlistName = req.body.playlistName || "";
+		if(playlistName === "") {
+            return res.status(400).json({message:"The parameter playlistName is invalid."});
 		}
-		var list = new Playlist(name,req.session.email,[]);
+		var list = new Playlist(playlistName,req.session.email,[]);
 		list.remove(function(err) {
 			if(err) {
                 return res.status(500).json({message:"Error during the suppression."});
@@ -46,11 +46,11 @@ class PlaylistController {
     
     findOnePlaylist(req, res) {
     	var email = req.session.email;
-    	var name = req.params.name || "";
-    	if(name === "") {
-            return res.status(400).json({message:"The name is not valid."});
+    	var playlistName = req.params.playlistName || "";
+    	if(playlistName === "") {
+            return res.status(400).json({message:"The playlist name is not valid."});
     	}
-		var playlist = new Playlist(name, email, []);
+		var playlist = new Playlist(playlistName, email, []);
 		playlist.findPlaylist(function(error, playlists) {
 			if(error) {
                 return res.status(500).json({message:"Error during the playlist recovery."});
@@ -63,15 +63,15 @@ class PlaylistController {
     }
     
     addMusic(req,res) {
-    	var id = req.body.id || "";
-    	var platform = req.body.platform || "";
-    	var namePlaylist = req.body.name || "";
-    	if(id === "" || platform === "" || namePlaylist === "") {
+    	var musicId = req.body.musicId || "";
+    	var musicPlatform = req.body.musicPlatform || "";
+    	var playlistName = req.body.playlistName || "";
+    	if(musicId === "" || musicPlatform === "" || playlistName === "") {
     		return res.status(400).json({message:"The parameters are not valid."});
     	}
-		var playlist = new Playlist(namePlaylist, req.session.email, []);
+		var playlist = new Playlist(playlistName, req.session.email, []);
 		var connector = new ControllerConnector();
-		connector.findTrack(id,platform,req.session.email, function(err,music) {
+		connector.findTrack(musicId,musicPlatform,req.session.email, function(err,music) {
 			if(err) {
                 return res.status(500).json({message:"Error during song recovery."});
 			}
@@ -85,19 +85,19 @@ class PlaylistController {
     }
     
     deleteMusic(req,res) {
-    	var id = req.body.id || "";
-    	var platform = req.body.platform || "";
-    	var namePlaylist = req.body.name || "";
-    	if(id === "" || platform === "" || namePlaylist === "") {
-    		return res.status(400).json({message:"The parameters are not valid."});
+        var musicId = req.body.musicId || "";
+        var musicPlatform = req.body.musicPlatform || "";
+        var playlistName = req.body.playlistName || "";
+    	if(musicId === "" || musicPlatform === "" || playlistName === "") {
+    		return res.status(400).json({message:"The parameter playlistName is invalid."});
     	}
-    	var music = new Music(id, platform, "", [], {}, 0, "");
-		var playlist = new Playlist(namePlaylist, req.session.email, []);
+    	var music = new Music(musicId, musicPlatform, "", [], {}, 0, "");
+		var playlist = new Playlist(playlistName, req.session.email, []);
 		playlist.deleteMusic(music, function(err) {
 			if(err) {
                 return res.status(500).json({message:"Error during the update."});
 			}
-			return res.status(200).json({message:"ok"});
+			return res.status(200).json({message:"OK"});
 		});
     }
 }
