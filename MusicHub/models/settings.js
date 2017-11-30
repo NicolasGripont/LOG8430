@@ -54,6 +54,6 @@ class Settings {
 
 /**
  * Export the Settings class
- * @type {User} Model class of the user Settings
+ * @type {Settings} Model class of the user Settings
  */
 module.exports = Settings;

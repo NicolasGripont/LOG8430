@@ -27,6 +27,6 @@ class Music {
 
 /**
  * Export the Music class
- * @type {User} Model class of a Music
+ * @type {Music} Model class of a Music
  */
 module.exports = Music;

@@ -7,20 +7,37 @@ var Music = require('../models/music');
 
 class SpotifyConnector extends AbstractConnector {
 
+
+    /**
+     * Constructor
+     *
+     * @param clientId       Client ID of application on https://beta.developer.spotify.com/dashboard/applications
+     * @param clientSecret   Client Secret of application on https://beta.developer.spotify.com/dashboard/applications
+     * @param loginUrl       Spotify API login URL
+     * @param tokenUrl       Spotify API token URL
+     * @param scope          Permission asked
+     * @param searchUrl      Spotify Search URL
+     */
     //TODO object parameter : cf cours de clean code
-    constructor(clientId,clientSecret,loginUrl,tokenUrl,scope, searchUrl){
+    constructor(clientId,clientSecret,loginUrl,tokenUrl,scope){
         super();
         this.clientId = clientId;
         this.clientSecret = clientSecret;
         this.loginUrl = loginUrl;
         this.tokenUrl = tokenUrl;
         this.scope = scope;
-        this.searchUrl = searchUrl;
         this.accessToken = undefined;
         this.refreshToken = undefined;
         this.expires = undefined;
     }
 
+    /**
+     * Log the user on the corresponding Api
+     *
+     * @param req           Http request
+     * @param res           Http response
+     * @param redirectUri   Redirect Uri to redirect when the user has logged on the API
+     */
     login(req, res, redirectUri) {
         var scope = 'user-read-private user-read-email';
         res.redirect(this.loginUrl +
@@ -32,6 +49,17 @@ class SpotifyConnector extends AbstractConnector {
             }));
     }
 
+    /**
+     * Method to use when the user has logged on the API. You should ask API parameters such as token
+     * in this method
+     *
+     * @param req              Http request
+     * @param res              Http response
+     * @param successCallback  Function called when the connextion is successful.
+     *                         Called with the req, res parameter and the json result.
+     * @param errorCallback    Function called when the connextion is failed.
+     *                         Called with the req, res parameter, the status code and the json result.
+     */
     loggedIn(req, res, successCallback, errorCallback) {
         var self = this;
         var code = req.query.code || null;
@@ -69,6 +97,16 @@ class SpotifyConnector extends AbstractConnector {
         });
     }
 
+    /**
+     * Log the user out of the corresponding Api
+     *
+     * @param req           Http request
+     * @param res           Http response
+     * @param successCallback  Function called when the log out is successful.
+     *                         Called with the req, res parameter and the json result.
+     * @param errorCallback    Function called when the log out is failed.
+     *                         Called with the req, res parameter, the status code and the json result.
+     */
     logout(req, res, successCallback, errorCallback) {
         var settings = new Settings(req.session.email);
 
@@ -81,18 +119,29 @@ class SpotifyConnector extends AbstractConnector {
         });
     }
 
+    /**
+     * Set the connector settings
+     *
+     * @param settings Settings to set
+     */
+    //TODO Settings attribute better than set multiple attributes here
     setSettings(settings) {
         this.accessToken = settings.accessToken;
         this.refreshToken = settings.refreshToken;
         this.expires = settings.expires;
     }
 
-    searchTracks(title) {
+    /**
+     * Search tracks corresponding on the title on the API
+     *
+     * @param query Query to search (keywords)
+     */
+    searchTracks(query) {
         var self = this;
         return new Promise(function(resolve, reject) {
             var options = {
                 url: "https://api.spotify.com/v1/search?"+
-                    queryString.stringify({q : title, type : "track"}),
+                    queryString.stringify({q : query, type : "track"}),
                 json: true,
                 headers: {Authorization: "Bearer "+self.accessToken}
             };
@@ -112,9 +161,14 @@ class SpotifyConnector extends AbstractConnector {
         });
     }
 
-    formatTracks(spotifyTracks) {
+    /**
+     * Format the api json tracks in json Model.Music array
+     *
+     * @param apiTracks Api json tracks to format
+     */
+    formatTracks(apiTracks) {
         var tracks = [];
-        for(var i = 0; i < spotifyTracks.length; i++) {
+        for(var i = 0; i < apiTracks.length; i++) {
             var id = -1;
             var platform = "spotify";
             var title = "";
@@ -124,19 +178,19 @@ class SpotifyConnector extends AbstractConnector {
             var previewUrl = "";
 
 
-            id = spotifyTracks[i].id;
-            title = spotifyTracks[i].name;
-            if(spotifyTracks[i].album) {
-            	album.name = spotifyTracks[i].album.name;
+            id = apiTracks[i].id;
+            title = apiTracks[i].name;
+            if(apiTracks[i].album) {
+            	album.name = apiTracks[i].album.name;
             	album.artists = [];
             }
-            if(spotifyTracks[i].artists) {
-                for(var j = 0; j < spotifyTracks[i].artists.length; j++) {
-                    artists.push({name:spotifyTracks[i].artists[j].name});
+            if(apiTracks[i].artists) {
+                for(var j = 0; j < apiTracks[i].artists.length; j++) {
+                    artists.push({name:apiTracks[i].artists[j].name});
                 }
             }
-            duration = spotifyTracks[i].duration_ms;
-            previewUrl = spotifyTracks[i].preview_url;
+            duration = apiTracks[i].duration_ms;
+            previewUrl = apiTracks[i].preview_url;
 
             const track = new Music(id, platform, title, artists, album, duration, previewUrl);
 
@@ -144,7 +198,12 @@ class SpotifyConnector extends AbstractConnector {
         }
         return tracks;
     }
-    
+
+    /**
+     * Find track by id on the API
+     *
+     * @param id Id of the track to find
+     */
     findTrack(id) {
     	var self = this;
         return new Promise(function(resolve, reject) {

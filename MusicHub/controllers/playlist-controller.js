@@ -102,4 +102,8 @@ class PlaylistController {
     }
 }
 
+/**
+ * Export the Playlist class
+ * @type {PlaylistController} Model class of an user music Playlist
+ */
 module.exports = PlaylistController;

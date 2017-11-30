@@ -19,7 +19,7 @@ class ConnectorController {
 
         var spotifyConfig = config.spotify;
         this.connectors['spotify'] = new SpotifyConnector(spotifyConfig.clientId, spotifyConfig.clientSecret,
-            spotifyConfig.loginUrl, spotifyConfig.tokenUrl, spotifyConfig.scope, spotifyConfig.searchUrl);
+            spotifyConfig.loginUrl, spotifyConfig.tokenUrl, spotifyConfig.scope);
     }
 
     executeAction(req, res, api, action) {

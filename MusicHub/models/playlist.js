@@ -192,6 +192,6 @@ class Playlist {
 
 /**
  * Export the Playlist class
- * @type {User} Model class of an user music Playlist
+ * @type {Playlist} Model class of an user music Playlist
  */
 module.exports = Playlist;
