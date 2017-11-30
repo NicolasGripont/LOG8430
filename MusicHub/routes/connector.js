@@ -1,6 +1,6 @@
 var express = require('express');
 var validator = require('validator');
-var ConnectorController = require('../controllers/connector-controller');
+var ConnectorController = require('../controllers/controllerSingleton').ConnectorController;
 
 var router = express.Router();
 

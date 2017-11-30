@@ -3,9 +3,7 @@ var sinon = require ('sinon');
 var chai = require('chai');
 var request = require('request');
 var queryString = require('querystring');
-var Music = require('../music');
-var Settings = require('../settings');
-var SpotifyConnector = require('../spotify-connector');
+var SpotifyConnector = require('../modelsSingleton').SpotifyConnector;
 
 describe('Spotify Connector Model', function() {
     var spotifyConnector;

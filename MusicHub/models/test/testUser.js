@@ -2,7 +2,7 @@ var assert = require('assert');
 var sinon = require ('sinon');
 var chai = require('chai');
 var DbUser = require('../../models_db/modelSingleton').DbUser;
-var User = require('../user');
+var User = require('../modelsSingleton').User;
 
 describe('User Model', function() {
 	

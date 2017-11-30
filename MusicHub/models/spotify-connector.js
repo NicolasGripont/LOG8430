@@ -1,9 +1,10 @@
 var request = require('request');
 var queryString = require('querystring');
-var AbstractConnector = require('./abstract-connector');
-var Settings = require('../models/settings');
 var Promise = require('promise');
-var Music = require('../models/music');
+var AbstractConnector = require('./abstract-connector');
+var modelSingleton2 = require('./modelsRequireMusicSettings');
+var Settings = modelSingleton2.Settings;
+var Music = modelSingleton2.Music;
 
 class SpotifyConnector extends AbstractConnector {
 

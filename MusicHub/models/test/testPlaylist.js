@@ -3,7 +3,7 @@ var sinon = require ('sinon');
 var chai = require('chai');
 var Playlist = require('../playlist');
 var DbPlaylist = require('../../models_db/modelSingleton').DbPlaylist;
-var Music = require('../music');
+var Music = require('../modelsSingleton').Music;
 
 describe('Playlist Model', function() {
 	

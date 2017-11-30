@@ -1,5 +1,5 @@
 var assert = require('assert');
-var Music = require('../music');
+var Music = require('../modelsSingleton').Music;
 
 describe('Music Model', function() {
     describe('constructor', function() {

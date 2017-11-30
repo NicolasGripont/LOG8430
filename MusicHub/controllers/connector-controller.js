@@ -2,10 +2,11 @@
  * Created by Nico on 05/11/2017.
  */
 var validator = require('validator');
-var DeezerConnector = require('../models/deezer-connector');
-var SpotifyConnector = require('../models/spotify-connector');
+var modelSingleton = require('../models/modelsSingleton');
+var DeezerConnector = modelSingleton.DeezerConnector;
+var SpotifyConnector = modelSingleton.SpotifyConnector;
 var config = require('../config.json');
-var SettingDB = require('../models_db/settings');
+var SettingDB = require('../models_db/modelSingleton').DbSettings;
 var Promise = require('promise');
 
 class ConnectorController {

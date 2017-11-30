@@ -2,7 +2,7 @@ var assert = require('assert');
 var sinon = require ('sinon');
 var chai = require('chai');
 var DbSettings = require('../../models_db/modelSingleton').DbSettings;
-var Settings = require('../settings');
+var Settings = require('../modelsSingleton').Settings;
 
 describe('Settings Model', function() {
 	

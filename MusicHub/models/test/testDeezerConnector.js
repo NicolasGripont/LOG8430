@@ -2,9 +2,7 @@ var assert = require('assert');
 var sinon = require ('sinon');
 var chai = require('chai');
 var request = require('request');
-var Music = require('../music');
-var Settings = require('../settings');
-var DeezerConnector = require('../deezer-connector');
+var DeezerConnector = require('../modelsSingleton').DeezerConnector;
 
 describe('Deezer Connector Model', function() {
 

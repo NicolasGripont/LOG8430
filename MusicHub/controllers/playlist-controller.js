@@ -1,6 +1,6 @@
 var Playlist = require('../models/playlist');
-var ControllerConnector = require('./connector-controller');
-var Music = require('../models/music');
+var ControllerConnector = require('./controllerSingleton').ConnectorController;
+var Music = require('../models/modelsSingleton').Music;
 
 class PlaylistController {
 	constructor() {}

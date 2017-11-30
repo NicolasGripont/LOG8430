@@ -1,7 +1,5 @@
 var request = require('request');
 var queryString = require('querystring');
-var AbstractConnector = require('./abstract-connector');
-var Settings = require('../models/settings');
 var Promise = require('promise');
 var Music = require('../models/music');
 
@@ -9,7 +7,7 @@ var Music = require('../models/music');
  * Define the Deezer Music API Connector Class
  * This class defines the connector whose purpose is to interact with the Deezer music API
  */
-class DeezerConnector extends AbstractConnector{
+class DeezerConnector extends AbstractConnector {
 
     /**
      * Constructor
