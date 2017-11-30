@@ -39,9 +39,13 @@ describe('User Model', function() {
         	var retour = [user];
         	stub[0].withArgs({email:user.email, password:user.password}).callsArgWith(1,null,retour);
         	user.logIn(function(err,value) {
-        		chai.expect(null).to.deep.equal(err);
-        		chai.expect(true).to.deep.equal(value);
-        		done();
+        		try {
+        			chai.expect(err).to.deep.equal(null);
+            		chai.expect(value).to.deep.equal(true);
+            		done();
+        		}catch(err) {
+        			done(err);
+        		}
         	});
         });
         
@@ -50,8 +54,12 @@ describe('User Model', function() {
         	var retour = [user];
         	stub[0].withArgs({email:user.email, password:user.password}).callsArgWith(1,{error:"error"});
         	user.logIn(function(err,value) {
-        		chai.expect({error:"error"}).to.deep.equal(err);
-        		done();
+        		try {
+        			chai.expect(err).to.deep.equal({error:"error"});
+            		done();
+        		}catch(err) {
+        			done(err);
+        		}
         	});
         });
         
@@ -60,9 +68,13 @@ describe('User Model', function() {
         	var retour = [];
         	stub[0].withArgs({email:user.email, password:user.password}).callsArgWith(1,null,retour);
         	user.logIn(function(err,value) {
-        		chai.expect(null).to.deep.equal(err);
-        		chai.expect(false).to.deep.equal(value);
-        		done();
+        		try {
+        			chai.expect(err).to.deep.equal(null);
+            		chai.expect(value).to.deep.equal(false);
+            		done();
+        		}catch(err) {
+        			done(err);
+        		}
         	});
         });
     });
@@ -75,10 +87,14 @@ describe('User Model', function() {
         	stub[0].callsArgWith(0,null);
         	stub[1].withArgs({email:user.email, password:user.password}).returns(newuser);
         	user.save(function(err) {
-        		chai.expect(null).to.deep.equal(err);
-        		chai.expect(newuser.email).to.deep.equal(user.email);
-        		chai.expect(newuser.password).to.deep.equal(user.password);
-        		done();
+        		try {
+        			chai.expect(err).to.deep.equal(null);
+            		chai.expect(newuser.email).to.deep.equal(user.email);
+            		chai.expect(newuser.password).to.deep.equal(user.password);
+            		done();
+        		}catch(err) {
+        			done(err);
+        		}
         	});
         });
         
@@ -86,8 +102,12 @@ describe('User Model', function() {
         	stub.push(sinon.stub(DbUser.prototype,"save"));
         	stub[0].callsArgWith(0,{error:"error"});
         	user.save(function(err) {
-        		chai.expect({error:"error"}).to.deep.equal(err);
-        		done();
+        		try {
+        			chai.expect(err).to.deep.equal({error:"error"});
+            		done();
+        		}catch(err) {
+        			done(err);
+        		}
         	});
         });
     });

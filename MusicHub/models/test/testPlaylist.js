@@ -42,8 +42,12 @@ describe('Playlist Model', function() {
         	var retour = [playlist];
         	stub[0].withArgs({name:playlist.name, userEmail:playlist.user}).callsArgWith(1,null,retour);
         	playlist.save(function(err) {
-        		chai.expect({message:"The playlist already exist"}).to.deep.equal(err);
-        		done();
+        		try {
+        			chai.expect(err).to.deep.equal({message:"The playlist already exist"});
+            		done();
+        		}catch(err) {
+        			done(err);
+        		}
         	});
         });
         
@@ -51,8 +55,12 @@ describe('Playlist Model', function() {
         	stub.push(sinon.stub(DbPlaylist,"find"));
         	stub[0].withArgs({name:playlist.name, userEmail:playlist.user}).callsArgWith(1,{error:"error"});
         	playlist.save(function(err) {
-        		chai.expect({error:"error"}).to.deep.equal(err);
-        		done();
+        		try {
+        			chai.expect(err).to.deep.equal({error:"error"});
+            		done();
+        		}catch(err) {
+        			done(err);
+        		}
         	});
         });
         
@@ -63,9 +71,13 @@ describe('Playlist Model', function() {
         	stub[0].withArgs({name:playlist.name, userEmail:playlist.user}).callsArgWith(1,null,retour);
         	stub[1].callsArgWith(0,{error:"error"});
         	playlist.save(function(err) {
-        		assert.equal(stub[1].called,true);
-        		chai.expect({error:"error"}).to.deep.equal(err);
-        		done();
+        		try {
+        			assert.equal(stub[1].called,true);
+            		chai.expect(err).to.deep.equal({error:"error"});
+            		done();
+        		}catch(err) {
+        			done(err);
+        		}
         	});
         });
         
@@ -76,9 +88,13 @@ describe('Playlist Model', function() {
         	stub[0].withArgs({name:playlist.name, userEmail:playlist.user}).callsArgWith(1,null,retour);
         	stub[1].callsArgWith(0,undefined);
         	playlist.save(function(err) {
-        		assert.equal(stub[1].called,true);
-        		chai.expect(undefined).to.deep.equal(err);
-        		done();
+        		try {
+        			assert.equal(stub[1].called,true);
+            		chai.expect(err).to.deep.equal(undefined);
+            		done();
+        		}catch(err) {
+        			done(err);
+        		}
         	});
         });
     });
@@ -92,9 +108,13 @@ describe('Playlist Model', function() {
         	stub[0].withArgs({name:playlist.name, userEmail:playlist.user}).callsArgWith(1,null,retour);
         	stub[1].withArgs({name:playlist.name, userEmail:playlist.user}).callsArgWith(1,undefined);
         	playlist.remove(function(err) {
-        		assert.equal(stub[1].called,true);
-        		chai.expect(undefined).to.deep.equal(err);
-        		done();
+        		try {
+        			assert.equal(stub[1].called,true);
+            		chai.expect(err).to.deep.equal(undefined);
+            		done();
+        		}catch(err) {
+        			done(err);
+        		}
         	});
         });
     	
@@ -103,8 +123,12 @@ describe('Playlist Model', function() {
         	var retour = [];
         	stub[0].withArgs({name:playlist.name, userEmail:playlist.user}).callsArgWith(1,null,retour);
         	playlist.remove(function(err) {
-        		chai.expect({message:"The playlist doesn't exist"}).to.deep.equal(err);
-        		done();
+        		try {
+        			chai.expect(err).to.deep.equal({message:"The playlist doesn't exist"});
+            		done();
+        		}catch(err) {
+        			done(err);
+        		}
         	});
         });
     	
@@ -112,8 +136,12 @@ describe('Playlist Model', function() {
         	stub.push(sinon.stub(DbPlaylist,"find"));
         	stub[0].withArgs({name:playlist.name, userEmail:playlist.user}).callsArgWith(1,{error:"error"});
         	playlist.remove(function(err) {
-        		chai.expect({error:"error"}).to.deep.equal(err);
-        		done();
+        		try {
+        			chai.expect(err).to.deep.equal({error:"error"});
+            		done();
+        		}catch(err) {
+        			done(err);
+        		}
         	});
         });
         
@@ -124,9 +152,13 @@ describe('Playlist Model', function() {
         	stub[0].withArgs({name:playlist.name, userEmail:playlist.user}).callsArgWith(1,null,retour);
         	stub[1].withArgs({name:playlist.name, userEmail:playlist.user}).callsArgWith(1,{error:"error"});
         	playlist.remove(function(err) {
-        		assert.equal(stub[1].called,true);
-        		chai.expect({error:"error"}).to.deep.equal(err);
-        		done();
+        		try {
+        			assert.equal(stub[1].called,true);
+            		chai.expect(err).to.deep.equal({error:"error"});
+            		done();
+        		}catch(err) {
+        			done(err);
+        		}
         	});
         });
         
@@ -138,8 +170,12 @@ describe('Playlist Model', function() {
         	stub.push(sinon.stub(DbPlaylist,"find"));
         	stub[0].withArgs({userEmail:playlist.user}).callsArgWith(1,{error:"error"});
         	playlist.findAllPlaylists(function(err) {
-        		chai.expect({error:"error"}).to.deep.equal(err);
-        		done();
+        		try {
+        			chai.expect(err).to.deep.equal({error:"error"});
+            		done();
+        		}catch(err) {
+        			done(err);
+        		}
         	});
         });
     	
@@ -147,9 +183,13 @@ describe('Playlist Model', function() {
         	stub.push(sinon.stub(DbPlaylist,"find"));
         	stub[0].withArgs({userEmail:playlist.user}).callsArgWith(1,null,playlist);
         	playlist.findAllPlaylists(function(err,pl) {
-        		chai.expect(null).to.deep.equal(err);
-        		chai.expect(playlist).to.deep.equal(pl);
-        		done();
+        		try {
+        			chai.expect(err).to.deep.equal(null);
+            		chai.expect(pl).to.deep.equal(playlist);
+            		done();
+        		}catch(err) {
+        			done(err);
+        		}
         	});
         });
     });
@@ -160,8 +200,12 @@ describe('Playlist Model', function() {
         	stub.push(sinon.stub(DbPlaylist,"find"));
         	stub[0].withArgs({name:playlist.name, userEmail:playlist.user}).callsArgWith(1,{error:"error"});
         	playlist.findPlaylist(function(err) {
-        		chai.expect({error:"error"}).to.deep.equal(err);
-        		done();
+        		try {
+        			chai.expect(err).to.deep.equal({error:"error"});
+            		done();
+        		}catch(err) {
+        			done(err);
+        		}
         	});
         });
     	
@@ -169,9 +213,13 @@ describe('Playlist Model', function() {
         	stub.push(sinon.stub(DbPlaylist,"find"));
         	stub[0].withArgs({name:playlist.name, userEmail:playlist.user}).callsArgWith(1,null,playlist);
         	playlist.findPlaylist(function(err,pl) {
-        		chai.expect(null).to.deep.equal(err);
-        		chai.expect(playlist).to.deep.equal(pl);
-        		done();
+        		try {
+        			chai.expect(err).to.deep.equal(null);
+            		chai.expect(pl).to.deep.equal(playlist);
+            		done();
+        		}catch(err) {
+        			done(err);
+        		}
         	});
         });
     });
@@ -184,8 +232,12 @@ describe('Playlist Model', function() {
         	var music = new Music("abcd", "spotify", "", [], {}, 0, "");
         	stub[0].withArgs({name:playlist.name, userEmail:playlist.user}).callsArgWith(1,null,retour);
         	playlist.addMusic(music, function(err) {
-        		chai.expect({message:"The playlist doesn't exist"}).to.deep.equal(err);
-        		done();
+        		try {
+        			chai.expect(err).to.deep.equal({message:"The playlist doesn't exist"});
+            		done();
+        		}catch(err) {
+        			done(err);
+        		}
         	});
         });
         
@@ -194,8 +246,12 @@ describe('Playlist Model', function() {
         	stub[0].withArgs({name:playlist.name, userEmail:playlist.user}).callsArgWith(1,{error:"error"});
         	var music = new Music("abcd", "spotify", "", [], {}, 0, "");
         	playlist.addMusic(music, function(err) {
-        		chai.expect({error:"error"}).to.deep.equal(err);
-        		done();
+        		try {
+        			chai.expect(err).to.deep.equal({error:"error"});
+            		done();
+        		}catch(err) {
+        			done(err);
+        		}
         	});
         });
         
@@ -209,9 +265,13 @@ describe('Playlist Model', function() {
         	stub[1].callsArgWith(0,{error:"error"});
         	var music = new Music("abcd", "spotify", "", [], {}, 0, "");
         	playlist.addMusic(music, function(err) {
-        		assert.equal(stub[1].called,true);
-        		chai.expect({error:"error"}).to.deep.equal(err);
-        		done();
+        		try {
+        			assert.equal(stub[1].called,true);
+            		chai.expect(err).to.deep.equal({error:"error"});
+            		done();
+        		}catch(err) {
+        			done(err);
+        		}
         	});
         });
         
@@ -225,10 +285,14 @@ describe('Playlist Model', function() {
         	stub[1].callsArgWith(0,undefined);
         	var music = new Music("abcd", "spotify", "", [], {}, 0, "");
         	playlist.addMusic(music, function(err) {
-        		assert.equal(stub[1].called,true);
-        		chai.expect(undefined).to.deep.equal(err);
-        		chai.expect(obj.musics).to.deep.equal([music]);
-        		done();
+        		try {
+        			assert.equal(stub[1].called,true);
+            		chai.expect(err).to.deep.equal(undefined);
+            		chai.expect(obj.musics).to.deep.equal([music]);
+            		done();
+        		}catch(err) {
+        			done(err);
+        		}
         	});
         });
     });
@@ -242,8 +306,12 @@ describe('Playlist Model', function() {
         	var music = new Music("abcd", "spotify", "", [], {}, 0, "");
         	stub[0].withArgs({name:playlist.name, userEmail:playlist.user}).callsArgWith(1,null,retour);
         	playlist.deleteMusic(music, function(err) {
-        		chai.expect({message:"The playlist doesn't exist"}).to.deep.equal(err);
-        		done();
+        		try {
+        			chai.expect(err).to.deep.equal({message:"The playlist doesn't exist"});
+            		done();
+        		}catch(err) {
+        			done(err);
+        		}
         	});
         });
         
@@ -252,8 +320,12 @@ describe('Playlist Model', function() {
         	stub[0].withArgs({name:playlist.name, userEmail:playlist.user}).callsArgWith(1,{error:"error"});
         	var music = new Music("abcd", "spotify", "", [], {}, 0, "");
         	playlist.deleteMusic(music, function(err) {
-        		chai.expect({error:"error"}).to.deep.equal(err);
-        		done();
+        		try {
+        			chai.expect(err).to.deep.equal({error:"error"});
+            		done();
+        		}catch(err) {
+        			done(err);
+        		}
         	});
         });
         
@@ -265,8 +337,12 @@ describe('Playlist Model', function() {
 	    	var retour = [obj];
 	    	stub[0].withArgs({name:playlist.name, userEmail:playlist.user}).callsArgWith(1,null,retour);
 	    	playlist.deleteMusic(music, function(err) {
-	    		chai.expect({message:"The music is not in the playlist"}).to.deep.equal(err);
-	    		done();
+	    		try {
+	    			chai.expect(err).to.deep.equal({message:"The music is not in the playlist"});
+		    		done();
+        		}catch(err) {
+        			done(err);
+        		}
 	    	});
         });
         
@@ -280,9 +356,13 @@ describe('Playlist Model', function() {
         	stub[1].callsArgWith(0,{error:"error"});
         	var music = new Music("abcd", "spotify", "", [], {}, 0, "");
         	playlist.deleteMusic(music, function(err) {
-        		assert.equal(stub[1].called,true);
-        		chai.expect({error:"error"}).to.deep.equal(err);
-        		done();
+        		try {
+        			assert.equal(stub[1].called,true);
+            		chai.expect(err).to.deep.equal({error:"error"});
+            		done();
+        		}catch(err) {
+        			done(err);
+        		}
         	});
         });
         
@@ -296,10 +376,14 @@ describe('Playlist Model', function() {
         	stub[1].callsArgWith(0,undefined);
         	var music = new Music("abcd", "spotify", "", [], {}, 0, "");
         	playlist.deleteMusic(music, function(err) {
-        		assert.equal(stub[1].called,true);
-        		chai.expect(undefined).to.deep.equal(err);
-        		chai.expect(obj.musics).to.deep.equal([]);
-        		done();
+        		try {
+        			assert.equal(stub[1].called,true);
+            		chai.expect(err).to.deep.equal(undefined);
+            		chai.expect(obj.musics).to.deep.equal([]);
+            		done();
+        		}catch(err) {
+        			done(err);
+        		}
         	});
         });
     });

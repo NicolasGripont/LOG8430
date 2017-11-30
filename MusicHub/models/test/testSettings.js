@@ -37,8 +37,12 @@ describe('Settings Model', function() {
         	stub.push(sinon.stub(DbSettings,"find"));
         	stub[0].withArgs({userEmail:settings.userEmail}).callsArgWith(1,{error:"error"});
         	settings.save(platform,options,function(err) {
-        		chai.expect({error:"error"}).to.deep.equal(err);
-        		done();
+        		try {
+        			chai.expect(err).to.deep.equal({error:"error"});
+            		done();
+        		}catch(err) {
+        			done(err);
+        		}
         	});
         });
         
@@ -51,9 +55,13 @@ describe('Settings Model', function() {
         	stub[0].withArgs({userEmail:settings.userEmail}).callsArgWith(1,null,retour);
         	stub[1].callsArgWith(0,{error:"error"});
         	settings.save(platform,options,function(err) {
-        		assert.equal(stub[1].called,true);
-        		chai.expect({error:"error"}).to.deep.equal(err);
-        		done();
+        		try {
+        			assert.equal(stub[1].called,true);
+            		chai.expect(err).to.deep.equal({error:"error"});
+            		done();
+        		}catch(err) {
+        			done(err);
+        		}
         	});
         });
         
@@ -66,9 +74,13 @@ describe('Settings Model', function() {
         	stub[0].withArgs({userEmail:settings.userEmail}).callsArgWith(1,null,retour);
         	stub[1].callsArgWith(0,undefined);
         	settings.save(platform,options,function(err) {
-        		assert.equal(stub[1].called,true);
-        		chai.expect(undefined).to.deep.equal(err);
-        		done();
+        		try {
+        			assert.equal(stub[1].called,true);
+            		chai.expect(err).to.deep.equal(undefined);
+            		done();
+        		}catch(err) {
+        			done(err);
+        		}
         	});
         });
         
@@ -82,9 +94,13 @@ describe('Settings Model', function() {
         	stub[0].withArgs({userEmail:settings.userEmail}).callsArgWith(1,null,retour);
         	stub[1].callsArgWith(0,undefined);
         	settings.save(platform,options,function(err) {
-        		assert.equal(stub[1].called,true);
-        		chai.expect(undefined).to.deep.equal(err);
-        		done();
+        		try {
+        			assert.equal(stub[1].called,true);
+            		chai.expect(err).to.deep.equal(undefined);
+            		done();
+        		}catch(err) {
+        			done(err);
+        		}
         	});
         });
     });

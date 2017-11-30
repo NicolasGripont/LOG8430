@@ -23,7 +23,6 @@ class DeezerConnector extends AbstractConnector{
     }
 
     login(req, res, redirectUri) {
-        console.log("DeezerConnector : " + redirectUri);
         res.redirect(this.loginUrl +
             queryString.stringify({
                 app_id: this.appId,
@@ -48,8 +47,6 @@ class DeezerConnector extends AbstractConnector{
                 }),
                 json: true
             };
-
-            console.log(options.url);
 
             request.get(options, function(error, response, body) {
                 self.accessToken = body.access_token;
@@ -151,9 +148,7 @@ class DeezerConnector extends AbstractConnector{
                         return reject(error);
                     }
                     var body = result.body;
-                    console.log(body);
                     var tracks = self.formatTracks([body]);
-                    console.log(tracks);
                     return resolve(tracks[0]);
                 })
             }
