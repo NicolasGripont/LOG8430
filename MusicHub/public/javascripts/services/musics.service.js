@@ -158,7 +158,7 @@ musicHub.musicsService = (function($) {
             data: JSON.stringify({
                 playlistName: playlistName,
                 musicId: music.id,
-                platform: music.platform
+                musicPlatform: music.platform
             })
         })
         .done(function(music) {
