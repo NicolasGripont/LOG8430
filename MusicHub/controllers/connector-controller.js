@@ -9,6 +9,7 @@ var SettingDB = require('../models_db/settings');
 var Promise = require('promise');
 
 class ConnectorController {
+
     constructor(){
         this.connectors = {};
 
@@ -49,10 +50,12 @@ class ConnectorController {
     }
 
     loggedIn(req, res, api) {
+        //TODO refactor (only one callback)
         this.connectors[api].loggedIn(req,res,this.succededLoggedIn,this.failedLoggedIn);
     }
 
     logout(req, res, api) {
+        //TODO refactor (only one callback)
         this.connectors[api].logout(req,res,this.succededLoggedIn,this.failedLoggedIn);
     }
 

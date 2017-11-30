@@ -30,7 +30,7 @@ describe('Playlist Model', function() {
     describe('constructor', function() {
         it('should have the correct attributes', function() {
             assert.equal(name,playlist.name);
-            assert.equal(user,playlist.user);
+            assert.equal(user,playlist.userEmail);
             assert.equal(musics,playlist.musics);
         });
     });
@@ -40,7 +40,7 @@ describe('Playlist Model', function() {
         it('should return an error when the playlist exist', function(done) {
         	stub.push(sinon.stub(DbPlaylist,"find"));
         	var retour = [playlist];
-        	stub[0].withArgs({name:playlist.name, userEmail:playlist.user}).callsArgWith(1,null,retour);
+        	stub[0].withArgs({name:playlist.name, userEmail:playlist.userEmail}).callsArgWith(1,null,retour);
         	playlist.save(function(err) {
         		try {
         			chai.expect(err).to.deep.equal({message:"The playlist already exist"});
@@ -53,7 +53,7 @@ describe('Playlist Model', function() {
         
         it('should return an error when the db return an error on find', function(done) {
         	stub.push(sinon.stub(DbPlaylist,"find"));
-        	stub[0].withArgs({name:playlist.name, userEmail:playlist.user}).callsArgWith(1,{error:"error"});
+        	stub[0].withArgs({name:playlist.name, userEmail:playlist.userEmail}).callsArgWith(1,{error:"error"});
         	playlist.save(function(err) {
         		try {
         			chai.expect(err).to.deep.equal({error:"error"});
@@ -68,7 +68,7 @@ describe('Playlist Model', function() {
         	stub.push(sinon.stub(DbPlaylist,"find"));
         	stub.push(sinon.stub(DbPlaylist.prototype,"save"));
         	var retour = [];
-        	stub[0].withArgs({name:playlist.name, userEmail:playlist.user}).callsArgWith(1,null,retour);
+        	stub[0].withArgs({name:playlist.name, userEmail:playlist.userEmail}).callsArgWith(1,null,retour);
         	stub[1].callsArgWith(0,{error:"error"});
         	playlist.save(function(err) {
         		try {
@@ -85,7 +85,7 @@ describe('Playlist Model', function() {
         	stub.push(sinon.stub(DbPlaylist,"find"));
         	stub.push(sinon.stub(DbPlaylist.prototype,"save"));
         	var retour = [];
-        	stub[0].withArgs({name:playlist.name, userEmail:playlist.user}).callsArgWith(1,null,retour);
+        	stub[0].withArgs({name:playlist.name, userEmail:playlist.userEmail}).callsArgWith(1,null,retour);
         	stub[1].callsArgWith(0,undefined);
         	playlist.save(function(err) {
         		try {
@@ -105,8 +105,8 @@ describe('Playlist Model', function() {
         	stub.push(sinon.stub(DbPlaylist,"find"));
         	stub.push(sinon.stub(DbPlaylist,"remove"));
         	var retour = [playlist];
-        	stub[0].withArgs({name:playlist.name, userEmail:playlist.user}).callsArgWith(1,null,retour);
-        	stub[1].withArgs({name:playlist.name, userEmail:playlist.user}).callsArgWith(1,undefined);
+        	stub[0].withArgs({name:playlist.name, userEmail:playlist.userEmail}).callsArgWith(1,null,retour);
+        	stub[1].withArgs({name:playlist.name, userEmail:playlist.userEmail}).callsArgWith(1,undefined);
         	playlist.remove(function(err) {
         		try {
         			assert.equal(stub[1].called,true);
@@ -121,7 +121,7 @@ describe('Playlist Model', function() {
     	it('should return an error when the playlist does not exist', function(done) {
         	stub.push(sinon.stub(DbPlaylist,"find"));
         	var retour = [];
-        	stub[0].withArgs({name:playlist.name, userEmail:playlist.user}).callsArgWith(1,null,retour);
+        	stub[0].withArgs({name:playlist.name, userEmail:playlist.userEmail}).callsArgWith(1,null,retour);
         	playlist.remove(function(err) {
         		try {
         			chai.expect(err).to.deep.equal({message:"The playlist doesn't exist"});
@@ -134,7 +134,7 @@ describe('Playlist Model', function() {
     	
     	it('should return an error when the db return an error on find', function(done) {
         	stub.push(sinon.stub(DbPlaylist,"find"));
-        	stub[0].withArgs({name:playlist.name, userEmail:playlist.user}).callsArgWith(1,{error:"error"});
+        	stub[0].withArgs({name:playlist.name, userEmail:playlist.userEmail}).callsArgWith(1,{error:"error"});
         	playlist.remove(function(err) {
         		try {
         			chai.expect(err).to.deep.equal({error:"error"});
@@ -149,8 +149,8 @@ describe('Playlist Model', function() {
         	stub.push(sinon.stub(DbPlaylist,"find"));
         	stub.push(sinon.stub(DbPlaylist,"remove"));
         	var retour = [playlist];
-        	stub[0].withArgs({name:playlist.name, userEmail:playlist.user}).callsArgWith(1,null,retour);
-        	stub[1].withArgs({name:playlist.name, userEmail:playlist.user}).callsArgWith(1,{error:"error"});
+        	stub[0].withArgs({name:playlist.name, userEmail:playlist.userEmail}).callsArgWith(1,null,retour);
+        	stub[1].withArgs({name:playlist.name, userEmail:playlist.userEmail}).callsArgWith(1,{error:"error"});
         	playlist.remove(function(err) {
         		try {
         			assert.equal(stub[1].called,true);
@@ -168,7 +168,7 @@ describe('Playlist Model', function() {
     	
     	it('should return an error when the db return an error on find', function(done) {
         	stub.push(sinon.stub(DbPlaylist,"find"));
-        	stub[0].withArgs({userEmail:playlist.user}).callsArgWith(1,{error:"error"});
+        	stub[0].withArgs({userEmail:playlist.userEmail}).callsArgWith(1,{error:"error"});
         	playlist.findAllPlaylists(function(err) {
         		try {
         			chai.expect(err).to.deep.equal({error:"error"});
@@ -181,7 +181,7 @@ describe('Playlist Model', function() {
     	
     	it('should return a playlist', function(done) {
         	stub.push(sinon.stub(DbPlaylist,"find"));
-        	stub[0].withArgs({userEmail:playlist.user}).callsArgWith(1,null,playlist);
+        	stub[0].withArgs({userEmail:playlist.userEmail}).callsArgWith(1,null,playlist);
         	playlist.findAllPlaylists(function(err,pl) {
         		try {
         			chai.expect(err).to.deep.equal(null);
@@ -198,7 +198,7 @@ describe('Playlist Model', function() {
     	
     	it('should return an error when the db return an error on find', function(done) {
         	stub.push(sinon.stub(DbPlaylist,"find"));
-        	stub[0].withArgs({name:playlist.name, userEmail:playlist.user}).callsArgWith(1,{error:"error"});
+        	stub[0].withArgs({name:playlist.name, userEmail:playlist.userEmail}).callsArgWith(1,{error:"error"});
         	playlist.findPlaylist(function(err) {
         		try {
         			chai.expect(err).to.deep.equal({error:"error"});
@@ -211,7 +211,7 @@ describe('Playlist Model', function() {
     	
     	it('should return a playlist', function(done) {
         	stub.push(sinon.stub(DbPlaylist,"find"));
-        	stub[0].withArgs({name:playlist.name, userEmail:playlist.user}).callsArgWith(1,null,playlist);
+        	stub[0].withArgs({name:playlist.name, userEmail:playlist.userEmail}).callsArgWith(1,null,playlist);
         	playlist.findPlaylist(function(err,pl) {
         		try {
         			chai.expect(err).to.deep.equal(null);
@@ -230,7 +230,7 @@ describe('Playlist Model', function() {
         	stub.push(sinon.stub(DbPlaylist,"find"));
         	var retour = [];
         	var music = new Music("abcd", "spotify", "", [], {}, 0, "");
-        	stub[0].withArgs({name:playlist.name, userEmail:playlist.user}).callsArgWith(1,null,retour);
+        	stub[0].withArgs({name:playlist.name, userEmail:playlist.userEmail}).callsArgWith(1,null,retour);
         	playlist.addMusic(music, function(err) {
         		try {
         			chai.expect(err).to.deep.equal({message:"The playlist doesn't exist"});
@@ -243,7 +243,7 @@ describe('Playlist Model', function() {
         
         it('should return an error when the db return an error on find', function(done) {
         	stub.push(sinon.stub(DbPlaylist,"find"));
-        	stub[0].withArgs({name:playlist.name, userEmail:playlist.user}).callsArgWith(1,{error:"error"});
+        	stub[0].withArgs({name:playlist.name, userEmail:playlist.userEmail}).callsArgWith(1,{error:"error"});
         	var music = new Music("abcd", "spotify", "", [], {}, 0, "");
         	playlist.addMusic(music, function(err) {
         		try {
@@ -261,7 +261,7 @@ describe('Playlist Model', function() {
         	stub.push(sinon.stub(DbPlaylist,"find"));
         	stub.push(sinon.stub(obj,"save"));
         	var retour = [obj];
-        	stub[0].withArgs({name:playlist.name, userEmail:playlist.user}).callsArgWith(1,null,retour);
+        	stub[0].withArgs({name:playlist.name, userEmail:playlist.userEmail}).callsArgWith(1,null,retour);
         	stub[1].callsArgWith(0,{error:"error"});
         	var music = new Music("abcd", "spotify", "", [], {}, 0, "");
         	playlist.addMusic(music, function(err) {
@@ -281,7 +281,7 @@ describe('Playlist Model', function() {
         	stub.push(sinon.stub(DbPlaylist,"find"));
         	stub.push(sinon.stub(obj,"save"));
         	var retour = [obj];
-        	stub[0].withArgs({name:playlist.name, userEmail:playlist.user}).callsArgWith(1,null,retour);
+        	stub[0].withArgs({name:playlist.name, userEmail:playlist.userEmail}).callsArgWith(1,null,retour);
         	stub[1].callsArgWith(0,undefined);
         	var music = new Music("abcd", "spotify", "", [], {}, 0, "");
         	playlist.addMusic(music, function(err) {
@@ -304,7 +304,7 @@ describe('Playlist Model', function() {
         	stub.push(sinon.stub(DbPlaylist,"find"));
         	var retour = [];
         	var music = new Music("abcd", "spotify", "", [], {}, 0, "");
-        	stub[0].withArgs({name:playlist.name, userEmail:playlist.user}).callsArgWith(1,null,retour);
+        	stub[0].withArgs({name:playlist.name, userEmail:playlist.userEmail}).callsArgWith(1,null,retour);
         	playlist.deleteMusic(music, function(err) {
         		try {
         			chai.expect(err).to.deep.equal({message:"The playlist doesn't exist"});
@@ -317,7 +317,7 @@ describe('Playlist Model', function() {
         
         it('should return an error when the db return an error on find', function(done) {
         	stub.push(sinon.stub(DbPlaylist,"find"));
-        	stub[0].withArgs({name:playlist.name, userEmail:playlist.user}).callsArgWith(1,{error:"error"});
+        	stub[0].withArgs({name:playlist.name, userEmail:playlist.userEmail}).callsArgWith(1,{error:"error"});
         	var music = new Music("abcd", "spotify", "", [], {}, 0, "");
         	playlist.deleteMusic(music, function(err) {
         		try {
@@ -335,7 +335,7 @@ describe('Playlist Model', function() {
 	    	var obj = {musics:[otherMusic],save:function(){}};
 	    	stub.push(sinon.stub(DbPlaylist,"find"));
 	    	var retour = [obj];
-	    	stub[0].withArgs({name:playlist.name, userEmail:playlist.user}).callsArgWith(1,null,retour);
+	    	stub[0].withArgs({name:playlist.name, userEmail:playlist.userEmail}).callsArgWith(1,null,retour);
 	    	playlist.deleteMusic(music, function(err) {
 	    		try {
 	    			chai.expect(err).to.deep.equal({message:"The music is not in the playlist"});
@@ -352,7 +352,7 @@ describe('Playlist Model', function() {
         	stub.push(sinon.stub(DbPlaylist,"find"));
         	stub.push(sinon.stub(obj,"save"));
         	var retour = [obj];
-        	stub[0].withArgs({name:playlist.name, userEmail:playlist.user}).callsArgWith(1,null,retour);
+        	stub[0].withArgs({name:playlist.name, userEmail:playlist.userEmail}).callsArgWith(1,null,retour);
         	stub[1].callsArgWith(0,{error:"error"});
         	var music = new Music("abcd", "spotify", "", [], {}, 0, "");
         	playlist.deleteMusic(music, function(err) {
@@ -372,7 +372,7 @@ describe('Playlist Model', function() {
         	stub.push(sinon.stub(DbPlaylist,"find"));
         	stub.push(sinon.stub(obj,"save"));
         	var retour = [obj];
-        	stub[0].withArgs({name:playlist.name, userEmail:playlist.user}).callsArgWith(1,null,retour);
+        	stub[0].withArgs({name:playlist.name, userEmail:playlist.userEmail}).callsArgWith(1,null,retour);
         	stub[1].callsArgWith(0,undefined);
         	var music = new Music("abcd", "spotify", "", [], {}, 0, "");
         	playlist.deleteMusic(music, function(err) {
