@@ -1,11 +1,11 @@
 var DbUser = require('../models_db/modelSingleton').DbUser;
 
 /**
- * Represents the application User
+ * Represents the application User.
  */
 class User {
     /**
-     * Constructor
+     * Constructor.
      *
      * @param email     Email of the user
      * @param password  Corresponding password
@@ -16,7 +16,7 @@ class User {
 	}
 
     /**
-     * Connect the user, check if the current user exist in database
+     * Connect the user, check if the current user exist in database.
      *
      * @param cb   Function called when existance in database of the current user is checked.
      *             Called with true if user exists in database, else false as parameter.
@@ -31,7 +31,7 @@ class User {
 	}
 
     /**
-     * Create the user in database
+     * Create the user in database.
      *
      * @param cb   Function called when the current user is created in database.
      *             Called with a mongoose json object error if failed, null if success as parameter.
@@ -47,7 +47,7 @@ class User {
 	}
 
     /**
-     * Getter of the user email
+     * Getter of the user email.
      *
      * @returns {*} The email
      */
@@ -56,7 +56,7 @@ class User {
 	}
 
     /**
-     * Getter of the user password
+     * Getter of the user password.
      *
      * @returns {*} The password
      */

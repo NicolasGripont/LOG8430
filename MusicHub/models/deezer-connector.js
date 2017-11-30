@@ -13,7 +13,7 @@ var Music = modelsRequireMusicSettings.Music;
 class DeezerConnector extends AbstractConnector {
 
     /**
-     * Constructor
+     * Constructor.
      *
      * @param appId       Application ID on http://developers.deezer.com/myapps
      * @param secretKey   Secret Key on http://developers.deezer.com/myapps
@@ -33,7 +33,7 @@ class DeezerConnector extends AbstractConnector {
     }
 
     /**
-     * Log the user on the corresponding Api
+     * Log the user on the corresponding Api.
      *
      * @param req           Http request
      * @param res           Http response
@@ -50,7 +50,7 @@ class DeezerConnector extends AbstractConnector {
 
     /**
      * Method to use when the user has logged on the API. You should ask API parameters such as token
-     * in this method
+     * in this method.
      *
      * @param req              Http request
      * @param res              Http response
@@ -97,7 +97,7 @@ class DeezerConnector extends AbstractConnector {
     }
 
     /**
-     * Log the user out of the corresponding Api
+     * Log the user out of the corresponding Api.
      *
      * @param req           Http request
      * @param res           Http response

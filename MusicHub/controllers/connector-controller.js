@@ -8,7 +8,7 @@ var Promise = require('promise');
 
 
 /**
- * Define Connector Controller for MVC
+ * Define Connector Controller for MVC.
  */
 class ConnectorController {
 
@@ -29,8 +29,8 @@ class ConnectorController {
 
     /**
      * Call the  action ('login' or 'loggedIn' or 'logout') of the connector corresponding to the api parameter.
-     * If success, call 'login' or 'loggedIn' or 'logout' method of connector
-     * If fail, call the method this.showError
+     * If success, call 'login' or 'loggedIn' or 'logout' method of connector.
+     * If fail, call the method this.showError.
      *
      * @param req      Http request
      * @param res      Http response
@@ -60,7 +60,7 @@ class ConnectorController {
     }
 
     /**
-     * Call the api connector 'login' method
+     * Call the api connector 'login' method.
      *
      * @param req      Http request
      * @param res      Http response
@@ -72,7 +72,7 @@ class ConnectorController {
     }
 
     /**
-     * Call the api connector 'loggedIn' method
+     * Call the api connector 'loggedIn' method.
      *
      * @param req      Http request
      * @param res      Http response
@@ -84,7 +84,7 @@ class ConnectorController {
     }
 
     /**
-     * Call the api connector 'logout' method
+     * Call the api connector 'logout' method.
      *
      * @param req      Http request
      * @param res      Http response
@@ -96,7 +96,7 @@ class ConnectorController {
     }
 
     /**
-     * Redirect the client to the /views/settings route
+     * Redirect the client to the /views/settings route.
      *
      * @param req      Http request
      * @param res      Http response
@@ -106,7 +106,7 @@ class ConnectorController {
     }
 
     /**
-     * Called the method this.showError (error callback method)
+     * Called the method this.showError (error callback method).
      *
      * @param req      Http request
      * @param res      Http response
@@ -128,9 +128,9 @@ class ConnectorController {
     }
 
     /**
-     * Send the user/client settings to the user/client
-     * If success, send settings as json object with the status code 200
-     * If fail or no settings, send an empty json with the status code 200
+     * Send the user/client settings to the user/client.
+     * If success, send settings as json object with the status code 200.
+     * If fail or no settings, send an empty json with the status code 200.
      *
      * @param req      Http request
      * @param res      Http response
@@ -155,9 +155,9 @@ class ConnectorController {
 
     /**
      * Send the tracks correspond to the query.
-     * The tracks or given as json object { apiName : [coresponding Model.Music array], ...}
-     * If success, send the tracks as json object with the status code 200
-     * If fail or no settings, send an empty json with the status code 200
+     * The tracks or given as json object { apiName : [coresponding Model.Music array], ...}.
+     * If success, send the tracks as json object with the status code 200.
+     * If fail or no settings, send an empty json with the status code 200.
      *
      * @param req      Http request
      * @param res      Http response

@@ -6,7 +6,7 @@ var SettingsDB = require('../models_db/modelSingleton').DbSettings;
 class Settings {
 
     /**
-     * Constructor
+     * Constructor.
      *
      * @param userEmail Email of the corresponding user
      */
@@ -15,7 +15,7 @@ class Settings {
     }
 
     /**
-     * Create or update the user settings corresponding to plateform/api given in parameter
+     * Create or update the user settings corresponding to plateform/api given in parameter.
      *
      * @param platform     Platform/api name of the settings to save
      * @param apiSettings  Platform/api settings to save
@@ -42,7 +42,7 @@ class Settings {
     }
 
     /**
-     * Getter of the user email who own the settings
+     * Getter of the user email who own the settings.
      *
      * @returns {*} The email
      */

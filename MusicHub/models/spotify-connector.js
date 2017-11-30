@@ -10,7 +10,7 @@ class SpotifyConnector extends AbstractConnector {
 
 
     /**
-     * Constructor
+     * Constructor.
      *
      * @param clientId       Client ID of application on https://beta.developer.spotify.com/dashboard/applications
      * @param clientSecret   Client Secret of application on https://beta.developer.spotify.com/dashboard/applications
@@ -52,7 +52,7 @@ class SpotifyConnector extends AbstractConnector {
 
     /**
      * Method to use when the user has logged on the API. You should ask API parameters such as token
-     * in this method
+     * in this method.
      *
      * @param req              Http request
      * @param res              Http response
@@ -99,7 +99,7 @@ class SpotifyConnector extends AbstractConnector {
     }
 
     /**
-     * Log the user out of the corresponding Api
+     * Log the user out of the corresponding Api.
      *
      * @param req           Http request
      * @param res           Http response
@@ -121,7 +121,7 @@ class SpotifyConnector extends AbstractConnector {
     }
 
     /**
-     * Set the connector settings
+     * Set the connector settings.
      *
      * @param settings Settings to set
      */
@@ -133,7 +133,7 @@ class SpotifyConnector extends AbstractConnector {
     }
 
     /**
-     * Search tracks corresponding on the title on the API
+     * Search tracks corresponding on the title on the API.
      *
      * @param query Query to search (keywords)
      */
@@ -163,7 +163,7 @@ class SpotifyConnector extends AbstractConnector {
     }
 
     /**
-     * Format the api json tracks in json Model.Music array
+     * Format the api json tracks in json Model.Music array.
      *
      * @param apiTracks Api json tracks to format
      */
@@ -201,7 +201,7 @@ class SpotifyConnector extends AbstractConnector {
     }
 
     /**
-     * Find track by id on the API
+     * Find track by id on the API.
      *
      * @param id Id of the track to find
      */

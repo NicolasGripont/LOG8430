@@ -4,7 +4,7 @@
 class Music {
 
     /**
-     * Constructor
+     * Constructor.
      *
      * @param id          Api id of the music.
      * @param platform    Api name of the music.

@@ -162,7 +162,7 @@ class Playlist {
 	}
 
     /**
-     * Getter of the playlist name
+     * Getter of the playlist name.
      *
      * @returns {*} The email
      */
@@ -171,7 +171,7 @@ class Playlist {
 	}
 
     /**
-     * Getter of the email of the playlist owning user
+     * Getter of the email of the playlist owning user.
      *
      * @returns {*} The owning user
      */
@@ -180,7 +180,7 @@ class Playlist {
 	}
 
     /**
-     * Getter of the playlist musics/tracks list
+     * Getter of the playlist musics/tracks list.
      *
      * @returns {*} The musics/tracks lists
      */

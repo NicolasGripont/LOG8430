@@ -10,7 +10,7 @@ class AbstractConnector {
     }
 
     /**
-     * Log the user on the corresponding Api
+     * Log the user on the corresponding Api.
      *
      * @param req           Http request
      * @param res           Http response
@@ -21,7 +21,7 @@ class AbstractConnector {
 
     /**
      * Method to use when the user has logged on the API. You should ask API parameters such as token
-     * in this method
+     * in this method.
      *
      * @param req              Http request
      * @param res              Http response
@@ -34,7 +34,7 @@ class AbstractConnector {
     }
 
     /**
-     * Log the user out of the corresponding Api
+     * Log the user out of the corresponding Api.
      *
      * @param req           Http request
      * @param res           Http response
@@ -47,7 +47,7 @@ class AbstractConnector {
     }
 
     /**
-     * Set the connector settings
+     * Set the connector settings.
      *
      * @param settings Settings to set
      */
@@ -56,7 +56,7 @@ class AbstractConnector {
     }
 
     /**
-     * Search tracks corresponding on the title on the API
+     * Search tracks corresponding on the title on the API.
      *
      * @param query Query to search (keywords)
      */
@@ -65,7 +65,7 @@ class AbstractConnector {
     }
 
     /**
-     * Format the api json tracks in json Model.Music array
+     * Format the api json tracks in json Model.Music array.
      *
      * @param apiTracks Api json tracks to format
      */

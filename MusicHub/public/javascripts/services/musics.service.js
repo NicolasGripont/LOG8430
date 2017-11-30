@@ -14,8 +14,8 @@ musicHub.musicsService = (function($) {
      * Gets all products associated with the category and order by the sortingCriteria
      *
      * @param query     The search query, keyword
-     * @param callback            Function called when result is gotten. Called with the json object of
-     *                            {API_name : [Tracks],...} if success or an empty json objct if fail as parameter.
+     * @param callback  Function called when result is gotten. Called with the json object of
+     *                  \{API_name : \[Tracks\],...\} if success or an empty json objct if fail as parameter.
      */
     self.searchTracks = function (query, callback) {
         $.ajax({
@@ -145,7 +145,7 @@ musicHub.musicsService = (function($) {
      * Add a music to the playlist associated to the name.
      *
      * @param playlistName  The playlist name of the playlist where the music will be added
-     * @param music         The music to add, the format is {id:someId, platform:somePlatform}
+     * @param music         The music to add, the format is \{id:someId, platform:somePlatform\}
      * @param callback      Function called when playlist is added or if failed.
      *                      Called with the error json with "message" attribute if fail or null if success as parameter.
      */

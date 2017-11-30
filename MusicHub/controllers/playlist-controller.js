@@ -14,9 +14,9 @@ class PlaylistController {
     constructor() {}
 
     /**
-     * Create the playlist with eq.body.playlistName as name for the user corresponding the session.email
-     * If success, send an OK json message with the status code 200
-     * If fail, send an error json message with the status code 400
+     * Create the playlist with eq.body.playlistName as name for the user corresponding the session.email.
+     * If success, send an OK json message with the status code 200.
+     * If fail, send an error json message with the status code 400.
      *
      * @param req  Http request
      * @param res  Http response
@@ -36,9 +36,9 @@ class PlaylistController {
 	}
 
     /**
-     * Delete the playlist corresponding to req.body.playlistName for the user corresponding the session.email
-     * If success, send an OK json message with the status code 200
-     * If fail, send an error json message with the status code 400
+     * Delete the playlist corresponding to req.body.playlistName for the user corresponding the session.email.
+     * If success, send an OK json message with the status code 200.
+     * If fail, send an error json message with the status code 400.
      *
      * @param req  Http request
      * @param res  Http response
@@ -60,9 +60,9 @@ class PlaylistController {
 
 	//TODO : Creer un objet error
     /**
-     * Find all playlists corresponding of the user corresponding the session.email
-     * If success, send an OK json message with the status code 200
-     * If fail, send an error json message with the status code 500
+     * Find all playlists corresponding of the user corresponding the session.email.
+     * If success, send an OK json message with the status code 200.
+     * If fail, send an error json message with the status code 500.
      *
      * @param req  Http request
      * @param res  Http response
@@ -79,10 +79,10 @@ class PlaylistController {
 	}
 
     /**
-     * Find the playlist corresponding to req.body.playlistName for the user corresponding the session.email
-     * If success, send an OK json message with the status code 200
-     * If fail, send an error json message with the status code 500
-     * If no playlist corresponding, send an error json message with the status code 400
+     * Find the playlist corresponding to req.body.playlistName for the user corresponding the session.email.
+     * If success, send an OK json message with the status code 200.
+     * If fail, send an error json message with the status code 500.
+     * If no playlist corresponding, send an error json message with the status code 400.
      *
      * @param req  Http request
      * @param res  Http response
@@ -106,10 +106,10 @@ class PlaylistController {
     }
 
     /**
-     * Add a music corresponding to req.body.musicId, req.body.musicPlatform to the playlist corresponding
-     * to req.body.playlistName for the user corresponding the session.email
-     * If success, send an OK json message with the status code 200
-     * If fail, send an error json message with the status code 500
+     * Add a music corresponding to req.body.musicId, req.body.musicPlatform to the playlist corresponding.
+     * to req.body.playlistName for the user corresponding the session.email.
+     * If success, send an OK json message with the status code 200.
+     * If fail, send an error json message with the status code 500.
      *
      * @param req  Http request
      * @param res  Http response
@@ -137,11 +137,11 @@ class PlaylistController {
     }
 
     /**
-     * Delete a music (first apparition) corresponding to req.body.musicId, req.body.musicPlatform from the playlist
-     * corresponding to req.body.playlistName for the user corresponding the session.email
-     * If success, send an OK json message with the status code 200
-     * If fail, send an error json message with the status code 500
-     * If no playlist corresponding, send an error json message with the status code 400
+     * Delete a music (first apparition) corresponding to req.body.musicId, req.body.musicPlatform from the playlist.
+     * corresponding to req.body.playlistName for the user corresponding the session.email.
+     * If success, send an OK json message with the status code 200.
+     * If fail, send an error json message with the status code 500.
+     * If no playlist corresponding, send an error json message with the status code 400.
      *
      * @param req  Http request
      * @param res  Http response

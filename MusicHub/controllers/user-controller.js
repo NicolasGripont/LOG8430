@@ -12,8 +12,8 @@ class UserController {
 
     /**
      * Create a user in DB.
-     * If success, send an OK json message with the status code 200
-     * If fail, send an error json message with the status code 400
+     * If success, send an OK json message with the status code 200.
+     * If fail, send an error json message with the status code 400.
      *
      * @param req  Http request
      * @param res  Http response
@@ -35,8 +35,8 @@ class UserController {
 
     /**
      * Log in the user. Add the user email to the req.session.email if success.
-     * If success, send an OK json message with the status code 200
-     * If fail, send an error json message with the status code 400
+     * If success, send an OK json message with the status code 200.
+     * If fail, send an error json message with the status code 400.
      *
      * @param req  Http request
      * @param res  Http response
@@ -62,8 +62,8 @@ class UserController {
 
     /**
      * Log out the user. Destroy the req/session.
-     * If success, send an OK json message with the status code 200
-     * If fail, send an error json message with the status code 400
+     * If success, send an OK json message with the status code 200.
+     * If fail, send an error json message with the status code 400.
      *
      * @param req  Http request
      * @param res  Http response
