@@ -3,9 +3,9 @@ languages:
   - javascript
 
 exclude:
-  - /public/soundmanager/script/soundmanager2-nodebug-jsmin.js
-  - /public/soundmanager/script/soundmanager2-nodebug.js
-  - /public/soundmanager/script/soundmanager2-jsmin.js
-  - /public/soundmanager/script/soundmanager2.js
-  - /public/soundmanager/demo/bar-ui/script/bar-ui.js
-  - /public/soundmanager/demo/bar-ui/script/bar-ui.js
+  - /MusicHub/public/soundmanager/script/soundmanager2-nodebug-jsmin\.js
+  - /MusicHub/public/soundmanager/script/soundmanager2-nodebug\.js
+  - /MusicHub/public/soundmanager/script/soundmanager2-jsmin.js
+  - /MusicHub/public/soundmanager/script/soundmanager2\.js
+  - /MusicHub/public/soundmanager/demo/bar-ui/script/bar-ui\.js
+  - /MusicHub/public/soundmanager/demo/bar-ui/script/bar-ui\.js
