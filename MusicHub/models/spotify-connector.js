@@ -99,7 +99,7 @@ class SpotifyConnector extends AbstractConnector {
                     queryString.stringify({q : title, type : "track"}),
                 json: true,
                 headers: {Authorization: "Bearer "+self.accessToken}
-            }
+            };
             request.get(options, function (error, result) {
                 if (error) {
                     return reject(error);
@@ -156,7 +156,7 @@ class SpotifyConnector extends AbstractConnector {
                 url: "https://api.spotify.com/v1/tracks/" + id,
                 json: true,
                 headers: {Authorization: "Bearer "+self.accessToken}
-            }
+            };
             request.get(options, function (error, result) {
                 if (error) {
                     return reject(error);

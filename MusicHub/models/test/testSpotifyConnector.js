@@ -1,4 +1,10 @@
 var assert = require('assert');
+var sinon = require ('sinon');
+var chai = require('chai');
+var request = require('request');
+var queryString = require('querystring');
+var Music = require('../music');
+var Settings = require('../settings');
 var SpotifyConnector = require('../spotify-connector');
 
 describe('Spotify Connector Model', function() {
@@ -9,10 +15,19 @@ describe('Spotify Connector Model', function() {
     var tokenUrl = "http://token.com";
     var scope = "scope";
     var searchUrl = "http://search.com";
+    var stub = [];
 
     beforeEach(function() {
         spotifyConnector = new SpotifyConnector(clientId, clientSecret, loginUrl, tokenUrl, scope, searchUrl);
     });
+    
+    afterEach(function() {
+	    // runs after each test in this block
+		for(var i=0;i<stub.length;i++) {
+			stub[i].restore();
+		}
+		stub = [];
+	});
 
     describe('constructor', function() {
         it('should have the correct attributes', function() {
@@ -90,4 +105,146 @@ describe('Spotify Connector Model', function() {
            assert.equal(results, JSON.stringify(resultsExpected));
        });
     });
+    
+    describe('method searchTracks', function() {
+        it('should return the correct result', function(done) {
+        	stub.push(sinon.stub(request,"get"));
+        	var title = "title";
+        	var options = {
+                url: "https://api.spotify.com/v1/search?"+
+                    queryString.stringify({q : title, type : "track"}),
+                json: true,
+                headers: {Authorization: "Bearer "+spotifyConnector.accessToken}
+            };
+        	var trackToModify1 = {};
+            trackToModify1.id = 2;
+            trackToModify1.name = "Test";
+            trackToModify1.album = {};
+            trackToModify1.album.name = "Nom de l'album";
+            trackToModify1.artists = [];
+            trackToModify1.artists.name = "Nom artiste";
+            trackToModify1.duration_ms = 10;
+            trackToModify1.preview_url = "http://preview.com";
+            var result = [{
+                "id": 2,
+                "platform": 'spotify',
+                "title": 'Test',
+                "artists": [],
+                "album": { "name": 'Nom de l\'album', "artists": [] },
+                "duration": 10,
+                "previewUrl": 'http://preview.com'
+            }];
+            var retour = {body:{tracks:{items:[trackToModify1]}}};
+        	stub[0].withArgs(options).callsArgWith(1,null,retour);
+        	var returnedPromise = spotifyConnector.searchTracks(title);
+        	returnedPromise.then(function(tracks){
+        		try {
+        			assert.equal(stub[0].called,true);
+            		chai.expect(tracks).to.deep.equal(result);
+            		done();
+        		}catch(err) {
+        			done(err);
+        		}
+        	}).catch(function(err) {
+        		//should not pass here
+        		done("should not call catch");
+        	});
+        });
+        
+        it('should return and error when request fail', function(done) {
+        	stub.push(sinon.stub(request,"get"));
+        	var title = "title";
+        	var options = {
+                url: "https://api.spotify.com/v1/search?"+
+                    queryString.stringify({q : title, type : "track"}),
+                json: true,
+                headers: {Authorization: "Bearer "+spotifyConnector.accessToken}
+            };
+        	stub[0].withArgs(options).callsArgWith(1,{error:'error'});
+        	var returnedPromise = spotifyConnector.searchTracks(title);
+        	returnedPromise.then(function(tracks){
+        		//should not pass here
+        		done("should not call then");
+        	}).catch(function(err) {
+        		try {
+        			assert.equal(stub[0].called,true);
+            		chai.expect(err).to.deep.equal({error:'error'});
+            		done();
+        		}catch(err) {
+        			done(err);
+        		}
+        	});
+        });
+    });
+    
+    
+    describe('method findTrack', function() {
+        it('should return the correct result', function(done) {
+        	stub.push(sinon.stub(request,"get"));
+        	var id = "abcd";
+        	var options = {
+                url: "https://api.spotify.com/v1/tracks/" + id,
+                json: true,
+                headers: {Authorization: "Bearer "+spotifyConnector.accessToken}
+            };
+        	var trackToModify1 = {};
+            trackToModify1.id = "abcd";
+            trackToModify1.name = "Test";
+            trackToModify1.album = {};
+            trackToModify1.album.name = "Nom de l'album";
+            trackToModify1.artists = [];
+            trackToModify1.artists.name = "Nom artiste";
+            trackToModify1.duration_ms = 10;
+            trackToModify1.preview_url = "http://preview.com";
+            var result = {
+                "id": id,
+                "platform": 'spotify',
+                "title": 'Test',
+                "artists": [],
+                "album": { "name": 'Nom de l\'album', "artists": [] },
+                "duration": 10,
+                "previewUrl": 'http://preview.com'
+            };
+            var retour = {body:trackToModify1};
+        	stub[0].withArgs(options).callsArgWith(1,null,retour);
+        	var returnedPromise = spotifyConnector.findTrack(id);
+        	returnedPromise.then(function(tracks){
+        		try {
+        			assert.equal(stub[0].called,true);
+            		chai.expect(tracks).to.deep.equal(result);
+            		done();
+        		}catch(err) {
+        			done(err);
+        		}
+        	}).catch(function(err) {
+        		//should not pass here
+        		done("should not call catch");
+        	});
+        });
+        
+        it('should return and error when request fail', function(done) {
+        	stub.push(sinon.stub(request,"get"));
+        	var id = "abcd";
+        	var options = {
+                url: "https://api.spotify.com/v1/tracks/" + id,
+                json: true,
+                headers: {Authorization: "Bearer "+spotifyConnector.accessToken}
+            };
+        	stub[0].withArgs(options).callsArgWith(1,{error:'error'});
+        	var returnedPromise = spotifyConnector.findTrack(id);
+        	returnedPromise.then(function(tracks){
+        		//should not pass here
+        		done("should not call then");
+        	}).catch(function(err) {
+        		try {
+        			assert.equal(stub[0].called,true);
+            		chai.expect(err).to.deep.equal({error:'error'});
+            		done();
+        		}catch(err) {
+        			done(err);
+        		}
+        	});
+        });
+    });
+    
 });

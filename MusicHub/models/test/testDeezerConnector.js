@@ -110,7 +110,7 @@ describe('Deezer Connector Model', function() {
         	var options = {
                 url: "http://api.deezer.com/search/track?q=" + title,
                 json: true
-            }
+            };
         	var trackToModify1 = {};
             trackToModify1.id = 2;
             trackToModify1.title = "Test";
@@ -135,7 +135,7 @@ describe('Deezer Connector Model', function() {
         	returnedPromise.then(function(tracks){
         		try {
         			assert.equal(stub[0].called,true);
-            		chai.expect(result).to.deep.equal(tracks);
+            		chai.expect(tracks).to.deep.equal(result);
             		done();
         		}catch(err) {
         			done(err);
@@ -152,7 +152,7 @@ describe('Deezer Connector Model', function() {
         	var options = {
                 url: "http://api.deezer.com/search/track?q=" + title,
                 json: true
-            }
+            };
         	stub[0].withArgs(options).callsArgWith(1,{error:'error'});
         	var returnedPromise = deezerConnector.searchTracks(title);
         	returnedPromise.then(function(tracks){
@@ -161,7 +161,7 @@ describe('Deezer Connector Model', function() {
         	}).catch(function(err) {
         		try {
         			assert.equal(stub[0].called,true);
-            		chai.expect({error:'error'}).to.deep.equal(err);
+            		chai.expect(err).to.deep.equal({error:'error'});
             		done();
         		}catch(err) {
         			done(err);
@@ -178,7 +178,7 @@ describe('Deezer Connector Model', function() {
         	var options = {
                 url: "http://api.deezer.com/track/" + id,
                 json: true
-            }
+            };
         	var trackToModify1 = {};
             trackToModify1.id = id;
             trackToModify1.title = "Test";

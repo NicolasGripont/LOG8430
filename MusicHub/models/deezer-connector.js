@@ -92,7 +92,7 @@ class DeezerConnector extends AbstractConnector{
                 var options = {
                     url: "http://api.deezer.com/search/track?q=" + title,
                     json: true
-                }
+                };
                 request.get(options, function (error, result) {
                     if (error) {
                         return reject(error);
@@ -142,7 +142,7 @@ class DeezerConnector extends AbstractConnector{
                 var options = {
                     url: "http://api.deezer.com/track/" + id,
                     json: true
-                }
+                };
                 request.get(options, function (error, result) {
                     if (error) {
                         return reject(error);
