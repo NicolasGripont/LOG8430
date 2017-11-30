@@ -1,2 +1,8 @@
-exclude:
-- /public/soundmanager/*
+component_depth: 2
+languages:
+- javascript
+
+- name: javascript
+  production:
+    exclude:
+    	- /public/soundmanager/*.js
