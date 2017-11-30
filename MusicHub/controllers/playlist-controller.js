@@ -1,5 +1,5 @@
 var Playlist = require('../models/playlist');
-var ControllerConnector = require('./controllerSingleton').ConnectorController;
+var ControllerConnector = require('./controllerRequireConnector').ConnectorController;
 var Music = require('../models/modelsSingleton').Music;
 
 /**

@@ -1,4 +1,4 @@
-var ConnectorController = require('./connector-controller');
+var ConnectorController = require('./controllerRequireConnector').ConnectorController;
 var PlaylistController = require('./playlist-controller');
 var UserController = require('./user-controller');
 
