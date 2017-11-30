@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "start": "node ./bin/www",
-    "test" : "nyc --reporter=html --reporter=text mocha ./models/test ./controllers/test ./routes/test --colors"
+    "test" : "nyc mocha ./models/test ./controllers/test ./routes/test --colors"
   },
   "dependencies": {
     "body-parser": "~1.18.2",
@@ -36,5 +36,21 @@
     "nyc": "latest",
     "sinon":"latest",
     "chai": "latest"
+  },
+  "nyc": {
+  "include": [
+    	"models/*",
+    	"controllers/*",
+    	"routes/*"
+    	
+    ],
+    "all": true,
+    "exclude": [
+    	"*/test/*"
+    ],
+    "reporter": [
+      "html",
+      "text"
+    ]
   }
 }
