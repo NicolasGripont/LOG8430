@@ -11,7 +11,8 @@ var musicHub = musicHub || {};
     var _elements = {
         alertDanger : $(".alert-danger"),
         inputEmail : $("#input-email"),
-        inputPassword : $("#input-password")
+        inputPassword : $("#input-password"),
+        signInForm : $('form')
     };
 
     /**
@@ -31,12 +32,28 @@ var musicHub = musicHub || {};
 
     /**
      * Link view sign in form
+     *
+     * @private
      */
-    $('form').submit(function (event) {
-        event.preventDefault();
-        var email = _elements.inputEmail.val();
-        var password = _elements.inputPassword.val();
-        connectionService.signin(email,password,_signedIn);
-    })
+    function _linkSignInFormSubmitEvent() {
+        _elements.signInForm.submit(function (event) {
+            event.preventDefault();
+            var email = _elements.inputEmail.val();
+            var password = _elements.inputPassword.val();
+            connectionService.signin(email,password,_signedIn);
+        })
+    }
+
+    /**
+     * Init controller
+     *
+     * @private
+     */
+    function _init() {
+        _linkSignInFormSubmitEvent();
+    }
+
+    _init();
+
 
 })(jQuery, musicHub.connectionService);

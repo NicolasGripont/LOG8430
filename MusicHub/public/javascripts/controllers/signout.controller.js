@@ -8,6 +8,9 @@ var musicHub = musicHub || {};
 (function($, connectionService) {
     "use strict";
 
+    var _elements = {
+        signOutButton : $('.deconnexion')
+    };
 
     /**
      * Updates the view after signout button clicked
@@ -22,11 +25,26 @@ var musicHub = musicHub || {};
     }
 
     /**
-     * Link view sign out button
+     *  Link view sign out button
+     *
+     * @private
      */
-    $('.deconnexion').click(function (event) {
-        event.preventDefault();
-        connectionService.signout(_signedOut);
-    })
+    function _linkSignOutButtonClickEvent() {
+        _elements.signOutButton.click(function (event) {
+            event.preventDefault();
+            connectionService.signout(_signedOut);
+        })
+    }
+
+    /**
+     * Init controller
+     *
+     * @private
+     */
+    function _init() {
+        _linkSignOutButtonClickEvent();
+    }
+
+    _init();
 
 })(jQuery, musicHub.connectionService);

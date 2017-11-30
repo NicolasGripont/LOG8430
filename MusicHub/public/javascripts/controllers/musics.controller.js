@@ -566,6 +566,7 @@ var musicHub = musicHub || {};
 
     /**
      * Init controller
+     *
      * @private
      */
     function _init() {

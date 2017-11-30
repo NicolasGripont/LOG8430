@@ -39,6 +39,16 @@ var musicHub = musicHub || {};
         }
     }
 
-    settingsService.retrieveSettings(_updateSettingsView);
+    /**
+     * Init controller
+     *
+     * @private
+     */
+    function _init() {
+        settingsService.retrieveSettings(_updateSettingsView);
+    }
+
+
+
 
 })(jQuery, musicHub.settingsService);

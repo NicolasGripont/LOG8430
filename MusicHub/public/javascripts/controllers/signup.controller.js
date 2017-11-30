@@ -13,7 +13,8 @@ var musicHub = musicHub || {};
         alertSuccess : $(".alert-success"),
         inputEmail : $("#input-email"),
         inputPassword : $("#input-password"),
-        inputRePassword : $("#input-re-password")
+        inputRePassword : $("#input-re-password"),
+        signUpForm : $('form')
     };
 
     /**
@@ -40,18 +41,33 @@ var musicHub = musicHub || {};
 
     /**
      * Link view sign up form
+     *
+     * @private
      */
-    $('form').submit(function (event) {
-        event.preventDefault();
-        var email = _elements.inputEmail.val();
-        var password = _elements.inputPassword.val();
-        var rePassword = _elements.inputRePassword.val();
-        if(password !== rePassword) {
-            _elements.alertDanger.empty();
-            _elements.alertDanger.append("The passwords have to be the same.").fadeIn(1000);
-        } else {
-            connectionService.signup(email, password, _signedUp);
-        }
-    })
+    function _linkSignUpFormSubmitEvent() {
+        _elements.signUpForm.submit(function (event) {
+            event.preventDefault();
+            var email = _elements.inputEmail.val();
+            var password = _elements.inputPassword.val();
+            var rePassword = _elements.inputRePassword.val();
+            if(password !== rePassword) {
+                _elements.alertDanger.empty();
+                _elements.alertDanger.append("The passwords have to be the same.").fadeIn(1000);
+            } else {
+                connectionService.signup(email, password, _signedUp);
+            }
+        })
+    }
+
+    /**
+     * Init controller
+     *
+     * @private
+     */
+    function _init() {
+        _linkSignUpFormSubmitEvent();
+    }
+
+    _init();
 
 })(jQuery, musicHub.connectionService);
