@@ -23,7 +23,7 @@ class UserController {
 		var password = req.body.password || "";
 		var newUser = new User(email,password);
 		if(email === "" || password === "") {
-			return res.status(400).json({error:{message:"Bad email or password."}});
+			return res.status(400).json({message:"Bad email or password."});
 		}
 		newUser.logIn(function(err,isFound){
 			if(err) {
@@ -40,9 +40,6 @@ class UserController {
 	logOut(req, res) {
         req.session.destroy(function(err) {
             if(err) {
-            	if(err.message) {
-                    return res.status(400).json({message:err.message});
-				}
                 return res.status(400).json({message:"Sign out error."});
             }
             res.status(200).json({message:"OK"});
