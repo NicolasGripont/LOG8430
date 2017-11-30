@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "start": "node ./bin/www",
-    "test" : "nyc mocha ./models/test ./controllers/test ./routes/test --colors"
+    "test" : "nyc mocha ./models/test ./controllers/test --colors"
   },
   "dependencies": {
     "body-parser": "~1.18.2",

@@ -1,10 +1,13 @@
 var assert = require('assert');
 var sinon = require ('sinon');
 var chai = require('chai');
-var Playlist = require('../../models/playlist');
-var PlaylistController = require('../playlist-controller');
-var ConnectorController = require('../connector-controller');
-var Music = require('../../models/music');
+var controllerSingleton = require('../controllerSingleton');
+var modelSingleton = require('../../models/modelsSingleton');
+var Playlist = modelSingleton.Playlist;
+var Music = modelSingleton.Music;
+var PlaylistController = controllerSingleton.PlaylistController;
+var ConnectorController = controllerSingleton.ConnectorController;
+
 
 
 describe('Playlist-controller', function() {
@@ -56,17 +59,13 @@ describe('Playlist-controller', function() {
         	stub.push(sinon.stub(Playlist.prototype,"save"));
         	stub.push(sinon.spy(res,"status"));
         	stub.push(sinon.stub(res,"json"));
-        	stub.push(sinon.spy(Playlist.prototype,"constructor"));
         	stub[0].callsArgWith(0,null);
         	stub[2].callsFake(function() {
         		try {
         			chai.expect(stub[0].called).to.deep.equal(true);
         			chai.expect(stub[1].called).to.deep.equal(true);
-        			chai.expect(stub[3].called).to.deep.equal(true);
         			chai.expect(stub[1].getCall(0).args[0]).to.deep.equal(200);
         			chai.expect(stub[2].getCall(0).args[0]).to.deep.equal({message:"OK"});
-        			chai.expect(stub[3].getCall(0).args).to.deep.equal([playlistName,email,[]]);
-        			
             		done();
         		}catch(err) {
         			done(err);

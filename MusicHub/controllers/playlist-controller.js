@@ -1,6 +1,7 @@
-var Playlist = require('../models/playlist');
+var Singleton = require('../models/modelsSingleton');
+var Playlist = Singleton.Playlist;
 var ControllerConnector = require('./controllerRequireConnector').ConnectorController;
-var Music = require('../models/modelsSingleton').Music;
+var Music = Singleton.Music;
 
 /**
  * Define Playlist Controller for MVC
