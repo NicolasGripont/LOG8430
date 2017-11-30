@@ -14,11 +14,10 @@ describe('Spotify Connector Model', function() {
     var loginUrl = "http://login.com";
     var tokenUrl = "http://token.com";
     var scope = "scope";
-    var searchUrl = "http://search.com";
     var stub = [];
 
     beforeEach(function() {
-        spotifyConnector = new SpotifyConnector(clientId, clientSecret, loginUrl, tokenUrl, scope, searchUrl);
+        spotifyConnector = new SpotifyConnector(clientId, clientSecret, loginUrl, tokenUrl, scope);
     });
     
     afterEach(function() {
@@ -36,7 +35,6 @@ describe('Spotify Connector Model', function() {
             assert.equal(loginUrl, spotifyConnector.loginUrl);
             assert.equal(tokenUrl, spotifyConnector.tokenUrl);
             assert.equal(scope, spotifyConnector.scope);
-            assert.equal(searchUrl, spotifyConnector.searchUrl);
         });
     });
 
