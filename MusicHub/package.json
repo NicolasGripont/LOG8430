@@ -35,7 +35,8 @@
     "mocha": "^4.0.1",
     "nyc": "latest",
     "sinon":"latest",
-    "chai": "latest"
+    "chai": "latest",
+    "chai-http": "latest"
   },
   "nyc": {
   "include": [
