@@ -1,7 +1,10 @@
 {
-  "name": "musichub",
+  "name": "musichub-connection",
   "version": "0.0.1",
-  "private": true,
+  "main":"index.js",
+  "author":"MusicHub",
+  "description":"connection part",
+  "license":"MIT",
   "scripts": {
     "start": "node ./bin/www",
     "test" : "nyc mocha ./models/test ./controllers/test --colors",
