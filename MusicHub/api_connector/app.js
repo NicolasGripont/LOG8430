@@ -7,6 +7,7 @@ var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
 var session = require('express-session');
 var MongoDBStore = require('connect-mongodb-session')(session);
+var common = require('musichub-common');
 var _ = require('lodash');
 
 var views = require('./routes/views');
@@ -15,7 +16,7 @@ var connector = require('./routes/connector');
 var playlist = require('./routes/playlist');
 var app = express();
 
-var config = require('./config.json');
+var config = common.config;
 
 
 // DB connexion
