@@ -1,7 +1,7 @@
 var assert = require('assert');
 var sinon = require ('sinon');
 var chai = require('chai');
-var User = require('../../models/user');
+var User = require('musichub-common').User;
 var UserController = require('../user-controller');
 
 

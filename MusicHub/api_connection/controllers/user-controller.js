@@ -1,4 +1,4 @@
-var User = require('../models/modelsSingleton').User;
+var User = require('musichub-common').User;
 
 /**
  * Define User Controller for MVC

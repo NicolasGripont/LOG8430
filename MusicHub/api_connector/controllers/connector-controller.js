@@ -1,10 +1,11 @@
 var validator = require('validator');
-var modelSingleton = require('../models/modelsSingleton');
-var DeezerConnector = modelSingleton.DeezerConnector;
-var SpotifyConnector = modelSingleton.SpotifyConnector;
-var config = require('../config.json');
-var SettingDB = require('../models_db/modelSingleton').DbSettings;
 var Promise = require('promise');
+var common = require('musichub-common');
+var DeezerConnector = common.DeezerConnector;
+var SpotifyConnector = common.SpotifyConnector;
+var config = common.config;
+var SettingDB = common.SettingsDB;
+
 
 
 /**

@@ -1,6 +1,6 @@
 var express = require('express');
 var router = express.Router();
-var PlaylistController = require('../controllers/controllerSingleton').PlaylistController;
+var PlaylistController = require('../controllers/playlist-controller');
 var controller = new PlaylistController();
 
 

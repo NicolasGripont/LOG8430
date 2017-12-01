@@ -1,12 +1,10 @@
 var assert = require('assert');
 var sinon = require ('sinon');
 var chai = require('chai');
-var controllerSingleton = require('../controllerSingleton');
-var modelSingleton = require('../../models/modelsSingleton');
-var Playlist = modelSingleton.Playlist;
-var Music = modelSingleton.Music;
-var PlaylistController = controllerSingleton.PlaylistController;
-var ConnectorController = controllerSingleton.ConnectorController;
+var common = require('musichub-common');
+var PlaylistController = require('../playlist-controller');
+var Playlist = common.Playlist;
+var Music = common.Music;
 
 
 
