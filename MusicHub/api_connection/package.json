@@ -7,10 +7,11 @@
   "license":"MIT",
   "scripts": {
     "start": "node ./bin/www",
-    "test" : "nyc mocha ./models/test ./controllers/test --colors",
+    "test" : "nyc mocha ./controllers/test --colors",
     "jsdoc" : "jsdoc controllers/*js && jsdoc models/*js && jsdoc public/javascripts/services/*js && jsdoc public/javascripts/controllers/*js"
   },
   "dependencies": {
+	"musichub-common":"latest",
     "body-parser": "~1.18.2",
     "connect-mongodb-session": "latest",
     "cookie-parser": "~1.4.3",
@@ -44,7 +45,6 @@
   },
   "nyc": {
   "include": [
-    	"models/*",
     	"controllers/*",
     	"routes/*"
     	

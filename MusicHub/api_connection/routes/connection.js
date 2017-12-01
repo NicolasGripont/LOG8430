@@ -1,6 +1,6 @@
 var express = require('express');
 var router = express.Router();
-var UserController = require('../controllers/controllerSingleton').UserController;
+var UserController = require('../controllers/user-controller');
 var controller = new UserController();
 
 /**
