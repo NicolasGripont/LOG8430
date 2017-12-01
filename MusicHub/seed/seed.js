@@ -1,5 +1,5 @@
 var User = require('../models_db/user');
-var config = require('../config.json');
+var config = require('../common/config.json');
 var mongoose = require('mongoose');
 
 // DB connexion

@@ -1,0 +1,58 @@
+{
+  "name": "musichub",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "start": "node ./bin/www",
+    "test" : "nyc mocha ./models/test ./controllers/test --colors",
+    "jsdoc" : "jsdoc controllers/*js && jsdoc models/*js && jsdoc public/javascripts/services/*js && jsdoc public/javascripts/controllers/*js"
+  },
+  "dependencies": {
+    "body-parser": "~1.18.2",
+    "connect-mongodb-session": "latest",
+    "cookie-parser": "~1.4.3",
+    "debug": "~2.6.9",
+    "express": "~4.15.5",
+    "express-handlebars": "~3.0.0",
+    "express-session": "latest",
+    "forever": "latest",
+    "fs": "latest",
+    "grunt": "latest",
+    "grunt-open": "latest",
+    "grunt-run": "latest",
+    "grunt-shell": "latest",
+    "lodash": "latest",
+    "mongoose": "^4.12.5",
+    "morgan": "~1.9.0",
+    "promise": "^8.0.1",
+    "pug": "^2.0.0-rc.4",
+    "querystring": "~0.2.0",
+    "request": "~2.34.0",
+    "serve-favicon": "~2.4.5",
+    "validator": "^9.1.1",
+    "spotify-web-api-node": "^2.5.0"
+  },
+  "devDependencies": {
+    "mocha": "^4.0.1",
+    "nyc": "latest",
+    "sinon":"latest",
+    "chai": "latest",
+    "chai-http": "latest"
+  },
+  "nyc": {
+  "include": [
+    	"models/*",
+    	"controllers/*",
+    	"routes/*"
+    	
+    ],
+    "all": true,
+    "exclude": [
+    	"*/test/*"
+    ],
+    "reporter": [
+      "html",
+      "text"
+    ]
+  }
+}
