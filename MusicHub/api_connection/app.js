@@ -10,10 +10,7 @@ var MongoDBStore = require('connect-mongodb-session')(session);
 var common = require('musichub-common');
 var _ = require('lodash');
 
-var views = require('./routes/views');
 var connexion = require('./routes/connection');
-var connector = require('./routes/connector');
-var playlist = require('./routes/playlist');
 var app = express();
 
 var config = common.config;

@@ -7,15 +7,13 @@ var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
 var session = require('express-session');
 var MongoDBStore = require('connect-mongodb-session')(session);
+var common = require('musichub-common');
 var _ = require('lodash');
 
-var views = require('./routes/views');
-var connexion = require('./routes/connection');
-var connector = require('./routes/connector');
 var playlist = require('./routes/playlist');
 var app = express();
 
-var config = require('./config.json');
+var config = common.config;
 
 
 // DB connexion
@@ -65,7 +63,6 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
 
 //TODO ajouter exception /user
 var exceptionList = ["^\/views\/signup$","^\/views\/signin$","^\/public\/.*",
@@ -87,9 +84,6 @@ app.use(function(req,res,next) {
 	});
 });
 
-app.use('/views', views);
-app.use('/user', connexion);
-app.use('/connector', connector);
 app.use('/playlist', playlist);
 
 // catch 404 and forward to error handler
