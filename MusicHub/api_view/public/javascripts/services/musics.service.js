@@ -1,11 +1,10 @@
 var musicHub = musicHub || {};
-
 /**
  * Defines a service to retrieve the tracks.
  *
  * @author Nicolas Gripont <nicolas.gripont@polymtl.ca>treille@polymtl.ca>
  */
-musicHub.musicsService = (function($) {
+musicHub.musicsService = (function($, utils) {
     "use strict";
 
     var self = {};
@@ -18,8 +17,10 @@ musicHub.musicsService = (function($) {
      *                  \{API_name : \[Tracks\],...\} if success or an empty json objct if fail as parameter.
      */
     self.searchTracks = function (query, callback) {
+        var host = utils.getParameter("connector-host");
+        var port = utils.getParameter("connector-port");
         $.ajax({
-            url: "/connector/search/" + query,
+            url: "http://" + host + ":" + port + "/connector/search/" + query,
             type: "GET"
         }).done(function (tracks) {
             sessionStorage.setItem("tracks", JSON.stringify(tracks));
@@ -82,8 +83,10 @@ musicHub.musicsService = (function($) {
      *                    an empty json array if fail as parameter.
      */
     self.retrievePlaylists = function(callback) {
+        var host = utils.getParameter("playlist-host");
+        var port = utils.getParameter("playlist-port");
         $.ajax({
-            url: "/playlist/",
+            url: "http://" + host + ":" + port + "/playlist/",
             type: "get",
             dataType: "json"
         }).done(function(playlists) {
@@ -101,8 +104,10 @@ musicHub.musicsService = (function($) {
      *                      null value if fail as parameter.
      */
     self.retrievePlaylist = function(playlistName, callback) {
+        var host = utils.getParameter("playlist-host");
+        var port = utils.getParameter("playlist-port");
         $.ajax({
-            url: "/playlist/" + playlistName,
+            url: "http://" + host + ":" + port + "/playlist/" + playlistName,
             type: "get",
             dataType: "json"
         }).done(function(playlist) {
@@ -121,8 +126,10 @@ musicHub.musicsService = (function($) {
      *                      Called with the error json with "message" attribute if fail or null if success as parameter.
      */
     self.createPlaylist = function(playlistName, callback) {
+        var host = utils.getParameter("playlist-host");
+        var port = utils.getParameter("playlist-port");
         $.ajax({
-            url: "/playlist/create",
+            url: "http://" + host + ":" + port + "/playlist/create",
             type: "POST",
             dataType: "json",
             contentType: "application/json; charset=utf-8",
@@ -150,8 +157,10 @@ musicHub.musicsService = (function($) {
      *                      Called with the error json with "message" attribute if fail or null if success as parameter.
      */
     self.addMusicToPlaylist = function(playlistName, music, callback) {
+        var host = utils.getParameter("playlist-host");
+        var port = utils.getParameter("playlist-port");
         $.ajax({
-            url: "/playlist/music",
+            url: "http://" + host + ":" + port + "/playlist/music",
             type: "PUT",
             dataType: "json",
             contentType: "application/json; charset=utf-8",
@@ -180,8 +189,10 @@ musicHub.musicsService = (function($) {
      *                         with "message" attribute if fail or null if success as parameter.
      */
     self.deleteMusicFromPlaylist = function(musicPlatform, playlistName, musicId, callback) {
+        var host = utils.getParameter("playlist-host");
+        var port = utils.getParameter("playlist-port");
         $.ajax({
-            url: "/playlist/music",
+            url: "http://" + host + ":" + port + "/playlist/music",
             type: "Delete",
             dataType: "json",
             contentType: "application/json; charset=utf-8",
@@ -210,8 +221,10 @@ musicHub.musicsService = (function($) {
      *                      Called with the error json with "message" attribute if fail or null if success as parameter.
      */
     self.deletePlaylist = function(playlistName, callback) {
+        var host = utils.getParameter("playlist-host");
+        var port = utils.getParameter("playlist-port");
         $.ajax({
-            url: "/playlist/delete",
+            url: "http://" + host + ":" + port + "/playlist/delete",
             type: "Delete",
             dataType: "json",
             contentType: "application/json; charset=utf-8",
@@ -232,4 +245,4 @@ musicHub.musicsService = (function($) {
     };
 
     return self;
-})(jQuery);
+})(jQuery, musicHub.utils);

@@ -5,7 +5,7 @@ var musicHub = musicHub || {};
  *
  * @author Nicolas Gripont <nicolas.gripont@polymtl.ca>treille@polymtl.ca>
  */
-musicHub.connectionService = (function($) {
+musicHub.connectionService = (function($, utils) {
     "use strict";
 
     var self = {};
@@ -18,8 +18,10 @@ musicHub.connectionService = (function($) {
      *                    Called with the error fail or null if success as parameter.
      */
     self.signin = function(email, password, callback) {
+        var host = utils.getParameter("connection-host");
+        var port = utils.getParameter("connection-port");
         $.ajax({
-            url: "/user/signin",
+            url: "http://" + host + ":" + port + "/user/signin",
             type: "POST",
             dataType: "json",
             contentType: "application/json; charset=utf-8",
@@ -45,8 +47,10 @@ musicHub.connectionService = (function($) {
      *                    Called with the error fail or null if success as parameter.
      */
     self.signup = function(email, password, callback) {
+        var host = utils.getParameter("connection-host");
+        var port = utils.getParameter("connection-port");
         $.ajax({
-            url: "/user/signup",
+            url: "http://" + host + ":" + port + "/user/signup",
             type: "POST",
             dataType: "json",
             contentType: "application/json; charset=utf-8",
@@ -70,8 +74,10 @@ musicHub.connectionService = (function($) {
      *                    Called with the error if fail or null if success as parameter.
      */
     self.signout = function(callback) {
+        var host = utils.getParameter("connection-host");
+        var port = utils.getParameter("connection-port");
         $.ajax({
-            url: "/user/signout",
+            url: "http://" + host + ":" + port + "/user/signout",
             type: "GET",
             dataType: "json",
             contentType: "application/json; charset=utf-8"
@@ -87,4 +93,4 @@ musicHub.connectionService = (function($) {
     };
 
     return self;
-})(jQuery);
+})(jQuery, musicHub.utils);

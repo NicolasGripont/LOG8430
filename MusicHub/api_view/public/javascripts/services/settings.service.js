@@ -5,7 +5,7 @@ var musicHub = musicHub || {};
  *
  * @author Nicolas Gripont <nicolas.gripont@polymtl.ca>treille@polymtl.ca>
  */
-musicHub.settingsService = (function($) {
+musicHub.settingsService = (function($, utils) {
     "use strict";
 
     var self = {};
@@ -16,8 +16,10 @@ musicHub.settingsService = (function($) {
      *                    null value if fail as parameter.
      */
     self.retrieveSettings = function(callback) {
+        var host = utils.getParameter("connector-host");
+        var port = utils.getParameter("connector-port");
         $.ajax({
-            url: "/connector/settings",
+            url: "http://" + host + ":" + port + "/connector/settings",
             type: "GET"
         }).done(function (setting) {
             return callback(setting);
@@ -28,4 +30,4 @@ musicHub.settingsService = (function($) {
 
 
     return self;
-})(jQuery);
+})(jQuery, musicHub.utils);
