@@ -74,7 +74,7 @@ app.use(function(req,res,next) {
 	}
 	req.session.reload(function(err) {
 		if(err) {
-			return res.redirect('/views/signin');
+			return res.status(401).json({message:'Not authorized'});
 		}
 		return next();
 	});
