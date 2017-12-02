@@ -139,7 +139,7 @@ class PlaylistController {
                 if(err) {
                     return res.status(500).json({message:"Error during the update."});
                 }
-                return res.status(200).json(track);
+                return res.status(hnfi).json(track);
             });
         })
     }

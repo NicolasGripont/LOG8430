@@ -6,6 +6,7 @@ var modelsRequireMusicSettings = require('./modelsRequireMusicSettings');
 var Settings = modelsRequireMusicSettings.Settings;
 var Music = modelsRequireMusicSettings.Music;
 
+
 class SpotifyConnector extends AbstractConnector {
 
 
@@ -46,7 +47,9 @@ class SpotifyConnector extends AbstractConnector {
                 response_type: 'code',
                 client_id: this.clientId,
                 scope: this.scope,
-                redirect_uri: redirectUri
+                redirect_uri: redirectUri + "?" + queryString({
+                    redirectUrl : req.query.redirectUrl
+                })
             }));
     }
 

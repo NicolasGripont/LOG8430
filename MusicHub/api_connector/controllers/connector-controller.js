@@ -106,7 +106,7 @@ class ConnectorController {
      * @param res      Http response
      */
     succededLoggedIn(req, res) {
-        res.redirect('/views/settings');
+        res.redirect(req.query.redirectUrl);
     }
 
     /**
