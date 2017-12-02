@@ -44,8 +44,7 @@ class DeezerConnector extends AbstractConnector {
             queryString.stringify({
                 app_id: this.appId,
                 redirect_uri: redirectUri,
-                perms: this.perms,
-                redirectUrl : req.query.redirectUrl
+                perms: this.perms
             }));
     }
 

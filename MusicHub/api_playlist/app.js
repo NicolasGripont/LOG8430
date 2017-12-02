@@ -8,6 +8,7 @@ var mongoose = require('mongoose');
 var session = require('express-session');
 var MongoDBStore = require('connect-mongodb-session')(session);
 var common = require('musichub-common');
+var cors = require('cors');
 var _ = require('lodash');
 
 var playlist = require('./routes/playlist');
@@ -42,6 +43,7 @@ store.on('error', function(error) {
 	console.log("error");
 });
 
+app.use(cors());
 app.use(require('express-session')({
     secret: 'musicHubProject',
     cookie: {
@@ -97,7 +99,7 @@ app.use(function(err, req, res, next) {
 
   // render the error page
   res.status(err.status || 500);
-  res.render('error');
+  res.send('error');
 });
 
 module.exports = app;

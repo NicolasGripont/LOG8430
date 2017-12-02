@@ -47,9 +47,7 @@ class SpotifyConnector extends AbstractConnector {
                 response_type: 'code',
                 client_id: this.clientId,
                 scope: this.scope,
-                redirect_uri: redirectUri + "?" + queryString({
-                    redirectUrl : req.query.redirectUrl
-                })
+                redirect_uri: redirectUri
             }));
     }
 

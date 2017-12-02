@@ -24,6 +24,7 @@ musicHub.connectionService = (function($, utils) {
             url: "http://" + host + ":" + port + "/user/signin",
             type: "POST",
             dataType: "json",
+            headers: {"Access-Control-Allow-Origin": "*"},
             contentType: "application/json; charset=utf-8",
             data: JSON.stringify({
                 email: email,
@@ -53,6 +54,7 @@ musicHub.connectionService = (function($, utils) {
             url: "http://" + host + ":" + port + "/user/signup",
             type: "POST",
             dataType: "json",
+            crossDomain: true,
             contentType: "application/json; charset=utf-8",
             data: JSON.stringify({
                 email: email,
@@ -80,6 +82,7 @@ musicHub.connectionService = (function($, utils) {
             url: "http://" + host + ":" + port + "/user/signout",
             type: "GET",
             dataType: "json",
+            crossDomain: true,
             contentType: "application/json; charset=utf-8"
         }).done(function (success) {
             sessionStorage.clear();

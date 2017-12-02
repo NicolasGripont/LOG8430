@@ -11,6 +11,7 @@
     "jsdoc" : "jsdoc controllers/*js && jsdoc models/*js && jsdoc public/javascripts/services/*js && jsdoc public/javascripts/controllers/*js"
   },
   "dependencies": {
+	"cors":"latest",
 	"musichub-common":"latest",
     "body-parser": "~1.18.2",
     "connect-mongodb-session": "latest",

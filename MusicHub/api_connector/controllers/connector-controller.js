@@ -71,6 +71,7 @@ class ConnectorController {
      * @param api      API name to request
      */
     login(req, res, api) {
+    	req.session.redirectUrl = req.query.redirectUrl;
         this.connectors[api].login(req,res,req.protocol + '://' + req.get('host')
                 +'/connector/connection/' + api + '/loggedIn');
     }
@@ -106,7 +107,7 @@ class ConnectorController {
      * @param res      Http response
      */
     succededLoggedIn(req, res) {
-        res.redirect(req.query.redirectUrl);
+        res.redirect(req.session.redirectUrl);
     }
 
     /**

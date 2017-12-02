@@ -1,6 +1,6 @@
 {
   "name": "musichub-connector",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "main":"index.js",
   "author":"MusicHub",
   "description":"connection part",
@@ -11,6 +11,7 @@
     "jsdoc" : "jsdoc controllers/*js && jsdoc models/*js && jsdoc public/javascripts/services/*js && jsdoc public/javascripts/controllers/*js"
   },
   "dependencies": {
+	"cors":"latest",
 	"musichub-common":"latest",
     "body-parser": "~1.18.2",
     "connect-mongodb-session": "latest",

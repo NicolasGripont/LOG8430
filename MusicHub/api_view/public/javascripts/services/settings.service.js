@@ -20,6 +20,7 @@ musicHub.settingsService = (function($, utils) {
         var port = utils.getParameter("connector-port");
         $.ajax({
             url: "http://" + host + ":" + port + "/connector/settings",
+            crossDomain: true,
             type: "GET"
         }).done(function (setting) {
             return callback(setting);
