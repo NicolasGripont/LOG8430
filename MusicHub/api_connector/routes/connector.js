@@ -8,6 +8,7 @@ var router = express.Router();
  *
  * req.session.email : should be defined
  */
+//TODO ajouter un parametre url de redirection en fin de processus
 router.get('/connection/:api/:action', function(req, res, next) {
     var connectorController = new ConnectorController();
     connectorController.executeAction(req,res);

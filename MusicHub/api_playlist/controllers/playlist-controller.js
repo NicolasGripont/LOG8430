@@ -129,7 +129,7 @@ class PlaylistController {
             url: "http://" + ConnectorAPI.host + ":" + ConnectorAPI.port +
 				 	"/track/" + musicPlatform + "/" + musicId,
             json: true,
-            headers: {Authorization: "Bearer "+self.accessToken}
+            headers: {cookie:req.headers.cookie}
         };
         request.get(options, function (error, track) {
             if(err) {
