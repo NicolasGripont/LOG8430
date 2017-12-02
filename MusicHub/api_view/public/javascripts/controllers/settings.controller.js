@@ -12,7 +12,8 @@ var musicHub = musicHub || {};
         spotifyLogin : $('.spotify .login'),
         spotifyLoggedIn : $('.spotify .loggedIn'),
         deezerLogin : $('.deezer .login'),
-        deezerLoggedIn : $('.deezer .loggedIn')
+        deezerLoggedIn : $('.deezer .loggedIn'),
+        connectLinks : $('a.connect')
     };
 
 
@@ -39,6 +40,14 @@ var musicHub = musicHub || {};
         }
     }
 
+    function _initConnectLink() {
+        _elements.connectLinks.click(function (event) {
+            var api = event.target.attr('api');
+            var action = event.target.attr('action');
+            settingsService.loginOrLogoutOnAPI(api,action);
+        })
+    }
+
     /**
      * Init controller
      *
@@ -46,7 +55,9 @@ var musicHub = musicHub || {};
      */
     function _init() {
         settingsService.retrieveSettings(_updateSettingsView);
+        _initConnectLink();
     }
+
 
     _init();
 

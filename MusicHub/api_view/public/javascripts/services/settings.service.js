@@ -28,6 +28,16 @@ musicHub.settingsService = (function($, utils) {
         })
     };
 
+    self.loginOrLogoutOnAPI = function(api,action){
+        var connectorHost = utils.getParameter("connector-host");
+        var connectorPort = utils.getParameter("connector-port");
+        var viewHost = utils.getParameter("view-host");
+        var viewPort = utils.getParameter("view-port");
+        document.local.href = "http://" + connectorHost + ":" + connectorPort + "/connector/connection/" +
+                    api + "/" + action+ "?redirectUrl=" +
+                    $.param("http://" + viewHost + ":" + viewPort + "/view/settings");
+    }
+
 
     return self;
 })(jQuery, musicHub.utils);

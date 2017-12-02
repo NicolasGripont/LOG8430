@@ -2,6 +2,7 @@ var express = require('express');
 var connection = require('musichub-connection');
 var connector = require('musichub-connector');
 var playlist = require('musichub-playlist');
+var config = require('../config.json');
 var router = express.Router();
 
 /* GET home page. */
@@ -13,7 +14,9 @@ router.get('/', function(req, res, next) {
 		"connection-port":connection.port,
 		"connection-host":connection.host,
 		"playlist-port":playlist.port,
-		"playlist-host":playlist.host
+		"playlist-host":playlist.host,
+        "view-port":config.port,
+        "view-host":config.host
 	});
 });
 
@@ -24,7 +27,9 @@ router.get('/signup', function(req, res, next) {
 		"connection-port":connection.port,
 		"connection-host":connection.host,
 		"playlist-port":playlist.port,
-		"playlist-host":playlist.host
+		"playlist-host":playlist.host,
+		"view-port":config.port,
+        "view-host":config.host
     });
 });
 
@@ -35,7 +40,9 @@ router.get('/signin', function(req, res, next) {
 		"connection-port":connection.port,
 		"connection-host":connection.host,
 		"playlist-port":playlist.port,
-		"playlist-host":playlist.host
+		"playlist-host":playlist.host,
+        "view-port":config.port,
+        "view-host":config.host
 	});
 });
 
@@ -47,7 +54,9 @@ router.get('/settings', function(req, res, next) {
 		"connection-port":connection.port,
 		"connection-host":connection.host,
 		"playlist-port":playlist.port,
-		"playlist-host":playlist.host
+		"playlist-host":playlist.host,
+        "view-port":config.port,
+        "view-host":config.host
 	});
 });
 
