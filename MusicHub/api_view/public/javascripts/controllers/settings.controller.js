@@ -42,8 +42,9 @@ var musicHub = musicHub || {};
 
     function _initConnectLink() {
         _elements.connectLinks.click(function (event) {
-            var api = event.target.attr('api');
-            var action = event.target.attr('action');
+            var link = $(event.target);
+            var api = link.attr('api');
+            var action = link.attr('action');
             settingsService.loginOrLogoutOnAPI(api,action);
         })
     }

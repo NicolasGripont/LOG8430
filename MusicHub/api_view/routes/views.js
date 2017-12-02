@@ -9,54 +9,54 @@ var router = express.Router();
 router.get('/', function(req, res, next) {
     res.render('musics', { title: 'Music Hub',
 		activeLi: "Home", 
-		"connector-port":connector.port,
-		"connector-host":connector.host,
-		"connection-port":connection.port,
-		"connection-host":connection.host,
-		"playlist-port":playlist.port,
-		"playlist-host":playlist.host,
-        "view-port":config.port,
-        "view-host":config.host
+		connectorPort:connector.port,
+		connectorHost:connector.host,
+		connectionPort:connection.port,
+		connectionHost:connection.host,
+		playlistPort:playlist.port,
+		playlistHost:playlist.host,
+        viewPort:config.port,
+        viewHost:config.host
 	});
 });
 
 router.get('/signup', function(req, res, next) {
     res.render('user/signup', { title: 'Music Hub - Sign Up',
-    	"connector-port":connector.port,
-		"connector-host":connector.host,
-		"connection-port":connection.port,
-		"connection-host":connection.host,
-		"playlist-port":playlist.port,
-		"playlist-host":playlist.host,
-		"view-port":config.port,
-        "view-host":config.host
+        connectorPort:connector.port,
+        connectorHost:connector.host,
+        connectionPort:connection.port,
+        connectionHost:connection.host,
+        playlistPort:playlist.port,
+        playlistHost:playlist.host,
+        viewPort:config.port,
+        viewHost:config.host
     });
 });
 
 router.get('/signin', function(req, res, next) {
     res.render('user/signin', { title: 'Music Hub - Sign In',
-    	"connector-port":connector.port,
-		"connector-host":connector.host,
-		"connection-port":connection.port,
-		"connection-host":connection.host,
-		"playlist-port":playlist.port,
-		"playlist-host":playlist.host,
-        "view-port":config.port,
-        "view-host":config.host
+        connectorPort:connector.port,
+        connectorHost:connector.host,
+        connectionPort:connection.port,
+        connectionHost:connection.host,
+        playlistPort:playlist.port,
+        playlistHost:playlist.host,
+        viewPort:config.port,
+        viewHost:config.host
 	});
 });
 
 router.get('/settings', function(req, res, next) {
     res.render('settings/settings', { title: 'Music Hub - Settings',
     	activeLi: "Settings",
-    	"connector-port":connector.port,
-		"connector-host":connector.host,
-		"connection-port":connection.port,
-		"connection-host":connection.host,
-		"playlist-port":playlist.port,
-		"playlist-host":playlist.host,
-        "view-port":config.port,
-        "view-host":config.host
+        connectorPort:connector.port,
+        connectorHost:connector.host,
+        connectionPort:connection.port,
+        connectionHost:connection.host,
+        playlistPort:playlist.port,
+        playlistHost:playlist.host,
+        viewPort:config.port,
+        viewHost:config.host
 	});
 });
 
