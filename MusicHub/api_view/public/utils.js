@@ -11,7 +11,7 @@ musicHub.utils = (function($) {
 
     /**
      * Get the parameter from the div params corresponding to the selector
-     * @param selector  Correspond to the attribute wanted
+     * @param selector  Correspond to the name of the attribute wanted
      * @returns         The value of the attribute
      */
     self.getParameter = function(selector) {
@@ -19,6 +19,7 @@ musicHub.utils = (function($) {
         if(divParams) {
             return divParams.attr(selector);
         }
+        return null;
     };
 
     return self;
