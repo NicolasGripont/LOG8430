@@ -13,6 +13,7 @@
   "dependencies": {
 	"cors":"latest",
 	"musichub-common":"latest",
+	"musichub-connector":"latest",
     "body-parser": "~1.18.2",
     "connect-mongodb-session": "latest",
     "cookie-parser": "~1.4.3",
