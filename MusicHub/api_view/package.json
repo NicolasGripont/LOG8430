@@ -1,13 +1,18 @@
 {
-  "name": "musichub",
+  "name": "musichub-views",
   "version": "0.0.1",
-  "private": true,
+  "main":"index.js",
+  "author":"MusicHub",
+  "description":"views part",
+  "license":"MIT",
   "scripts": {
     "start": "node ./bin/www",
-    "test" : "nyc mocha ./models/test ./controllers/test --colors",
     "jsdoc" : "jsdoc controllers/*js && jsdoc models/*js && jsdoc public/javascripts/services/*js && jsdoc public/javascripts/controllers/*js"
   },
   "dependencies": {
+	"musichub-connection":"latest",
+	"musichub-connector":"latest",
+	"musichub-playlist":"latest",
     "body-parser": "~1.18.2",
     "connect-mongodb-session": "latest",
     "cookie-parser": "~1.4.3",
@@ -33,26 +38,5 @@
     "spotify-web-api-node": "^2.5.0"
   },
   "devDependencies": {
-    "mocha": "^4.0.1",
-    "nyc": "latest",
-    "sinon":"latest",
-    "chai": "latest",
-    "chai-http": "latest"
-  },
-  "nyc": {
-  "include": [
-    	"models/*",
-    	"controllers/*",
-    	"routes/*"
-    	
-    ],
-    "all": true,
-    "exclude": [
-    	"*/test/*"
-    ],
-    "reporter": [
-      "html",
-      "text"
-    ]
   }
 }
