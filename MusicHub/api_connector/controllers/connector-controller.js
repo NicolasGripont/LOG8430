@@ -29,17 +29,20 @@ class ConnectorController {
     }
 
     /**
-     * Call the  action ('login' or 'loggedIn' or 'logout') of the connector corresponding to the api parameter.
+     * Call the  req.params.action ('login' or 'loggedIn' or 'logout') of the connector
+     * corresponding to the req.params.api.
      * If success, call 'login' or 'loggedIn' or 'logout' method of connector.
      * If fail, call the method this.showError.
      *
      * @param req      Http request
      * @param res      Http response
-     * @param api      API name to request
-     * @param action   Action to do on connector : 'login' or 'loggedIn' or 'logout'
+     * @param req.params.api      API name to request
+     * @param req.params.action   Action to do on connector : 'login' or 'loggedIn' or 'logout'
      */
-    executeAction(req, res, api, action) {
-        if (validator.isIn(req.params.action, ['login', 'loggedIn', 'logout'])) {
+    executeAction(req, res, api) {
+        var action = req.params.action;
+        var api = req.params.api;
+        if (validator.isIn(action, ['login', 'loggedIn', 'logout'])) {
             if(validator.isIn(api,['deezer', 'spotify'])) {
                 switch (action) {
                     case 'login':
@@ -137,7 +140,8 @@ class ConnectorController {
      * @param res      Http response
      */
     sendSettings(req, res) {
-        SettingDB.find( { userEmail : req.session.email }, function(err, settings) {
+        var email = req.session.email;
+        SettingDB.find( { userEmail : email }, function(err, settings) {
             if(settings && settings.length === 1) {
                 var now = Date.now();
                 if(settings.deezer && now >= settings.deezer.expires) {
@@ -155,18 +159,19 @@ class ConnectorController {
     }
 
     /**
-     * Send the tracks correspond to the query.
+     * Send the tracks correspond to the query in req.query.
      * The tracks or given as json object { apiName : [coresponding Model.Music array], ...}.
      * If success, send the tracks as json object with the status code 200.
      * If fail or no settings, send an empty json with the status code 200.
      *
      * @param req      Http request
      * @param res      Http response
-     * @param query    Query, keywords to search
      */
-    search(req, res, query) {
+    search(req, res) {
         var self = this;
-        SettingDB.find( { userEmail : req.session.email }, function(err, settings) {
+        var query = req.params.query;
+        var email = req.session.email;
+        SettingDB.find( { userEmail : email }, function(err, settings) {
             if(settings && settings.length === 1) {
                 var settings = settings[0];
                 //TODO test token expiration date
@@ -197,28 +202,28 @@ class ConnectorController {
 
 
     /**
-     * Find the track corresponding to the id and platform/api given as parameter.
+     * Find the track corresponding to the musicId and api given in req.params.
      *
-     * @param id         ID of the track to find
-     * @param platform   Platform/api of the track to find
-     * @param email      Email of the user the current user
-     * @param cb         Function called when the track is found or if fail.
-     *                   Called with a error and null parameter if fail or null and track if success.
+     * @param req      Http request
+     * @param res      Http response
      */
-    findTrack(id, platform, email, cb) {
+    findTrack(req, res) {
     	var self = this;
+    	var api = req.params.api;
+    	var musicId = req.params.musicId;
+        var email = req.session.email;
     	SettingDB.find( { userEmail : email }, function(err, settings) {
     		if(!settings || settings.length !== 1) {
-            	 return cb({message:"No settings"});
+            	 return res.status(400).json({message:"No settings"});
 			} 		
 			var settings = settings[0];
-			self.connectors[platform].setSettings(settings[platform]);
-			var requestSong = self.connectors[platform].findTrack(id);
+			self.connectors[api].setSettings(settings[api]);
+			var requestSong = self.connectors[api].findTrack(musicId);
 			requestSong.then(function(track){
-			    return cb(null,track);
+                return res.status(200).json(track);
 			})
 			.catch(function(error){
-			     return cb(error);
+                return res.status(400).json({message:"An error append."});
 			});
     	});
     }

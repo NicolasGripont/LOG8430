@@ -1,6 +1,9 @@
+var request = require('request');
 var Common = require('musichub-common');
 var Playlist = Common.Playlist;
 var Music = Common.Music;
+var ConnectorAPI = require('musichub-connector');
+
 
 /**
  * Define Playlist Controller for MVC
@@ -121,18 +124,24 @@ class PlaylistController {
     		return res.status(400).json({message:"The parameters are not valid."});
     	}
 		var playlist = new Playlist(playlistName, req.session.email, []);
-		var connector = new ControllerConnector();
-		connector.findTrack(musicId,musicPlatform,req.session.email, function(err,music) {
-			if(err) {
+
+        var options = {
+            url: "http://" + ConnectorAPI.host + ":" + ConnectorAPI.port +
+				 	"/track/" + musicPlatform + "/" + musicId,
+            json: true,
+            headers: {Authorization: "Bearer "+self.accessToken}
+        };
+        request.get(options, function (error, track) {
+            if(err) {
                 return res.status(500).json({message:"Error during song recovery."});
-			}
-			playlist.addMusic(music, function(err) {
-				if(err) {
+            }
+            playlist.addMusic(track, function(err) {
+                if(err) {
                     return res.status(500).json({message:"Error during the update."});
-				}
-				return res.status(200).json(music);
-			});
-		});
+                }
+                return res.status(200).json(track);
+            });
+        })
     }
 
     /**

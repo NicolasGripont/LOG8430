@@ -1,6 +1,5 @@
 var express = require('express');
-var validator = require('validator');
-var ConnectorController = require('../controllers/controllerSingleton').ConnectorController;
+var ConnectorController = require('../controllers/connector-controller');
 
 var router = express.Router();
 
@@ -11,7 +10,7 @@ var router = express.Router();
  */
 router.get('/connection/:api/:action', function(req, res, next) {
     var connectorController = new ConnectorController();
-    connectorController.executeAction(req,res,req.params.api,req.params.action);
+    connectorController.executeAction(req,res);
 });
 
 /**
@@ -31,8 +30,21 @@ router.get('/settings', function(req, res, next) {
  */
 router.get('/search/:query', function(req, res, next) {
     var connectorController = new ConnectorController();
-    connectorController.search(req,res,req.params.query);
+    connectorController.search(req,res);
 });
+
+
+/**
+ * Search tracks corresponding to query param
+ *
+ * req.session.email : should be defined
+ */
+router.get('/track/:api/:musicId', function(req, res, next) {
+    var connectorController = new ConnectorController();
+    connectorController.findTrack(req,res);
+});
+
+
 
 
 module.exports = router;
