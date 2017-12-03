@@ -36,7 +36,7 @@ musicHub.settingsService = (function($, utils) {
         var connectorPort = utils.getParameter("connector-port");
         var viewHost = utils.getParameter("view-host");
         var viewPort = utils.getParameter("view-port");
-        var redirectUrl = "http://" + viewHost + ":" + viewPort + "/view/settings";
+        var redirectUrl = "http://" + viewHost + ":" + viewPort + "/views/settings";
         document.location.href = "http://" + connectorHost + ":" + connectorPort + "/connector/connection/" +
                     api + "/" + action+ "?redirectUrl=" + redirectUrl;
     };
