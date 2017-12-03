@@ -13,6 +13,8 @@ class User {
 	constructor(email, password) {
 		this._email = email;
 		this._password = password;
+		this._token = undefined;
+		this._expires = undefined;
 	}
 
     /**
@@ -63,7 +65,43 @@ class User {
 	get password() {
 		return this._password;
 	}
-	
+
+    /**
+     * Getter of the user token.
+     *
+     * @returns {*} The token
+     */
+    get email() {
+        return this._email;
+    }
+
+    /**
+     * Getter of the user token expiration date.
+     *
+     * @returns {*} The expiration date
+     */
+    get expires() {
+        return this._password;
+    }
+
+
+    /**
+     * Getter of the user token.
+     *
+     * @returns {*} The token
+     */
+    set token(value) {
+		this._email = value;
+    }
+
+    /**
+     * Getter of the user token expiration date.
+     *
+     * @returns {*} The expiration date
+     */
+    set expires(value) {
+		this._expires = value;
+    }
 }
 
 /**

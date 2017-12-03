@@ -10,6 +10,8 @@ var MongoDBStore = require('connect-mongodb-session')(session);
 var common = require('musichub-common');
 var cors = require('cors');
 var _ = require('lodash');
+var common = require('musichub-common');
+var UserDB = common.UserDB;
 
 var connector = require('./routes/connector');
 var app = express();
@@ -74,12 +76,19 @@ app.use(function(req,res,next) {
 	if(path) {
 		return next();
 	}
-	req.session.reload(function(err) {
-		if(err) {
-			return res.status(401).json({message:'Not authorized'});
-		}
-		return next();
-	});
+	UserDB.find({token : req.body.token}, function (error, user) {
+	    if(error || !user || Date.now() > user.expires) {
+            return res.status(401).json({message:'Not authorized'});
+        }
+        req.session.email = user.email;
+        return next();
+    });
+	// req.session.reload(function(err) {
+	// 	if(err) {
+	// 		return res.status(401).json({message:'Not authorized'});
+	// 	}
+	// 	return next();
+	// });
 });
 
 app.use('/connector', connector);
