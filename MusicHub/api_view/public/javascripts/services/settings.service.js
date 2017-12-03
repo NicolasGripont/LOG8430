@@ -31,6 +31,11 @@ musicHub.settingsService = (function($, utils) {
         })
     };
 
+    /**
+     * Login or logout from API
+     * @param api      The API name
+     * @param action   The action : 'login' or 'logout'
+     */
     self.loginOrLogoutOnAPI = function(api,action){
         var connectorHost = utils.getParameter("connector-host");
         var connectorPort = utils.getParameter("connector-port");

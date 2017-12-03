@@ -36,7 +36,7 @@ router.get('/search/:query', function(req, res, next) {
 
 
 /**
- * Search tracks corresponding to query param
+ * Get track corresponding to api and musicId param
  *
  * req.session.email : should be defined
  */

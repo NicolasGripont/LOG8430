@@ -110,6 +110,7 @@ class PlaylistController {
     /**
      * Add a music corresponding to req.body.musicId, req.body.musicPlatform to the playlist corresponding.
      * to req.body.playlistName for the user corresponding the session.email.
+	 * Call the ConnectorApi to get the music to add.
      * If success, send an OK json message with the status code 200.
      * If fail, send an error json message with the status code 500.
      *

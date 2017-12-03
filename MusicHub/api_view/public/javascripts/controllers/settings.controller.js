@@ -40,6 +40,10 @@ var musicHub = musicHub || {};
         }
     }
 
+    /**
+     * Init connect/diconnect to api Link
+     * @private
+     */
     function _initConnectLink() {
         _elements.connectLinks.click(function (event) {
             var link = $(event.target);
