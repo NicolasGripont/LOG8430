@@ -20,7 +20,7 @@ var musicHub = musicHub || {};
      */
     function _signedOut(error) {
         if(!error) {
-            window.location.replace("/views");
+            window.location.replace("/views/signin");
         }
     }
 

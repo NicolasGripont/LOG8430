@@ -80,10 +80,10 @@ musicHub.connectionService = (function($, utils) {
      *                    Called with the error if fail or null if success as parameter.
      */
     self.signout = function(callback) {
-        var host = utils.getParameter("connection-host");
-        var port = utils.getParameter("connection-port");
+        var connectionHost = utils.getParameter("connection-host");
+        var connectionPort = utils.getParameter("connection-port");
         $.ajax({
-            url: "http://" + host + ":" + port + "/user/signout",
+            url: "http://" + connectionHost + ":" + connectionPort + "/user/signout",
             type: "GET",
             dataType: "json",
             crossDomain: true,
