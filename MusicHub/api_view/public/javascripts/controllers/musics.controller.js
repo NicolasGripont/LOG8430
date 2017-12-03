@@ -486,8 +486,8 @@ var musicHub = musicHub || {};
      */
     function _linkAddMusicModalHideEvent() {
         _elements.addMusicModal.on('hidden.bs.modal', function () {
-            _elements.createPlaylistDangerAlert.hide().html("");
-            _elements.createPlaylistSuccessAlert.hide().html("");
+            _elements.addMusicDangerAlert.hide().html("");
+            _elements.addMusicSuccessAlert.hide().html("");
             $(this).find(_selectors.inputs).val('').end();
         });
     }
