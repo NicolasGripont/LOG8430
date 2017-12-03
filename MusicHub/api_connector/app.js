@@ -43,7 +43,13 @@ store.on('error', function(error) {
 	console.log("error");
 });
 
-app.use(cors());
+var options = {
+	origin: true,
+	credentials:true,
+	methods:['GET', 'PUT', 'POST','DELETE','OPTIONS'],
+	allowedHeaders:['X-Requested-With', 'X-HTTP-Method-Override', 'Content-Type', 'Accept','access-control-allow-origin']
+};
+app.use(cors(options));
 app.use(require('express-session')({
     secret: 'musicHubProject',
     cookie: {
