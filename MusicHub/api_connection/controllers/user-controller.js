@@ -77,7 +77,7 @@ class UserController {
      * @param res  Http response
      */
 	logOut(req, res) {
-		UserDB.find({token:req.body.token}, function (error, user) {
+		UserDB.find({token:req.query.token}, function (error, user) {
 			if(error || !user) {
                 return res.status(400).json({message:"Sign out error."});
 			}

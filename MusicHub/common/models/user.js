@@ -71,8 +71,8 @@ class User {
      *
      * @returns {*} The token
      */
-    get email() {
-        return this._email;
+    get token() {
+        return this._token;
     }
 
     /**
@@ -81,7 +81,7 @@ class User {
      * @returns {*} The expiration date
      */
     get expires() {
-        return this._password;
+        return this._expires;
     }
 
 

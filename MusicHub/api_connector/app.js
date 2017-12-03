@@ -76,7 +76,7 @@ app.use(function(req,res,next) {
 	if(path) {
 		return next();
 	}
-	UserDB.find({token : req.body.token}, function (error, user) {
+	UserDB.find({token : req.query.token}, function (error, user) {
 	    if(error || !user || Date.now() > user.expires) {
             return res.status(401).json({message:'Not authorized'});
         }
