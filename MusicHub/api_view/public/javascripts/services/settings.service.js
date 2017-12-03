@@ -21,6 +21,8 @@ musicHub.settingsService = (function($, utils) {
         $.ajax({
             url: "http://" + host + ":" + port + "/connector/settings",
             crossDomain: true,
+            xhrFields: { withCredentials: true },
+            headers: {"Access-Control-Allow-Origin": "*"},
             type: "GET"
         }).done(function (setting) {
             return callback(setting);
@@ -37,7 +39,7 @@ musicHub.settingsService = (function($, utils) {
         var redirectUrl = "http://" + viewHost + ":" + viewPort + "/view/settings";
         document.location.href = "http://" + connectorHost + ":" + connectorPort + "/connector/connection/" +
                     api + "/" + action+ "?redirectUrl=" + redirectUrl;
-    }
+    };
 
 
     return self;

@@ -22,6 +22,8 @@ musicHub.musicsService = (function($, utils) {
         $.ajax({
             url: "http://" + host + ":" + port + "/connector/search/" + query,
             crossDomain: true,
+            xhrFields: { withCredentials: true },
+            headers: {"Access-Control-Allow-Origin": "*"},
             type: "GET"
         }).done(function (tracks) {
             sessionStorage.setItem("tracks", JSON.stringify(tracks));
@@ -89,6 +91,8 @@ musicHub.musicsService = (function($, utils) {
         $.ajax({
             url: "http://" + host + ":" + port + "/playlist/",
             crossDomain: true,
+            xhrFields: { withCredentials: true },
+            headers: {"Access-Control-Allow-Origin": "*"},
             type: "get",
             dataType: "json"
         }).done(function(playlists) {
@@ -111,6 +115,8 @@ musicHub.musicsService = (function($, utils) {
         $.ajax({
             url: "http://" + host + ":" + port + "/playlist/" + playlistName,
             crossDomain: true,
+            xhrFields: { withCredentials: true },
+            headers: {"Access-Control-Allow-Origin": "*"},
             type: "get",
             dataType: "json"
         }).done(function(playlist) {
@@ -135,6 +141,8 @@ musicHub.musicsService = (function($, utils) {
             url: "http://" + host + ":" + port + "/playlist/create",
             type: "POST",
             crossDomain: true,
+            xhrFields: { withCredentials: true },
+            headers: {"Access-Control-Allow-Origin": "*"},
             dataType: "json",
             contentType: "application/json; charset=utf-8",
             data: JSON.stringify({
@@ -166,8 +174,10 @@ musicHub.musicsService = (function($, utils) {
         $.ajax({
             url: "http://" + host + ":" + port + "/playlist/music",
             type: "PUT",
-            dataType: "json",
             crossDomain: true,
+            xhrFields: { withCredentials: true },
+            headers: {"Access-Control-Allow-Origin": "*"},
+            dataType: "json",
             contentType: "application/json; charset=utf-8",
             data: JSON.stringify({
                 playlistName: playlistName,
@@ -201,6 +211,8 @@ musicHub.musicsService = (function($, utils) {
             type: "Delete",
             dataType: "json",
             crossDomain: true,
+            xhrFields: { withCredentials: true },
+            headers: {"Access-Control-Allow-Origin": "*"},
             contentType: "application/json; charset=utf-8",
             data: JSON.stringify({
                 playlistName: playlistName,
@@ -234,6 +246,8 @@ musicHub.musicsService = (function($, utils) {
             type: "Delete",
             dataType: "json",
             crossDomain: true,
+            xhrFields: { withCredentials: true },
+            headers: {"Access-Control-Allow-Origin": "*"},
             contentType: "application/json; charset=utf-8",
             data: JSON.stringify({
                 playlistName: playlistName,

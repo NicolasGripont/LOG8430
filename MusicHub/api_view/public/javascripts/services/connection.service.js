@@ -57,6 +57,8 @@ musicHub.connectionService = (function($, utils) {
             type: "POST",
             dataType: "json",
             crossDomain: true,
+            xhrFields: { withCredentials: true },
+            headers: {"Access-Control-Allow-Origin": "*"},
             contentType: "application/json; charset=utf-8",
             data: JSON.stringify({
                 email: email,
