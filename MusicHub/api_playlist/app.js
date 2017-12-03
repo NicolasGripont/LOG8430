@@ -82,7 +82,6 @@ app.use(function(req,res,next) {
 	if(path) {
 		return next();
 	}
-	console.log(req.headers.cookie);
 	req.session.reload(function(err) {
 		if(err) {
 			return res.status(401).json({message:'Not authorized'});

@@ -131,7 +131,7 @@ class PlaylistController {
             json: true,
             headers: {cookie:req.headers.cookie}
         };
-        request.get(options, function (error, track) {
+        request.get(options, function (err, track) {
             if(err) {
                 return res.status(500).json({message:"Error during song recovery."});
             }
