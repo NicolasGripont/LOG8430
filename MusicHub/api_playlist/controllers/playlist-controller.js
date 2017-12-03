@@ -127,19 +127,19 @@ class PlaylistController {
 
         var options = {
             url: "http://" + ConnectorAPI.host + ":" + ConnectorAPI.port +
-				 	"/track/" + musicPlatform + "/" + musicId,
+				 	"/connector/track/" + musicPlatform + "/" + musicId,
             json: true,
             headers: {cookie:req.headers.cookie}
         };
-        request.get(options, function (err, track) {
+        request.get(options, function (err, ressource) {
             if(err) {
                 return res.status(500).json({message:"Error during song recovery."});
             }
-            playlist.addMusic(track, function(err) {
+            playlist.addMusic(ressource.body, function(err) {
                 if(err) {
                     return res.status(500).json({message:"Error during the update."});
                 }
-                return res.status(200).json(track);
+                return res.status(200).json(ressource.body);
             });
         })
     }
