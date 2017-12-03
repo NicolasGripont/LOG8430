@@ -3,6 +3,7 @@ var sinon = require ('sinon');
 var chai = require('chai');
 var request = require('request');
 var queryString = require('querystring');
+var SpotifyConnectorParams = require('../modelsSingleton').SpotifyConnectorParams;
 var SpotifyConnector = require('../modelsSingleton').SpotifyConnector;
 
 describe('Spotify Connector Model', function() {
@@ -15,7 +16,13 @@ describe('Spotify Connector Model', function() {
     var stub = [];
 
     beforeEach(function() {
-        spotifyConnector = new SpotifyConnector(clientId, clientSecret, loginUrl, tokenUrl, scope);
+        var spotifyConnectorParams = new SpotifyConnectorParams();
+        spotifyConnectorParams.clientId = clientId;
+        spotifyConnectorParams.clientSecret = clientSecret;
+        spotifyConnectorParams.loginUrl = loginUrl;
+        spotifyConnectorParams.tokenUrl = tokenUrl;
+        spotifyConnectorParams.scope = scope;
+        spotifyConnector = new SpotifyConnector(spotifyConnectorParams);
     });
     
     afterEach(function() {

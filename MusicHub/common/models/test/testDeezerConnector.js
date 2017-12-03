@@ -2,6 +2,7 @@ var assert = require('assert');
 var sinon = require ('sinon');
 var chai = require('chai');
 var request = require('request');
+var DeezerConnectorParams = require('../modelsSingleton').DeezerConnectorParams;
 var DeezerConnector = require('../modelsSingleton').DeezerConnector;
 
 describe('Deezer Connector Model', function() {
@@ -15,8 +16,14 @@ describe('Deezer Connector Model', function() {
     var stub = [];
 
     beforeEach(function() {
+        var deezerConnectorParams = new DeezerConnectorParams();
+        deezerConnectorParams.appId = appId;
+        deezerConnectorParams.secretKey = secretKey;
+        deezerConnectorParams.loginUrl = loginUrl;
+        deezerConnectorParams.perms = perms;
+        deezerConnectorParams.tokenUrl = tokenUrl;
     	// runs before each test in this block
-        deezerConnector = new DeezerConnector(appId, secretKey, loginUrl, perms, tokenUrl);
+        deezerConnector = new DeezerConnector(deezerConnectorParams);
     });
     
     afterEach(function() {
