@@ -10,7 +10,3 @@ exclude:
 - /MusicHub/api_view/public/soundmanager/demo/bar-ui/script/demo\.js
 - /MusicHub/api_view/public/soundmanager/demo/bar-ui/script/bar-ui\.js
 - /MusicHub/seed/seed\.js
-- /MusicHub/api_connection/Gruntfile.js
-- /MusicHub/api_connector/Gruntfile.js
-- /MusicHub/api_playlist/Gruntfile.js
-- /MusicHub/api_view/Gruntfile.js
