@@ -21,13 +21,13 @@ class DeezerConnector extends AbstractConnector {
      * @param perms       Permissions asked to the user
      * @param tokenUrl    Deezer api token url
      */
-    constructor(appId, secretKey, loginUrl, perms, tokenUrl){
+    constructor(params){
         super();
-        this.appId = appId;
-        this.secretKey = secretKey;
-        this.loginUrl = loginUrl;
-        this.perms = perms;
-        this.tokenUrl = tokenUrl;
+        this.appId = params.appId;
+        this.secretKey = params.secretKey;
+        this.loginUrl = params.loginUrl;
+        this.perms = params.perms;
+        this.tokenUrl = params.tokenUrl;
         this.accessToken = undefined;
         this.expires = undefined;
     }

@@ -3,6 +3,8 @@ var Promise = require('promise');
 var common = require('musichub-common');
 var DeezerConnector = common.DeezerConnector;
 var SpotifyConnector = common.SpotifyConnector;
+var DeezerConnectorParams = common.DeezerConnectorParams;
+var SpotifyConnectorParams = common.SpotifyConnectorParams;
 var config = common.config;
 var SettingDB = common.SettingsDB;
 
@@ -20,12 +22,22 @@ class ConnectorController {
         this.connectors = {};
 
         var deezerConfig = config.deezer;
-        this.connectors['deezer'] = new DeezerConnector(deezerConfig.appId, deezerConfig.secretKey,
-            deezerConfig.loginUrl, deezerConfig.perms, deezerConfig.tokenUrl);
+        var deezerConnectorParams = new DeezerConnectorParams();
+        deezerConnectorParams.appId = deezerConfig.appId;
+        deezerConnectorParams.secretKey = deezerConfig.secretKey;
+        deezerConnectorParams.loginUrl = deezerConfig.loginUrl;
+        deezerConnectorParams.perms = deezerConfig.perms;
+        deezerConnectorParams.tokenUrl = deezerConfig.tokenUrl;
+        this.connectors['deezer'] = new DeezerConnector(deezerConnectorParams);
 
         var spotifyConfig = config.spotify;
-        this.connectors['spotify'] = new SpotifyConnector(spotifyConfig.clientId, spotifyConfig.clientSecret,
-            spotifyConfig.loginUrl, spotifyConfig.tokenUrl, spotifyConfig.scope);
+        var spotifyConnectorParams = new SpotifyConnectorParams();
+        spotifyConnectorParams.clientId = spotifyConfig.clientId;
+        spotifyConnectorParams.clientSecret = spotifyConfig.clientSecret;
+        spotifyConnectorParams.loginUrl = spotifyConfig.loginUrl;
+        spotifyConnectorParams.tokenUrl = spotifyConfig.tokenUrl;
+        spotifyConnectorParams.scope = spotifyConfig.scope;
+        this.connectors['spotify'] = new SpotifyConnector(spotifyConnectorParams);
     }
 
     /**

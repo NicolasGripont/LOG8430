@@ -1,13 +1,13 @@
-component_depth: 2
+component_depth: 3
 languages:
 - javascript
 
 exclude:
-- /MusicHub/public/soundmanager/script/soundmanager2-nodebug-jsmin\.js
-- /MusicHub/public/soundmanager/script/soundmanager2-nodebug\.js
-- /MusicHub/public/soundmanager/script/soundmanager2-jsmin\.js
-- /MusicHub/public/soundmanager/script/soundmanager2\.js
-- /MusicHub/public/soundmanager/demo/bar-ui/script/demo\.js
-- /MusicHub/public/soundmanager/demo/bar-ui/script/bar-ui\.js
+- /MusicHub/api_view/public/soundmanager/script/soundmanager2-nodebug-jsmin\.js
+- /MusicHub/api_view/public/soundmanager/script/soundmanager2-nodebug\.js
+- /MusicHub/api_view/public/soundmanager/script/soundmanager2-jsmin\.js
+- /MusicHub/api_view/public/soundmanager/script/soundmanager2\.js
+- /MusicHub/api_view/public/soundmanager/demo/bar-ui/script/demo\.js
+- /MusicHub/api_view/public/soundmanager/demo/bar-ui/script/bar-ui\.js
 - /MusicHub/seed/seed\.js
 - /MusicHub/Gruntfile\.js

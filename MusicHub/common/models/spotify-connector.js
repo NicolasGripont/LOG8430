@@ -18,16 +18,14 @@ class SpotifyConnector extends AbstractConnector {
      * @param loginUrl       Spotify API login URL
      * @param tokenUrl       Spotify API token URL
      * @param scope          Permission asked
-     * @param searchUrl      Spotify Search URL
      */
-    //TODO object parameter : cf cours de clean code
-    constructor(clientId,clientSecret,loginUrl,tokenUrl,scope){
+    constructor(params){
         super();
-        this.clientId = clientId;
-        this.clientSecret = clientSecret;
-        this.loginUrl = loginUrl;
-        this.tokenUrl = tokenUrl;
-        this.scope = scope;
+        this.clientId = params.clientId;
+        this.clientSecret = params.clientSecret;
+        this.loginUrl = params.loginUrl;
+        this.tokenUrl = params.tokenUrl;
+        this.scope = params.scope;
         this.accessToken = undefined;
         this.refreshToken = undefined;
         this.expires = undefined;
