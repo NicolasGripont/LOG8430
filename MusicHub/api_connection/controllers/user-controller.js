@@ -1,5 +1,6 @@
-var User = require('musichub-common').User;
+var User = require('./user');
 var md5 = require('md5');
+var DbUser = require('./user-db');
 
 /**
  * Define User Controller for MVC
@@ -26,8 +27,10 @@ class UserController {
 			return res.status(400).json({message:"Bad Email or password."});
 		}
 		var newUser = new User(email,password);
+
 		newUser.save(function(err) {
 			if(err) {
+				console.log(err);
 				return res.status(400).json({message:"Email is already used by another user."});
 			}
 			res.status(200).json({message:"OK"});
@@ -50,19 +53,22 @@ class UserController {
 		if(email === "" || password === "") {
 			return res.status(400).json({message:"Bad email or password."});
 		}
-		newUser.logIn(function(err,isFound){
+		newUser.logIn(function(err,user){
 			if(err) {
 				return res.status(500).json({message:"Connection to database failed"});
 			}
-			if(isFound) {
-				newUser.token = md5(newUser.email + newUser.password() + self.getRandomInt(0,1000000000));
-				newUser.expires = Date.now() + 60 * 60 * 1000;
-				newUser.save(function (err) {
+
+			if(user) {
+                user.token = md5(user.email + user.password + self.getRandomInt(0,1000000000));
+                user.expires = Date.now() + 60 * 60 * 1000;
+                console.log(user);
+                user.save(function (err) {
                     if(err) {
+                    	console.log(err);
                         return res.status(400).json({message:"Email is already used by another user."});
                     }
-                    res.status(200).json({token:newUser.token});
-                })
+                    return res.status(200).json({token:user.token});
+                });
 			}
 			return res.status(400).json({message:"Bad email or password."});
 		});

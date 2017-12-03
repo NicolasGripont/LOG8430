@@ -194,7 +194,6 @@ class ConnectorController {
                 .catch(function(error){
                     return res.status(400).json({ message : "Error when search on APIs."});
                 })
-
             } else {
                 return res.status(200).json({});
             }

@@ -1,4 +1,4 @@
-var DbUser = require('../models_db/modelSingleton').DbUser;
+var DbUser = require('./user-db');
 
 /**
  * Represents the application User.
