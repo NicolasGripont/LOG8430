@@ -44,11 +44,19 @@ store.on('error', function(error) {
 });
 
 
-app.use(cors());
+var options = {
+	origin: true,
+	credentials:true,
+	methods:['GET', 'PUT', 'POST','DELETE','OPTIONS'],
+	allowedHeaders:['X-Requested-With', 'X-HTTP-Method-Override', 'Content-Type', 'Accept','access-control-allow-origin']
+};
+app.use(cors(options));
 app.use(require('express-session')({
     secret: 'musicHubProject',
+    domain:config.host,
     cookie: {
-      maxAge: 1000 * 60 * 60 * 2 // 2 hours
+      maxAge: 1000 * 60 * 60 * 2, // 2 hours
+      domain:config.host
     },
     store: store,
     rolling: true,
@@ -75,6 +83,7 @@ app.use(function(req,res,next) {
 	if(path) {
 		return next();
 	}
+	console.log(req.headers.cookie);
 	req.session.reload(function(err) {
 		if(err) {
 			return res.status(401).json({message:'Not authorized'});

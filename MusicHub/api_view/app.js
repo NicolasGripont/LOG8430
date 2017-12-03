@@ -6,7 +6,15 @@ var views = require('./routes/views');
 var app = express();
 
 
-app.use(cors());
+
+var options = {
+	origin: true,
+	credentials:true,
+	methods:['GET', 'PUT', 'POST','DELETE','OPTIONS'],
+	allowedHeaders:['X-Requested-With', 'X-HTTP-Method-Override', 'Content-Type', 'Accept','access-control-allow-origin']
+};
+app.use(cors(options));
+
 // view engine setup
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "pug");
