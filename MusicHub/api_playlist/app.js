@@ -51,15 +51,17 @@ var options = {
 };
 app.use(cors(options));
 app.use(require('express-session')({
-    secret: 'musicHubProject',
-    cookie: {
-      maxAge: 1000 * 60 * 60 * 2 // 2 hours
-    },
-    store: store,
-    rolling: true,
-    resave: true,
-    saveUninitialized: false
-  }));
+	secret: 'musicHubProject',
+	domain:config.host,
+	cookie: {
+	  maxAge: 1000 * 60 * 60 * 2, // 2 hours
+	  domain:config.host
+	},
+	store: store,
+	rolling: true,
+	resave: true,
+	saveUninitialized: false
+}));
 
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
@@ -80,6 +82,7 @@ app.use(function(req,res,next) {
 	if(path) {
 		return next();
 	}
+	console.log(req.headers.cookie);
 	req.session.reload(function(err) {
 		if(err) {
 			return res.status(401).json({message:'Not authorized'});
