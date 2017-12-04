@@ -288,7 +288,7 @@ var musicHub = musicHub || {};
      */
     function _updateModalAddMusic(playlists) {
         var selectPlaylist = _elements.playlistNameSelect;
-        selectPlaylist.find(_selectors.option).remove();
+        selectPlaylist.empty();
         if (playlists) {
             playlists.forEach(function(playlist) {
                 selectPlaylist.append("<option>" + playlist.name + "</option>");
@@ -488,6 +488,7 @@ var musicHub = musicHub || {};
         _elements.addMusicModal.on('hidden.bs.modal', function () {
             _elements.addMusicDangerAlert.hide().html("");
             _elements.addMusicSuccessAlert.hide().html("");
+            _elements.s.hide().html("");
             $(this).find(_selectors.inputs).val('').end();
         });
     }
